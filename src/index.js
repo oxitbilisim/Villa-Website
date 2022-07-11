@@ -28,7 +28,7 @@ import Location  from './components/location';
 import Shop from './components/shop';
 import ShopGrid from './components/shop-grid';
 import ProdductDetails from './components/product-details';
-import ShopLeftSidebar from './components/shop-left-sidebar';
+import Bolgeler from './components/bolgeler';
 import ShopRightSidebar from './components/shop-right-sidebar';
 
 import BlogGrid from './components/blog-grid';
@@ -80,7 +80,7 @@ class Root extends Component {
                         <Route path="/location" component={ Location } />
                         <Route path="/shop" component={ Shop } />
                         <Route path="/shop-grid" component={ ShopGrid } />
-                        <Route path="/shop-left-sidebar" component={ ShopLeftSidebar } />
+                        <Route path="/bolgeler" component={ Bolgeler } />
                         <Route path="/shop-right-sidebar" component={ ShopRightSidebar } />
 
                         <Route path="/product-details" component={ ProdductDetails } />

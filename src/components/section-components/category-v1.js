@@ -1,13 +1,27 @@
-import React, { Component } from 'react';
+import axios from "axios";
+import React, {Component } from "react";
 import { Link } from 'react-router-dom';
-import parse from 'html-react-parser';
+
 
 class CategoryV1 extends Component {
+ state = {
+    kategori: [],
+  };
+
+  componentDidMount() {
+    		      axios
+        .get("http://villaadmin.oxit.web.tr/api/Kategori/GetAll"
+        )
+        .then((response) => {
+        	let kategori=response.data;
+			this.setState({ kategori });
+        })
+  }
+
 
     render() {
 
-        let publicUrl = process.env.PUBLIC_URL+'/'
-        let imagealt = 'image'
+
 
     return <div className="ltn__category-area ltn__product-gutter section-bg-1--- pt-115 pb-90 go-top">
 			  <div className="container">
@@ -20,78 +34,27 @@ class CategoryV1 extends Component {
 			      </div>
 			    </div>
 			    <div className="row ltn__category-slider-active--- slick-arrow-1 justify-content-center">
-			      <div className="col-lg-3 col-md-4 col-sm-6 col-6">
+
+
+
+					  {this.state.kategori.map(item => (
+					<div className="col-lg-3 col-md-4 col-sm-6 col-6">
 			        <div className="ltn__category-item ltn__category-item-5 text-center">
-			          <Link to="/shop">
-			            <span className="category-icon"><i className="flaticon-car" /></span>
-			            <span className="category-title">Denize Yakın </span>
+			          <Link to={item.url}>
+			          <img src={`data:image/jpeg;base64,${item.image}`} />
+			            <span className="category-title">{item.ad} </span>
 			            <span className="category-btn"><i className="flaticon-right-arrow" /></span>
 			          </Link>
 			        </div>
 			      </div>
-			      <div className="col-lg-3 col-md-4 col-sm-6 col-6">
-			        <div className="ltn__category-item ltn__category-item-5 text-center">
-			          <Link to="/shop">
-			            <span className="category-icon"><i className="flaticon-swimming" /></span>
-			            <span className="category-title">Muhafazakar </span>
-			            <span className="category-btn"><i className="flaticon-right-arrow" /></span>
-			          </Link>
-			        </div>
-			      </div>
-			      <div className="col-lg-3 col-md-4 col-sm-6 col-6">
-			        <div className="ltn__category-item ltn__category-item-5 text-center">
-			          <Link to="/shop">
-			            <span className="category-icon"><i className="flaticon-secure-shield" /></span>
-			            <span className="category-title">Balayı Villaları</span>
-			            <span className="category-btn"><i className="flaticon-right-arrow" /></span>
-			          </Link>
-			        </div>
-			      </div>
-			      <div className="col-lg-3 col-md-4 col-sm-6 col-6">
-			        <div className="ltn__category-item ltn__category-item-5 text-center">
-			          <Link to="/shop">
-			            <span className="category-icon"><i className="flaticon-stethoscope" /></span>
-			            <span className="category-title">Evcil Hayvan </span>
-			            <span className="category-btn"><i className="flaticon-right-arrow" /></span>
-			          </Link>
-			        </div>
-			      </div>
-			      <div className="col-lg-3 col-md-4 col-sm-6 col-6">
-			        <div className="ltn__category-item ltn__category-item-5 text-center">
-			          <Link to="/shop">
-			            <span className="category-icon"><i className="flaticon-book" /></span>
-			            <span className="category-title">Evcil Hayvan </span>
-			            <span className="category-btn"><i className="flaticon-right-arrow" /></span>
-			          </Link>
-			        </div>
-			      </div>
-					 <div className="col-lg-3 col-md-4 col-sm-6 col-6">
-			        <div className="ltn__category-item ltn__category-item-5 text-center">
-			          <Link to="/shop">
-			            <span className="category-icon"><i className="flaticon-book" /></span>
-			            <span className="category-title">Evcil Hayvan </span>
-			            <span className="category-btn"><i className="flaticon-right-arrow" /></span>
-			          </Link>
-			        </div>
-			      </div>
-					 <div className="col-lg-3 col-md-4 col-sm-6 col-6">
-			        <div className="ltn__category-item ltn__category-item-5 text-center">
-			          <Link to="/shop">
-			            <span className="category-icon"><i className="flaticon-book" /></span>
-			            <span className="category-title">Evcil Hayvan </span>
-			            <span className="category-btn"><i className="flaticon-right-arrow" /></span>
-			          </Link>
-			        </div>
-			      </div>
-					 <div className="col-lg-3 col-md-4 col-sm-6 col-6">
-			        <div className="ltn__category-item ltn__category-item-5 text-center">
-			          <Link to="/shop">
-			            <span className="category-icon"><i className="flaticon-book" /></span>
-			            <span className="category-title">Evcil Hayvan </span>
-			            <span className="category-btn"><i className="flaticon-right-arrow" /></span>
-			          </Link>
-			        </div>
-			      </div>
+					 ))}
+
+
+
+
+
+
+
 
 			    </div>
 			  </div>
