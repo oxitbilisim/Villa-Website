@@ -2,10 +2,31 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Social from '../section-components/social';
 import Copyright from './copyright';
+import axios from "axios";
 
 class Footer_v1 extends Component {
 
+	 state = {
+    bolge: [],
+	 kategori: [],
+  };
+
     componentDidMount() {
+
+    	  axios.get("http://villaadmin.oxit.web.tr/api/VillaFE/GetBolgeAll")
+        .then((response) => {
+        	let bolge=response.data;
+			this.setState({ bolge });
+
+        }),
+
+
+					   axios.get("http://villaadmin.oxit.web.tr/api/VillaFE/GetKategoriAll")
+        .then((response) => {
+        	let kategori=response.data;
+			this.setState({ kategori });
+        })
+
 
     	const $ = window.$;
 
@@ -63,12 +84,11 @@ class Footer_v1 extends Component {
 				            <h4 className="footer-title">Tatil Bölgeleri</h4>
 				            <div className="footer-menu go-top">
 				              <ul>
-								  <li><Link to="/blog-grid">Kalkan </Link></li>
-							<li><Link to="/blog-grid">Fethiye  </Link></li>
-							<li><Link to="/blog-grid">Kaş  </Link></li>
-							<li><Link to="/blog-grid">İslamlar </Link></li>
-							<li><Link to="/blog-grid">Dalyan </Link></li>
-							<li><Link to="/blog-grid">Göcek </Link></li>
+								    {this.state.bolge.map(item => (
+									<li><Link to={item.url}>{item.ad}</Link></li>
+								))}
+
+
 
 				              </ul>
 				            </div>
@@ -79,11 +99,9 @@ class Footer_v1 extends Component {
 				            <h4 className="footer-title">Villa Kategorileri</h4>
 				            <div className="footer-menu go-top">
 				              <ul>
-				                <li><Link to="/blog-grid">Denize Yakın Villalar </Link></li>
-							<li><Link to="/blog-grid">Muhafazakar Villalar </Link></li>
-							<li><Link to="/blog-grid">Balayı Villaları  </Link></li>
-							<li><Link to="/blog-grid">Evcil Hayvan İzni </Link></li>
-							<li><Link to="/blog-grid">Çocuk Havuzlu Villalar </Link></li>
+				                {this.state.kategori.map(item => (
+									<li><Link to={item.url}>{item.ad}</Link></li>
+										))}
 				              </ul>
 				            </div>
 				          </div>

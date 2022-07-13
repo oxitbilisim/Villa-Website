@@ -5190,6 +5190,8 @@ ul.wp-block-latest-posts.is-grid.alignwide {
   -ms-flex-positive: 0;
   flex-grow: 1;
   position: static;
+    -ms-flex: 0 0 30%;
+    flex: 1 1 50%;
 }
 
 .site-logo {
@@ -15952,6 +15954,7 @@ input.cart-plus-minus-box {
   height: 8px;
   background-color: var(--white);
   margin-top: 20px;
+
 }
 
 .car-price-filter-range .price_filter .ui-state-default:last-child::before {

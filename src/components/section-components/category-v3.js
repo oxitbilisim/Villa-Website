@@ -7,9 +7,7 @@ class CategoryV3 extends Component {
     bolge: [],
   };
 	  componentDidMount() {
-    		      axios
-        .get("http://villaadmin.oxit.web.tr/api/Bolge/GetAll"
-        )
+    		  axios.get("http://villaadmin.oxit.web.tr/api/VillaFE/GetBolgeAll?rules=1")
         .then((response) => {
         	let bolge=response.data;
 			this.setState({ bolge });
@@ -21,7 +19,7 @@ class CategoryV3 extends Component {
 
 
     render() {
-    return <div className="ltn__banner-area pt-120 go-top">
+    return <div className="ltn__banner-area pt-60 go-top">
 				<div className="container">
 				<div className="row">
 					<div className="col-lg-12">
@@ -40,7 +38,7 @@ class CategoryV3 extends Component {
 
 						<div className="ltn__banner-info">
 						<h3><Link to={item.url}> {item.ad} </Link></h3>
-						<mark> 454 Villa</mark>
+						<mark> {item.toplam} Villa</mark>
 						</div>
 					</div>
 					</div>

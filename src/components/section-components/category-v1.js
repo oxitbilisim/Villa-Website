@@ -9,9 +9,7 @@ class CategoryV1 extends Component {
   };
 
   componentDidMount() {
-    		      axios
-        .get("http://villaadmin.oxit.web.tr/api/Kategori/GetAll"
-        )
+    		      axios.get("http://villaadmin.oxit.web.tr/api/VillaFE/GetKategoriAll?rules=1")
         .then((response) => {
         	let kategori=response.data;
 			this.setState({ kategori });
@@ -23,7 +21,7 @@ class CategoryV1 extends Component {
 
 
 
-    return <div className="ltn__category-area ltn__product-gutter section-bg-1--- pt-115 pb-90 go-top">
+    return <div className="ltn__category-area ltn__product-gutter section-bg-1--- pt-60 pb-60 go-top">
 			  <div className="container">
 			    <div className="row">
 			      <div className="col-lg-12">

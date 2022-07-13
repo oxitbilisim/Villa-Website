@@ -51,7 +51,7 @@ class BannerV5 extends Component {
 
 
 
-										<div   className="car-price-filter-range   col-lg-3">
+										<div  className="car-price-filter-range   col-lg-3">
 
 
 											{/* <button type="submit" class="btn theme-btn-1 btn-effect-1 text-uppercase">Search Inventory</button> */}

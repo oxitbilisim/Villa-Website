@@ -26,7 +26,7 @@ componentDidMount() {
 
 
     return   <div>
-				<div className="ltn__product-slider-area ltn__product-gutter pt-115 pb-70">
+				<div className="ltn__product-slider-area ltn__product-gutter pt-60 pb-60">
 					<div className="container">
 					<div className="row">
 						<div className="col-lg-12">
@@ -39,7 +39,7 @@ componentDidMount() {
 					<div className="row ltn__product-slider-item-three-active--- slick-arrow-1">
 
 
-  {this.state.populer.map(item => (
+  					{this.state.populer.map(item => (
 						<div className="col-xl-4 col-sm-6 col-12">
 									<div className="ltn__product-item ltn__product-item-4 ltn__product-item-5 text-center---">
 										<div className="product-img go-top">

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, HashRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter , HashRouter, Route, Switch } from "react-router-dom";
 import HomeV1 from './components/home-v1';
 import HomeV2 from './components/home-v2';
 import HomeV3 from './components/home-v3';
@@ -52,19 +52,10 @@ import History from './components/history';
 class Root extends Component {
     render() {
         return(
-                <HashRouter basename="/">
-	                <div>
+                <BrowserRouter basename="/">
+
 	                <Switch>
 	                    <Route exact path="/" component={HomeV6} />
-                        <Route path="/home-v2" component={HomeV2} />
-                        <Route path="/home-v3" component={HomeV3} />
-                        <Route path="/home-v4" component={HomeV4} />
-                        <Route path="/home-v5" component={HomeV5} />
-                        <Route path="/home-v6" component={HomeV1} />
-                        <Route path="/home-v7" component={HomeV7} />
-                        <Route path="/home-v8" component={HomeV8} />
-                        <Route path="/home-v9" component={HomeV9} />
-                        <Route path="/home-v10" component={HomeV10} />
 
                         <Route path="/about" component={About} />
                         <Route path="/service" component={Service} />
@@ -92,7 +83,7 @@ class Root extends Component {
 
 
                         <Route path="/blog-details" component={ BlogDetails } />
-                        <Route path="/contact" component={ Contact } />
+                        <Route path="/iletisim" component={ Contact } />
                         <Route path="/cart" component={ Cart } />
                         <Route path="/checkout" component={ Checkout } />
                         <Route path="/my-account" component={ MyAccount } />
@@ -103,8 +94,8 @@ class Root extends Component {
                         <Route path="/order-tracking" component={ OrderTracking } />
                         <Route path="/history" component={ History } />
 	                </Switch>
-	                </div>
-                </HashRouter>
+
+                </BrowserRouter>
         )
     }
 }
