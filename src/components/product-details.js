@@ -9,7 +9,6 @@ import Footer from './global-components/footer';
 const Product_Details = () => {
     return <div>
         <Navbar />
-        <PageHeader headertitle="Villa Flower Aras" customclass="mb-0" />
         <ProductSlider />
         <ProductDetails />
         <CallToActionV1 />

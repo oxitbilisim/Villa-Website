@@ -2,8 +2,36 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import parse from 'html-react-parser';
 import Sidebar from "../blog-components/sidebar";
+import axios from "axios";
 
 class ShopDetails extends Component {
+
+	state = {
+    villa: {ad:null,baslik:null},
+		images:[],
+		icerik:{},
+		lokasyon:{mrkUzaklik:null,pljUzaklik:null,hvlUzaklik:null,sglUzaklik:null,marktUzaklik:null,rstUzaklik:null},
+		kategori:[],
+		ozellik:[],
+		gorunum:{},
+		periyodikFiyat:[],
+		periyodikFiyatAyarlari:[]
+
+  };
+	  componentDidMount() {
+    		  axios.get("http://villaadmin.oxit.web.tr/api/VillaFE/GetVillaById?villaId=3")
+        .then((response) => {
+        	let villa=response.data.villa;
+			this.setState({ villa });
+			let icerik=response.data.icerik;
+			this.setState({icerik})
+			let ozellik=response.data.ozellik;
+			this.setState({ozellik})
+			let lokasyon=response.data.lokasyon;
+			this.setState({lokasyon})
+        })
+  }
+
 
     render() {
 
@@ -12,10 +40,11 @@ class ShopDetails extends Component {
     return <div className="ltn__shop-details-area pb-10">
 				<div className="container">
 				<div className="row">
+
 					<div className="col-lg-8 col-md-12">
 					<div className="ltn__shop-details-inner ltn__page-details-inner mb-60">
 
-						<h1>Villa Flower Aras</h1>
+						<h1>{this.state.villa.ad}</h1>
 						<label><span className="ltn__secondary-color">
 							<i className="flaticon-pin" /></span> Antalya,Kalkan,Patara</label>
 
@@ -44,111 +73,18 @@ Villamız korunaklı olmasından dolayı muhafazakar villalar ve balayı villala
 							<div className="col-lg-4 col-md-6">
 							<div className="ltn__menu-widget">
 								<ul>
+									   {this.state.ozellik.map(item => (
 								<li>
-									<label className="checkbox-item">Havuz
-									<input type="checkbox" defaultChecked="checked" />
+									<label className="checkbox-item">{item.ozellikAd}
+									<input type="checkbox"  defaultChecked="checked" />
 									<span className="checkmark" />
 									</label>
 								</li>
-								<li>
-									<label className="checkbox-item">Jakuzi
-									<input type="checkbox" defaultChecked="checked" />
-									<span className="checkmark" />
-									</label>
-								</li>
-								<li>
-									<label className="checkbox-item">Mutfak Ekipmanları
-									<input type="checkbox" defaultChecked="checked" />
-									<span className="checkmark" />
-									</label>
-								</li>
-								<li>
-									<label className="checkbox-item">Ebeveyn Banyosu
-									<input type="checkbox" defaultChecked="checked" />
-									<span className="checkmark" />
-									</label>
-								</li>
-								<li>
-									<label className="checkbox-item">Bahçe
-									<input type="checkbox" defaultChecked="checked" />
-									<span className="checkmark" />
-									</label>
-								</li>
+								))}
 								</ul>
 							</div>
 							</div>
-							<div className="col-lg-4 col-md-6">
-							<div className="ltn__menu-widget">
-								<ul>
-								<li>
-									<label className="checkbox-item">Kapalı Bahçe & Muhafazakar
-									<input type="checkbox" defaultChecked="checked" />
-									<span className="checkmark" />
-									</label>
-								</li>
-								<li>
-									<label className="checkbox-item">Wifi
-									<input type="checkbox" defaultChecked="checked" />
-									<span className="checkmark" />
-									</label>
-								</li>
-								<li>
-									<label className="checkbox-item">Doğa içinde Doğa manzarası
-									<input type="checkbox" defaultChecked="checked" />
-									<span className="checkmark" />
-									</label>
-								</li>
-								<li>
-									<label className="checkbox-item">Garaj-Otopark
-									<input type="checkbox" defaultChecked="checked" />
-									<span className="checkmark" />
-									</label>
-								</li>
-								<li>
-									<label className="checkbox-item">Klima
-									<input type="checkbox" defaultChecked="checked" />
-									<span className="checkmark" />
-									</label>
-								</li>
-								</ul>
-							</div>
-							</div>
-							<div className="col-lg-4 col-md-6">
-							<div className="ltn__menu-widget">
-								<ul>
-								<li>
-									<label className="checkbox-item">TV
-									<input type="checkbox" defaultChecked="checked" />
-									<span className="checkmark" />
-									</label>
-								</li>
-								<li>
-									<label className="checkbox-item">Sigara içilmez
-									<input type="checkbox" defaultChecked="checked" />
-									<span className="checkmark" />
-									</label>
-								</li>
-								<li>
-									<label className="checkbox-item">Barbekü
-									<input type="checkbox" defaultChecked="checked" />
-									<span className="checkmark" />
-									</label>
-								</li>
-								<li>
-									<label className="checkbox-item">Mutfak
-									<input type="checkbox" defaultChecked="checked" />
-									<span className="checkmark" />
-									</label>
-								</li>
-								<li>
-									<label className="checkbox-item">Full eşya
-									<input type="checkbox" defaultChecked="checked" />
-									<span className="checkmark" />
-									</label>
-								</li>
-								</ul>
-							</div>
-							</div>
+
 						</div>
 						</div>
 						<h4 className="title-2">Villa Konumu</h4>
@@ -160,15 +96,15 @@ Villamız korunaklı olmasından dolayı muhafazakar villalar ve balayı villala
 
 						<div className="property-detail-info-list section-bg-1 clearfix mb-60">
 						<ul>
-							<li><label>Havaalanına:</label> <span>110 KM</span></li>
-							<li><label>Merkeze: </label> <span>1 KM</span></li>
-							<li><label>Plaja:</label> <span>3 KM</span></li>
+							<li><label>Havaalanına:</label> <span>{this.state.lokasyon.hvlUzaklik} KM</span></li>
+							<li><label>Merkeze: </label> <span>{this.state.lokasyon.mrkUzaklik} KM</span></li>
+							<li><label>Plaja:</label> <span>{this.state.lokasyon.pljUzaklik} KM</span></li>
 
 						</ul>
 						<ul>
-							<li><label>Sağlık Kurumuna:</label> <span>4 KM</span></li>
-							<li><label>Markete:</label> <span>2 KM</span></li>
-							<li><label>Restorana:</label> <span>1 KM</span></li>
+							<li><label>Sağlık Kurumuna:</label> <span>{this.state.lokasyon.sglUzaklik} KM</span></li>
+							<li><label>Markete:</label> <span>{this.state.lokasyon.marktUzaklik} KM</span></li>
+							<li><label>Restorana:</label> <span>{this.state.lokasyon.rstUzaklik} KM</span></li>
 						</ul>
 						</div>
 
@@ -468,6 +404,7 @@ Villamız korunaklı olmasından dolayı muhafazakar villalar ve balayı villala
 						</div>
 					</div>
 					</div>
+
 					<Sidebar/>
 				</div>
 				</div>
