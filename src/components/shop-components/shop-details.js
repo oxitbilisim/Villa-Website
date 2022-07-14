@@ -7,13 +7,13 @@ import axios from "axios";
 class ShopDetails extends Component {
 
 	state = {
-    villa: {ad:null,baslik:null},
+    villa: {ad:null,baslik:null,kapasite:null,yatakOdaSayisi:null,banyoSayisi:null},
 		images:[],
-		icerik:{},
-		lokasyon:{mrkUzaklik:null,pljUzaklik:null,hvlUzaklik:null,sglUzaklik:null,marktUzaklik:null,rstUzaklik:null},
+		icerik:{icerikBasligi:null,icerik:null},
+		lokasyon:{bolgeId:null,ilceId:null,mevki:null,map:null,mrkUzaklik:null,pljUzaklik:null,hvlUzaklik:null,sglUzaklik:null,marktUzaklik:null,rstUzaklik:null},
 		kategori:[],
 		ozellik:[],
-		gorunum:{},
+		gorunum:{havuzOzellik:null},
 		periyodikFiyat:[],
 		periyodikFiyatAyarlari:[]
 
@@ -29,6 +29,12 @@ class ShopDetails extends Component {
 			this.setState({ozellik})
 			let lokasyon=response.data.lokasyon;
 			this.setState({lokasyon})
+			let gorunum=response.data.gorunum;
+			this.setState({gorunum})
+			let periyodikFiyat=response.data.periyodikFiyat;
+			this.setState({periyodikFiyat})
+			let images=response.data.images;
+			this.setState({images})
         })
   }
 
@@ -38,7 +44,50 @@ class ShopDetails extends Component {
         let publicUrl = process.env.PUBLIC_URL+'/'
 
     return <div className="ltn__shop-details-area pb-10">
-				<div className="container">
+
+<div className="ltn__img-slider-area mb-10">
+				<div className="container-fluid">
+				<div className="row ltn__image-slider-4-active slick-arrow-1 slick-arrow-1-inner ltn__no-gutter-all">
+					<div className="col-lg-12">
+					<div className="ltn__img-slide-item-4">
+						<a href={publicUrl+"assets/img/img-slide/31.jpg"} data-rel="lightcase:myCollection">
+						<img src={publicUrl+"assets/img/img-slide/31.jpg"} alt="Image" />
+						</a>
+					</div>
+					</div>
+					<div className="col-lg-12">
+					<div className="ltn__img-slide-item-4">
+						<a href={publicUrl+"assets/img/img-slide/32.jpg"} data-rel="lightcase:myCollection">
+						<img src={publicUrl+"assets/img/img-slide/32.jpg"} alt="Image" />
+						</a>
+					</div>
+					</div>
+					<div className="col-lg-12">
+					<div className="ltn__img-slide-item-4">
+						<a href={publicUrl+"assets/img/img-slide/33.jpg"} data-rel="lightcase:myCollection">
+						<img src={publicUrl+"assets/img/img-slide/33.jpg"} alt="Image" />
+						</a>
+					</div>
+					</div>
+					<div className="col-lg-12">
+					<div className="ltn__img-slide-item-4">
+						<a href={publicUrl+"assets/img/img-slide/34.jpg"} data-rel="lightcase:myCollection">
+						<img src={publicUrl+"assets/img/img-slide/34.jpg"} alt="Image" />
+						</a>
+					</div>
+					</div>
+					<div className="col-lg-12">
+					<div className="ltn__img-slide-item-4">
+						<a href={publicUrl+"assets/img/img-slide/35.jpg"} data-rel="lightcase:myCollection">
+						<img src={publicUrl+"assets/img/img-slide/35.jpg"} alt="Image" />
+						</a>
+					</div>
+					</div>
+				</div>
+				</div>
+			</div>
+
+					<div className="container">
 				<div className="row">
 
 					<div className="col-lg-8 col-md-12">
@@ -46,21 +95,21 @@ class ShopDetails extends Component {
 
 						<h1>{this.state.villa.ad}</h1>
 						<label><span className="ltn__secondary-color">
-							<i className="flaticon-pin" /></span> Antalya,Kalkan,Patara</label>
+							<i className="flaticon-pin" /></span> {this.state.lokasyon.bolgeId},{this.state.lokasyon.ilceAd},{this.state.lokasyon.mevki}</label>
 
-						<h4 className="title-2">Kalkan Patara da Muhafazakar Tatil Villası</h4>
+						<ul className="ltn__list-item-2 ltn__list-item-2-before ltn__flat-info">
+							<li><span>{this.state.villa.kapasite} <i className="flaticon-user"></i></span>Kapasite</li>
+							<li><span>{this.state.villa.yatakOdaSayisi} <i className="flaticon-bed"></i> </span>Yatak Odası</li>
+							<li><span>{this.state.villa.banyoSayisi} <i className="flaticon-clean"></i></span>Banyo</li>
 
-						<p>Patara merkezde bulunan kiralık balayı villası modern tarzıyla ,size özel havuzu romantik jakuzisi ve geniş bahçesi ile hayallerinizdeki balayı tatilini unutulmaz kılacaktır.
+						</ul>
 
-1 amerikan mutfaklı salonu, yemek odası ve 1 yatak odasından oluşan villamızda tek çocuklu aileler de konaklayabilir.
 
-Dünyaca ünlü gün batımını doyasıya izleyeceğiniz Kum Tepeleri ve Patara plajına 1,5 km mesafede bulunan villamız köy merkezine 250 metre yürüyüş mesafesindedir. 50 metre mesafede durak bulunan villamıza araçsız gelen misafirlerimiz; Patara plajı,Kaş, Kalkan ve Kaputaş plajına saat başı geçen dolmuşlar ile ulaşım sağlayabilirler.
 
-Yine 50 metre mesafede bulunan otelimize ait restauranttan akşam yemekleri(ev yemekleri) için seçenek oluşturabilir, otelimiz kahvaltısından da ek ücret karşılığı kahvaltı talebinde bulunabilirler. 200 metre mesafede ihtiyaçlarınızı karşılayabileceğiniz market ve banka atm leri bulunmaktadır.
 
-Villamız korunaklı olmasından dolayı muhafazakar villalar ve balayı villaları kategorisine hitap etmektedir. Geniş ve korunaklı bahçesi, donanımlı mutfağı, rahat ve zevkli mobilyaları ile sizlere rahat ve unutulmaz bir tatil imkanı sağlayan villamızın bahçesinde istediğiniz zaman yakacağınız bir barbekü şöminesi bulunmaktadır
+						<h4 className="title-2">{this.state.icerik.icerikBasligi}</h4>
 
-</p>
+						<p>{this.state.icerik.icerik}</p>
 						<p>Giriş :16:00</p>
 							<p>Çıkış  :10:00</p>
 
@@ -70,18 +119,30 @@ Villamız korunaklı olmasından dolayı muhafazakar villalar ve balayı villala
 						<h4 className="title-2 mb-10">Özellikler</h4>
 						<div className="property-details-amenities mb-60">
 						<div className="row">
+							<div className="col-lg-12 col-md-12">
+								<h6 className="title-4 ">Havuz Özellikleri</h6>
+							<p>{this.state.gorunum.havuzOzellik}</p>
+							</div>
+
+
 							<div className="col-lg-4 col-md-6">
+
 							<div className="ltn__menu-widget">
-								<ul>
-									   {this.state.ozellik.map(item => (
-								<li>
-									<label className="checkbox-item">{item.ozellikAd}
-									<input type="checkbox"  defaultChecked="checked" />
-									<span className="checkmark" />
-									</label>
-								</li>
-								))}
-								</ul>
+								<div className="ltn__blog-meta-btn">
+									<div className="ltn__blog-meta">
+										<ul>
+											 {this.state.ozellik.map(item => (
+											<li className="ltn__blog-date">
+												<i className="far fa-check-square"></i>{item.ozellikAd}
+											</li>
+												 ))}
+										</ul>
+									</div>
+
+								</div>
+
+
+
 							</div>
 							</div>
 
@@ -89,9 +150,8 @@ Villamız korunaklı olmasından dolayı muhafazakar villalar ve balayı villala
 						</div>
 						<h4 className="title-2">Villa Konumu</h4>
 						<div className="property-details-google-map mb-90">
-						 <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3125.0970415628835!2d29.41023652218447!3d36.27180562243338!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c02d2bd6cf1941%3A0x5e27889fcb344d7d!2sKalkan%2C%20%C5%9Eehitler%20Cd.%20No%3A16%2C%2007580%20Ka%C5%9F%2FAntalya!5e0!3m2!1str!2str!4v1655714420430!5m2!1str!2str"
-            width="100%" height="400" frameBorder={0} allowFullScreen aria-hidden="false" tabIndex={0}></iframe>
+
+<iframe src="//maps.google.com/maps?q=53.3381768,-6.2613077&z=15&output=embed" width="100%" height="400"></iframe>
 						</div>
 
 						<div className="property-detail-info-list section-bg-1 clearfix mb-60">
@@ -118,85 +178,13 @@ Villamız korunaklı olmasından dolayı muhafazakar villalar ve balayı villala
 						<div className="ltn__tab-menu ltn__tab-menu-2 ltn__tab-menu-top-right-- text-uppercase--- text-center---">
 							<div className="nav">
 							<a className="active show" data-bs-toggle="tab" href="#liton_tab_3_1">TL</a>
-							<a  data-bs-toggle="tab" href="#liton_tab_3_2">USD</a>
-							<a data-bs-toggle="tab" href="#liton_tab_3_3" >GBP</a>
-							<a data-bs-toggle="tab" href="#liton_tab_3_4" >EURO</a>
+
 							</div>
 						</div>
 						<div className="tab-content">
+
+
 							<div className="tab-pane fade active show" id="liton_tab_3_1">
-							<div className="ltn__apartments-tab-content-inner">
-
-
-
-									<div className="product-details-apartments-info-list  section-bg-1">
-									<div className="row">
-										<div className="col-lg-12">
-										<div className="apartments-info-list apartments-info-list-color mt-40---">
-											<ul>
-											<li><label>15 Mrt 2022 - 30 Nis 2022</label> <span>Gecelik</span></li>
-											<li><label>En az kiralama 3 gece</label> <span>707 TL</span></li>
-											</ul>
-
-										</div>
-										</div>
-
-									</div>
-
-
-									</div>
-
-
-
-
-
-
-							</div>
-							</div>
-
-
-
-							<div className="tab-pane fade " id="liton_tab_3_2">
-							<div className="ltn__product-tab-content-inner">
-
-									<div className="product-details-apartments-info-list  section-bg-1">
-								<div className="row">
-										<div className="col-lg-12">
-										<div className="apartments-info-list apartments-info-list-color mt-40---">
-											<ul>
-											<li><label>15 Mrt 2022 - 30 Nis 2022</label> <span>Gecelik</span></li>
-											<li><label>En az kiralama 3 gece</label> <span>50 USD</span></li>
-											</ul>
-
-										</div>
-										</div>
-
-									</div>
-									</div>
-
-							</div>
-							</div>
-							<div className="tab-pane fade" id="liton_tab_3_3">
-							<div className="ltn__product-tab-content-inner">
-
-									<div className="product-details-apartments-info-list  section-bg-1">
-									<div className="row">
-										<div className="col-lg-12">
-										<div className="apartments-info-list apartments-info-list-color mt-40---">
-											<ul>
-											<li><label>15 Mrt 2022 - 30 Nis 2022</label> <span>Gecelik</span></li>
-											<li><label>En az kiralama 3 gece</label> <span>40 GBP</span></li>
-											</ul>
-
-										</div>
-										</div>
-
-									</div>
-									</div>
-
-							</div>
-							</div>
-							<div className="tab-pane fade" id="liton_tab_3_4">
 							<div className="ltn__product-tab-content-inner">
 
 
@@ -210,51 +198,23 @@ Villamız korunaklı olmasından dolayı muhafazakar villalar ve balayı villala
 			            <ul className="ltn__select-availability-table-head">
 			              <li><b>Tarih</b></li>
 			              <li><b>En Az Kiralama Günü</b></li>
-			              <li><b>Fiyat </b></li>
+			              <li><b>Fiyat(Gecelik) </b></li>
 
 			            </ul>
+
+
+						  {this.state.periyodikFiyat.map(item => (
 			            <ul className="ltn__select-availability-table-row">
-							<li>15 Mrt 2022 - 30 Nis 2022</li>
+							<li>{item.baslangic} - {item.bitis}</li>
 
-			              <li>3 Gece</li>
-							 <li>Gecelik/40 EURO</li>
-
-			            </ul>
-						  <ul className="ltn__select-availability-table-row">
-							<li>15 Mrt 2022 - 30 Nis 2022</li>
-
-			              <li>3 Gece</li>
-							  <li>Gecelik/40 EURO</li>
+			              <li>{item.enAzKiralama} Gece</li>
+							 <li>{item.fiyat} {item.paraBirimiAd}</li>
 
 			            </ul>
-						  <ul className="ltn__select-availability-table-row">
-							<li>15 Mrt 2022 - 30 Nis 2022</li>
+							  ))}
 
-			              <li>3 Gece</li>
-							 <li>Gecelik/40 EURO</li>
 
-			            </ul>
-						  <ul className="ltn__select-availability-table-row">
-							<li>15 Mrt 2022 - 30 Nis 2022</li>
 
-			              <li>3 Gece</li>
-							  <li>Gecelik/40 EURO</li>
-
-			            </ul>
-						  <ul className="ltn__select-availability-table-row">
-							<li>15 Mrt 2022 - 30 Nis 2022</li>
-
-			              <li>3 Gece</li>
-							  <li>Gecelik/40 EURO</li>
-
-			            </ul>
-						  <ul className="ltn__select-availability-table-row">
-							<li>15 Mrt 2022 - 30 Nis 2022</li>
-
-			              <li>3 Gece</li>
-							  <li>Gecelik/40 EURO</li>
-
-			            </ul>
 
 			          </div>
 
@@ -405,7 +365,336 @@ Villamız korunaklı olmasından dolayı muhafazakar villalar ve balayı villala
 					</div>
 					</div>
 
-					<Sidebar/>
+				<div className="col-lg-4 go-top">
+					<aside className="sidebar ltn__shop-sidebar ltn__right-sidebar---">
+
+<div className="widget ltn__author-widget">
+						<div className="ltn__author-widget-inner text-center">
+							<img src={publicUrl+"assets/img/team/4.jpg"} alt="Image" />
+							<h5>Rosalina D. Willaimson</h5>
+							<small>Traveller/Photographer</small>
+							<div className="product-ratting">
+							<ul>
+								<li><a href="#"><i className="fas fa-star" /></a></li>
+								<li><a href="#"><i className="fas fa-star" /></a></li>
+								<li><a href="#"><i className="fas fa-star" /></a></li>
+								<li><a href="#"><i className="fas fa-star-half-alt" /></a></li>
+								<li><a href="#"><i className="far fa-star" /></a></li>
+								<li className="review-total"> <a href="#"> ( 1 Reviews )</a></li>
+							</ul>
+							</div>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis distinctio, odio, eligendi suscipit reprehenderit atque.</p>
+							<div className="ltn__social-media">
+							<ul>
+								<li><a href="#" title="Facebook"><i className="fab fa-facebook-f" /></a></li>
+								<li><a href="#" title="Twitter"><i className="fab fa-twitter" /></a></li>
+								<li><a href="#" title="Linkedin"><i className="fab fa-linkedin" /></a></li>
+								<li><a href="#" title="Youtube"><i className="fab fa-youtube" /></a></li>
+							</ul>
+							</div>
+						</div>
+						</div>
+						<div className="widget ltn__top-rated-product-widget go-top">
+						<h4 className="ltn__widget-title ltn__widget-title-border-2">En Popüler Villalar</h4>
+						<ul>
+							<li>
+							<div className="top-rated-product-item clearfix">
+								<div className="top-rated-product-img">
+								<Link to="/product-details"><img src={publicUrl+"assets/img/img-slide/32.jpg"} alt="#" /></Link>
+								</div>
+								<div className="top-rated-product-info">
+								<div className="product-ratting">
+									<ul>
+									<li><a href="#"><i className="fas fa-star" /></a></li>
+									<li><a href="#"><i className="fas fa-star" /></a></li>
+									<li><a href="#"><i className="fas fa-star" /></a></li>
+									<li><a href="#"><i className="fas fa-star" /></a></li>
+									<li><a href="#"><i className="fas fa-star" /></a></li>
+									</ul>
+								</div>
+								<h6><Link to="/shop">Villa Flower Aras </Link></h6>
+								<div className="product-price">
+									<span>750 TL</span>
+									<del>1000 TL</del>
+								</div>
+								</div>
+							</div>
+							</li>
+
+							<li>
+							<div className="top-rated-product-item clearfix">
+								<div className="top-rated-product-img">
+								<Link to="/product-details"><img src={publicUrl+"assets/img/img-slide/32.jpg"} alt="#" /></Link>
+								</div>
+								<div className="top-rated-product-info">
+								<div className="product-ratting">
+									<ul>
+									<li><a href="#"><i className="fas fa-star" /></a></li>
+									<li><a href="#"><i className="fas fa-star" /></a></li>
+									<li><a href="#"><i className="fas fa-star" /></a></li>
+									<li><a href="#"><i className="fas fa-star" /></a></li>
+									<li><a href="#"><i className="fas fa-star" /></a></li>
+									</ul>
+								</div>
+								<h6><Link to="/shop">Villa Flower Aras </Link></h6>
+								<div className="product-price">
+									<span>750 TL</span>
+									<del>1000 TL</del>
+								</div>
+								</div>
+							</div>
+							</li>
+
+							<li>
+							<div className="top-rated-product-item clearfix">
+								<div className="top-rated-product-img">
+								<Link to="/product-details"><img src={publicUrl+"assets/img/img-slide/32.jpg"} alt="#" /></Link>
+								</div>
+								<div className="top-rated-product-info">
+								<div className="product-ratting">
+									<ul>
+									<li><a href="#"><i className="fas fa-star" /></a></li>
+									<li><a href="#"><i className="fas fa-star" /></a></li>
+									<li><a href="#"><i className="fas fa-star" /></a></li>
+									<li><a href="#"><i className="fas fa-star" /></a></li>
+									<li><a href="#"><i className="fas fa-star" /></a></li>
+									</ul>
+								</div>
+								<h6><Link to="/shop">Villa Flower Aras </Link></h6>
+								<div className="product-price">
+									<span>750 TL</span>
+									<del>1000 TL</del>
+								</div>
+								</div>
+							</div>
+							</li>
+
+
+						</ul>
+						</div>
+						{/* Menu Widget (Category) */}
+						<div className="widget ltn__menu-widget ltn__menu-widget-2--- ltn__menu-widget-2-color-2---">
+						<h4 className="ltn__widget-title ltn__widget-title-border-2">Tatil Bölgeleri</h4>
+						<ul className="go-top">
+							<li><Link to="/blog-grid">Kalkan <span>(26)</span></Link></li>
+							<li><Link to="/blog-grid">Fethiye  <span>(30)</span></Link></li>
+							<li><Link to="/blog-grid">Kaş  <span>(71)</span></Link></li>
+							<li><Link to="/blog-grid">İslamlar <span>(56)</span></Link></li>
+							<li><Link to="/blog-grid">Dalyan <span>(60)</span></Link></li>
+							<li><Link to="/blog-grid">Göcek <span>(60)</span></Link></li>
+						</ul>
+						</div>
+
+						{/* Menu Widget (Category) */}
+						<div className="widget ltn__menu-widget ltn__menu-widget-2--- ltn__menu-widget-2-color-2---">
+						<h4 className="ltn__widget-title ltn__widget-title-border-2">Villa Kategorileri</h4>
+						<ul className="go-top">
+							<li><Link to="/blog-grid">Denize Yakın Villalar <span>(26)</span></Link></li>
+							<li><Link to="/blog-grid">Muhafazakar Villalar <span>(30)</span></Link></li>
+							<li><Link to="/blog-grid">Balayı Villaları  <span>(71)</span></Link></li>
+							<li><Link to="/blog-grid">Evcil Hayvan İzni <span>(56)</span></Link></li>
+							<li><Link to="/blog-grid">Çocuk Havuzlu Villalar <span>(60)</span></Link></li>
+
+						</ul>
+						</div>
+
+
+						{/* Popular Product Widget */}
+						<div className="widget ltn__popular-product-widget">
+						<h4 className="ltn__widget-title ltn__widget-title-border-2">Önerilen Villalar</h4>
+						<div className="row ltn__popular-product-widget-active slick-arrow-1">
+
+							<div className="col-12">
+							<div className="ltn__product-item ltn__product-item-4 ltn__product-item-5 text-center---">
+								<div className="product-img go-top">
+								<Link to="/shop"><img src={publicUrl+"assets/img/img-slide/32.jpg"} alt="#" /></Link>
+								<div className="real-estate-agent">
+									<div className="agent-img">
+									<Link to="/team-details"><img src={publicUrl+"assets/img/blog/author.jpg"} alt="#" /></Link>
+									</div>
+								</div>
+								</div>
+								<div className="product-info">
+								<div className="product-price">
+									<span>750 TL<label>/Günlük</label></span>
+								</div>
+								<h2 className="product-title"><Link to="/shop">Villa Flower Aras</Link></h2>
+								<div className="product-img-location">
+									<ul>
+									<li>
+										<Link to="/shop"><i className="flaticon-pin" /> Antalya,Kalkan,Patara</Link>
+									</li>
+									</ul>
+								</div>
+								<ul className="ltn__list-item-2--- ltn__list-item-2-before--- ltn__plot-brief">
+									<li><span>3 </span>
+									Yatak Odası
+									</li>
+									<li><span>2 </span>
+									Banyo
+									</li>
+									<li><span>60 </span>
+									m2
+									</li>
+								</ul>
+								</div>
+							</div>
+							</div>
+
+								<div className="col-12">
+							<div className="ltn__product-item ltn__product-item-4 ltn__product-item-5 text-center---">
+								<div className="product-img go-top">
+								<Link to="/shop"><img src={publicUrl+"assets/img/img-slide/32.jpg"} alt="#" /></Link>
+								<div className="real-estate-agent">
+									<div className="agent-img">
+									<Link to="/team-details"><img src={publicUrl+"assets/img/blog/author.jpg"} alt="#" /></Link>
+									</div>
+								</div>
+								</div>
+								<div className="product-info">
+								<div className="product-price">
+									<span>750 TL<label>/Günlük</label></span>
+								</div>
+								<h2 className="product-title"><Link to="/shop">Villa Flower Aras</Link></h2>
+								<div className="product-img-location">
+									<ul>
+									<li>
+										<Link to="/shop"><i className="flaticon-pin" /> Antalya,Kalkan,Patara</Link>
+									</li>
+									</ul>
+								</div>
+								<ul className="ltn__list-item-2--- ltn__list-item-2-before--- ltn__plot-brief">
+									<li><span>3 </span>
+									Yatak Odası
+									</li>
+									<li><span>2 </span>
+									Banyo
+									</li>
+									<li><span>60 </span>
+									m2
+									</li>
+								</ul>
+								</div>
+							</div>
+							</div>
+
+
+								<div className="col-12">
+							<div className="ltn__product-item ltn__product-item-4 ltn__product-item-5 text-center---">
+								<div className="product-img go-top">
+								<Link to="/shop"><img src={publicUrl+"assets/img/img-slide/32.jpg"} alt="#" /></Link>
+								<div className="real-estate-agent">
+									<div className="agent-img">
+									<Link to="/team-details"><img src={publicUrl+"assets/img/blog/author.jpg"} alt="#" /></Link>
+									</div>
+								</div>
+								</div>
+								<div className="product-info">
+								<div className="product-price">
+									<span>750 TL<label>/Günlük</label></span>
+								</div>
+								<h2 className="product-title"><Link to="/shop">Villa Flower Aras</Link></h2>
+								<div className="product-img-location">
+									<ul>
+									<li>
+										<Link to="/shop"><i className="flaticon-pin" /> Antalya,Kalkan,Patara</Link>
+									</li>
+									</ul>
+								</div>
+								<ul className="ltn__list-item-2--- ltn__list-item-2-before--- ltn__plot-brief">
+									<li><span>3 </span>
+									Yatak Odası
+									</li>
+									<li><span>2 </span>
+									Banyo
+									</li>
+									<li><span>60 </span>
+									m2
+									</li>
+								</ul>
+								</div>
+							</div>
+							</div>
+
+						</div>
+						</div>
+						{/* Popular Post Widget */}
+						<div className="widget ltn__popular-post-widget go-top">
+						<h4 className="ltn__widget-title ltn__widget-title-border-2">Son Bloglar</h4>
+						<ul>
+							<li>
+							<div className="popular-post-widget-item clearfix">
+								<div className="popular-post-widget-img">
+								<Link to="/blog-details"><img src={publicUrl+"assets/img/img-slide/32.jpg"} alt="#" /></Link>
+								</div>
+								<div className="popular-post-widget-brief">
+								<h6><Link to="/blog-details">Villa Flower Aras'ta neden kalmalıyım ?</Link></h6>
+								<div className="ltn__blog-meta">
+									<ul>
+									<li className="ltn__blog-date">
+										<a href="#"><i className="far fa-calendar-alt" />05.05.2022</a>
+									</li>
+									</ul>
+								</div>
+								</div>
+							</div>
+							</li>
+
+							<li>
+							<div className="popular-post-widget-item clearfix">
+								<div className="popular-post-widget-img">
+								<Link to="/blog-details"><img src={publicUrl+"assets/img/img-slide/32.jpg"} alt="#" /></Link>
+								</div>
+								<div className="popular-post-widget-brief">
+								<h6><Link to="/blog-details">Villa Flower Aras'ta neden kalmalıyım ?</Link></h6>
+								<div className="ltn__blog-meta">
+									<ul>
+									<li className="ltn__blog-date">
+										<a href="#"><i className="far fa-calendar-alt" />05.05.2022</a>
+									</li>
+									</ul>
+								</div>
+								</div>
+							</div>
+							</li>
+
+							<li>
+							<div className="popular-post-widget-item clearfix">
+								<div className="popular-post-widget-img">
+								<Link to="/blog-details"><img src={publicUrl+"assets/img/img-slide/32.jpg"} alt="#" /></Link>
+								</div>
+								<div className="popular-post-widget-brief">
+								<h6><Link to="/blog-details">Villa Flower Aras'ta neden kalmalıyım ?</Link></h6>
+								<div className="ltn__blog-meta">
+									<ul>
+									<li className="ltn__blog-date">
+										<a href="#"><i className="far fa-calendar-alt" />05.05.2022</a>
+									</li>
+									</ul>
+								</div>
+								</div>
+							</div>
+							</li>
+
+						</ul>
+						</div>
+						{/* Social Media Widget */}
+						<div className="widget ltn__social-media-widget">
+						<h4 className="ltn__widget-title ltn__widget-title-border-2">Takip Et</h4>
+						<div className="ltn__social-media-2">
+							<ul>
+							<li><a href="#" title="Facebook"><i className="fab fa-facebook-f" /></a></li>
+							<li><a href="#" title="Instagram"><i className="fab fa-instagram" /></a></li>
+							</ul>
+						</div>
+						</div>
+
+						{/* Banner Widget */}
+						<div className="widget ltn__banner-widget d-none go-top">
+						<Link to="/shop"><img src={publicUrl+"assets/img/banner/2.jpg"} alt="#" /></Link>
+						</div>
+					</aside>
+					</div>
 				</div>
 				</div>
 			</div>
