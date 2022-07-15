@@ -10583,7 +10583,7 @@ ul.wp-block-latest-posts.is-grid.alignwide {
   color: var(--white);
 }
 
-.bg-image {
+.bg_image {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
