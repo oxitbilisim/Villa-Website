@@ -30,7 +30,7 @@ const VillaImage = (props) => {
                             <div key={'img-' + item.id} className="col-lg-12">
                                 <div className="ltn__img-slide-item-4">
                                     <a href={"" + item.id} data-rel="lightcase:myCollection">
-                                        <img src={"data:image/png;base64," + item.image} style={{height: '238px'}}
+                                        <img src={"data:image/png;base64," + item.image}
                                              alt="Image"/>
                                     </a>
                                 </div>
@@ -48,7 +48,7 @@ const VillaImage = (props) => {
                             <div className="col-lg-12">
                                 <div className="ltn__img-slide-item-4">
                                     <a href={"/assets/img/img-slide/31.jpg"} data-rel="lightcase:myCollection">
-                                        <img src="/assets/img/img-slide/31.jpg" style={{height: '238px'}}
+                                        <img src="/assets/img/img-slide/31.jpg"
                                              alt="Image"/>
                                     </a>
                                 </div>
@@ -56,7 +56,7 @@ const VillaImage = (props) => {
                             <div  className="col-lg-12">
                                 <div className="ltn__img-slide-item-4">
                                     <a href={"/assets/img/img-slide/32.jpg"} data-rel="lightcase:myCollection">
-                                        <img src="/assets/img/img-slide/32.jpg" style={{height: '238px'}}
+                                        <img src="/assets/img/img-slide/32.jpg"
                                              alt="Image"/>
                                     </a>
                                 </div>
@@ -64,7 +64,7 @@ const VillaImage = (props) => {
                             <div  className="col-lg-12">
                                 <div className="ltn__img-slide-item-4">
                                     <a href={"/assets/img/img-slide/33.jpg"} data-rel="lightcase:myCollection">
-                                        <img src="/assets/img/img-slide/33.jpg" style={{height: '238px'}}
+                                        <img src="/assets/img/img-slide/33.jpg"
                                              alt="Image"/>
                                     </a>
                                 </div>
@@ -72,7 +72,7 @@ const VillaImage = (props) => {
                             <div  className="col-lg-12">
                                 <div className="ltn__img-slide-item-4">
                                     <a href={"/assets/img/img-slide/34.jpg"} data-rel="lightcase:myCollection">
-                                        <img src="/assets/img/img-slide/34.jpg" style={{height: '238px'}}
+                                        <img src="/assets/img/img-slide/34.jpg"
                                              alt="Image"/>
                                     </a>
                                 </div>
@@ -80,7 +80,7 @@ const VillaImage = (props) => {
                             <div  className="col-lg-12">
                                 <div className="ltn__img-slide-item-4">
                                     <a href={"/assets/img/img-slide/35.jpg"} data-rel="lightcase:myCollection">
-                                        <img src="/assets/img/img-slide/35.jpg" style={{height: '238px'}}
+                                        <img src="/assets/img/img-slide/35.jpg"
                                              alt="Image"/>
                                     </a>
                                 </div>
