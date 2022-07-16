@@ -12,12 +12,6 @@ const VillaCard = (props) => {
                     <img src={`data:image/jpeg;base64,${props.data?.image}`}
                          style={{maxHeight: '281px'}}/>
                 </Link>
-                <div className="real-estate-agent">
-                    <div className="agent-img">
-                        <Link to={"/villa/" + props.data?.url}>
-                            <img src={`data:image/jpeg;base64,${props.data?.image}`}/></Link>
-                    </div>
-                </div>
             </div>
             <div className="product-info">
                 <h2 className="product-title go-top">
