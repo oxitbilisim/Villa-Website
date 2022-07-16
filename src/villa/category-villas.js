@@ -5,6 +5,7 @@ import Footer from './global-components/footer';
 import Navbar from "./global-components/navbar";
 import VillaListV1 from "./villa-list/villa-list-v1";
 import {GlobalContext} from "./global-context";
+import VillaFilters from "./villa-list/villa-filters";
 
 const CategoryVillas = (props) => {
     const {regions, categories} = useContext(GlobalContext);
@@ -18,7 +19,9 @@ const CategoryVillas = (props) => {
     return <div>
         <Navbar />
         <PageHeader headertitle={currentCategory?.ad} />
-        <VillaListV1 type='CATEGORY' {...props} />
+        <VillaFilters {...props}>
+            <VillaListV1 type='CATEGORY' {...props} />
+        </VillaFilters>
         <CallToActionV1 />
         <Footer />
     </div>

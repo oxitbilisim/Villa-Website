@@ -8,11 +8,11 @@ const NavbarV3 = () => {
     const {regions, categories} = useContext(GlobalContext)
     let publicUrl = process.env.PUBLIC_URL + '/'
 
-    const renderMenu = () => {
+    const renderMenu = (type) => {
         return <ul>
             <li key={'home'}><Link to="/">Anasayfa</Link></li>
             <li key={'regions'}><Link to="#">Bölgeler</Link>
-                <ul>
+                <ul className={type=='MOBILE'?'sub-menu':''}>
                     {regions.map(item => (
                         <li key={'region-'+item.id}><Link to={'/bolge/' + item.url}>{item.ad}</Link></li>
                     ))}
@@ -20,7 +20,7 @@ const NavbarV3 = () => {
                 </ul>
             </li>
             <li key={'categories'}><Link to="#">Kategoriler</Link>
-                <ul>
+                <ul className={type=='MOBILE'?'sub-menu':''}>
                     {categories.map(item => (
                         <li key={'category-'+item.id}><Link to={'/kategori/' + item.url}>{item.ad}</Link></li>
                     ))}
@@ -115,7 +115,7 @@ const NavbarV3 = () => {
                     </div>
 
                     <div className="ltn__utilize-menu">
-                        {renderMenu()}
+                        {renderMenu('MOBILE')}
                     </div>
 
                     <div className="ltn__social-media-2">
