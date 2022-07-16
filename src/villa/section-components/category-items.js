@@ -19,10 +19,9 @@ const CategoryItems = () => {
             <div className="row ltn__category-slider-active--- slick-arrow-1 justify-content-center go-top">
                 {categories.map(item => (
                     <div key={'category-'+item.id} className="col-lg-3 col-md-4 col-sm-6 col-6">
-                        <div style={{height:'320px'}} className="ltn__category-item ltn__category-item-5 ltn__category-item-5-2 text-center---">
+                        <div style={{height:'270px'}} className="ltn__category-item ltn__category-item-5 ltn__category-item-5-2 text-center---">
                             <Link to={'/kategori/'+item.url}>
                                 <span className="category-icon"><i className="flaticon-house-1"/></span>
-                                <span className="category-number">01</span>
                                 <span className="category-title">{item.ad}</span>
                                 <span className="category-btn d-none"><i className="flaticon-right-arrow"/></span>
                             </Link>

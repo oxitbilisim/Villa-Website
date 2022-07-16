@@ -7,6 +7,9 @@ import HomeV6 from "./villa/home-v6";
 import RegionVillas from "./villa/region-villas";
 import CategoryVillas from "./villa/category-villas";
 import VillaDetail from "./villa/villa-detail/villa-detail";
+import Contact from "./villa/contact";
+import BlogGrid from "./villa/blog-grid";
+import BlogDetails from "./villa/blog-details";
 
 const Root = () => {
     return (
@@ -17,6 +20,9 @@ const Root = () => {
                     <Route exact path="/bolge/:subUri" component={RegionVillas}/>
                     <Route exact path="/kategori/:subUri" component={CategoryVillas}/>
                     <Route exact path="/villa/:subUri" component={VillaDetail}/>
+                    <Route exact path="/blog" component={BlogGrid}/>
+                    <Route exact path="/blog-details" component={BlogDetails}/>
+                    <Route exact path="/iletisim" component={Contact}/>
                     
                 </Switch>
             </GlobalContextProvider>

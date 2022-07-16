@@ -11081,6 +11081,7 @@ ul.wp-block-latest-posts.is-grid.alignwide {
   box-shadow: var(--ltn__box-shadow-4);
   border-radius: 10px;
   margin-bottom: 50px;
+  text-align: center;
 }
 .ltn__category-item-5 a {
   padding: 40px 30px 35px;
@@ -11102,7 +11103,7 @@ ul.wp-block-latest-posts.is-grid.alignwide {
   margin-bottom: 20px;
 }
 .ltn__category-item-5 a .category-title {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 600;
   font-family: var(--ltn__heading-font);
   color: var(--ltn__heading-color);
@@ -11149,7 +11150,7 @@ ul.wp-block-latest-posts.is-grid.alignwide {
 }
 
 .ltn__category-item-5-2 a .category-icon {
-  margin-right: 0;
+  margin-right: auto;
   margin-left: auto;
 }
 
@@ -13311,7 +13312,7 @@ blockquote::before {
 
 .ltn__banner-style-4 {
   position: relative;
-  height: 350px;
+  height: 300px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

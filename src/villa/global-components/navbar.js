@@ -27,7 +27,7 @@ const Navbar = () => {
 
                 </ul>
             </li>
-            <li key={'blog'}><Link to="#">Blog</Link></li>
+            <li key={'blog'}><Link to="/blog">Blog</Link></li>
             <li key={'contact'}><Link to="/iletisim">İletişim</Link></li>
         </ul>
     }

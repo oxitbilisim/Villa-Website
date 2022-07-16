@@ -19,14 +19,16 @@ const VillaListV1 = (props) => {
         let parentId = null;
         const subUri = props.match.params.subUri;
         if (props.type === 'REGION') {
+            console.log("REGION");
+            console.table(regions);
             parentId = regions.find(i => i.url === subUri)?.id;
             const queryParams = (parentId != null ? '?bolgeId=' + parentId : '')
             apiUri = '/VillaFE/GetBolgeVillas' + queryParams;
 
         } else if (props.type === 'CATEGORY') {
-            parentId = regions.find(i => i.url === subUri)?.id;
+            parentId = categories.find(i => i.url === subUri)?.id;
             const queryParams = (parentId != null ? '?kategoriId=' + parentId : '')
-            apiUri = '/VillaFE/GetKategoriVillas';
+            apiUri = '/VillaFE/GetKategoriVillas'+queryParams;
         }
 
         axios.get(process.env.REACT_APP_API_ENDPOINT + apiUri)

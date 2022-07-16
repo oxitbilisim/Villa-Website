@@ -7,29 +7,29 @@ import VillaImage from "./villa-image";
 import VillaInfo from "./villa-info";
 
 const VillaDetail = (props) => {
-    const [data,setData] = useState(null);
-    const [loaded,setLoaded] = useState(false);
+    const [data, setData] = useState(null);
+    const [loaded, setLoaded] = useState(false);
     useEffect(() => {
         loadData();
     }, []);
 
     const loadData = () => {
         const subUri = props.match.params.subUri;
-        axios.get(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetVillaByURL?url="+subUri)
+        axios.get(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetVillaByURL?url=" + subUri)
             .then((response) => {
                 setData(response.data);
-            }).finally(()=>{
+            }).finally(() => {
             setLoaded(true);
         })
     }
 
     return <div>
-        <Navbar />
-        {loaded?<VillaImage list={data?.images} />:null}
-        <VillaInfo data={data} />
-        <CallToActionV1 />
-        <Footer />
-        </div>
+        <Navbar/>
+        <VillaImage list={data?.images}/>
+        <VillaInfo data={data}/>
+        <CallToActionV1/>
+        <Footer/>
+    </div>
 }
 
 export default VillaDetail
