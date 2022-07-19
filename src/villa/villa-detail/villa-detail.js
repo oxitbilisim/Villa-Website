@@ -25,8 +25,8 @@ const VillaDetail = (props) => {
 
     return <div>
         <Navbar/>
-        <VillaImage list={data?.images}/>
-        <VillaInfo data={data}/>
+        {loaded?<VillaImage list={data?.images}/>:null}
+        {loaded?<VillaInfo data={data}/>:null}
         <CallToActionV1/>
         <Footer/>
     </div>

@@ -1,27 +1,43 @@
 import React, {Component, useEffect} from 'react';
 import PropTypes from "prop-types";
-import $ from 'jquery';
 import ReactDOM from "react-dom";
-import Root from "../../index";
+
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.scss";
+import "slick-carousel/slick/slick-theme.scss";
+import './villa-image.css'
 
 const VillaImage = (props) => {
-
+    const settings = {
+        dots: false,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        centerMode: true
+    };
     useEffect(() => {
-       const minscript = document.createElement("script");
+        const minscript = document.createElement("script");
         minscript.async = true;
         minscript.src = "/assets/js/main.js";
         document.body.appendChild(minscript);
 
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = '/assets/css/plugins.js';
-        link.media = 'all';
-        document.body.appendChild(link);
-
-    }, [props.list])
+    }, [props.list]);
 
     return <div>
+        <Slider className='ltn__img-slider-area' {...settings}>
+            {
+                props.list.map(item =>
+                    <div key={'img-' + item.id}>
+                        
+                            <a href={process.env.REACT_APP_API_ENDPOINT+"/VillaFE/GetVillaImage?id=" + item.id} data-rel="lightcase:myCollection">
+                                <img src={process.env.REACT_APP_API_ENDPOINT+"/VillaFE/GetVillaImage?id=" + item.id} alt="Image"/>
+                            </a>
+                     
+                    </div>
+                )
+            }
+        </Slider>
         {/*<div className="ltn__img-slider-area mb-20">
             <div className="container-fluid">
                 <div className="row ltn__image-slider-4-active slick-arrow-1 slick-arrow-1-inner ltn__no-gutter-all">
@@ -41,55 +57,7 @@ const VillaImage = (props) => {
                 </div>
             </div>
         </div>*/}
-        <div className="ltn__img-slider-area mb-20">
-            <div className="container-fluid">
-                <div className="row ltn__image-slider-4-active slick-arrow-1 slick-arrow-1-inner ltn__no-gutter-all">
-                    
-                            <div className="col-lg-12">
-                                <div className="ltn__img-slide-item-4">
-                                    <a href={"/assets/img/img-slide/31.jpg"} data-rel="lightcase:myCollection">
-                                        <img src="/assets/img/img-slide/31.jpg"
-                                             alt="Image"/>
-                                    </a>
-                                </div>
-                            </div>
-                            <div  className="col-lg-12">
-                                <div className="ltn__img-slide-item-4">
-                                    <a href={"/assets/img/img-slide/32.jpg"} data-rel="lightcase:myCollection">
-                                        <img src="/assets/img/img-slide/32.jpg"
-                                             alt="Image"/>
-                                    </a>
-                                </div>
-                            </div>
-                            <div  className="col-lg-12">
-                                <div className="ltn__img-slide-item-4">
-                                    <a href={"/assets/img/img-slide/33.jpg"} data-rel="lightcase:myCollection">
-                                        <img src="/assets/img/img-slide/33.jpg"
-                                             alt="Image"/>
-                                    </a>
-                                </div>
-                            </div>
-                            <div  className="col-lg-12">
-                                <div className="ltn__img-slide-item-4">
-                                    <a href={"/assets/img/img-slide/34.jpg"} data-rel="lightcase:myCollection">
-                                        <img src="/assets/img/img-slide/34.jpg"
-                                             alt="Image"/>
-                                    </a>
-                                </div>
-                            </div>
-                            <div  className="col-lg-12">
-                                <div className="ltn__img-slide-item-4">
-                                    <a href={"/assets/img/img-slide/35.jpg"} data-rel="lightcase:myCollection">
-                                        <img src="/assets/img/img-slide/35.jpg"
-                                             alt="Image"/>
-                                    </a>
-                                </div>
-                            </div>
-    
 
-                </div>
-            </div>
-        </div>
     </div>
 }
 

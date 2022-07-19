@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 import axios from "axios";
 import PropTypes from "prop-types";
 import {GlobalContext} from "../global-context";
-import VillaListSidebar from "./villa-list-sidebar";
 import VillaCard from "../global-components/VillaCard";
 
 const VillaListV1 = (props) => {

@@ -1,7 +1,8 @@
 import React, {Component, useContext} from 'react';
 import {Link} from 'react-router-dom';
-import parse from 'html-react-parser';
+import { DatePicker } from 'antd';
 import {GlobalContext} from "../global-context";
+const { RangePicker } = DatePicker;
 
 const BannerV5 = () => {
     const {regions, categories} = useContext(GlobalContext);
@@ -24,7 +25,7 @@ const BannerV5 = () => {
                                                 <div className="car-dealer-form-inner">
                                                     <form action="#" className="ltn__car-dealer-form-box row">
                                                         <div
-                                                            className="ltn__car-dealer-form-item ltn__custom-icon ltn__icon-calendar col-lg-3 col-md-6">
+                                                            className="col-lg-3 col-md-6">
                                                             <select className="nice-select">
                                                                 <option>Bölge</option>
                                                                 {regions.map(item =>
@@ -33,8 +34,8 @@ const BannerV5 = () => {
                                                             </select>
                                                         </div>
                                                         <div
-                                                            className="ltn__car-dealer-form-item ltn__custom-icon ltn__icon-car col-lg-3 col-md-6">
-                                                            <select className="nice-select">
+                                                            className="col-lg-3 col-md-6">
+                                                            <select>
                                                                 <option>Kişi Sayısı</option>
                                                                 <option>2</option>
                                                                 <option>3</option>
@@ -43,12 +44,8 @@ const BannerV5 = () => {
                                                                 <option>6+</option>
                                                             </select>
                                                         </div>
-                                                        <div
-                                                            className="ltn__car-dealer-form-item ltn__custom-icon ltn__icon-meter col-lg-3 col-md-6">
-                                                            <select className="nice-select">
-                                                                <option>Tarih</option>
-
-                                                            </select>
+                                                        <div className="col-lg-3 col-md-6">
+                                                                                
                                                         </div>
 
 

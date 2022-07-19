@@ -10,6 +10,7 @@ import VillaDetail from "./villa/villa-detail/villa-detail";
 import Contact from "./villa/contact";
 import BlogGrid from "./villa/blog-grid";
 import BlogDetails from "./villa/blog-details";
+import villaSearch from "./villa/villa-search";
 
 const Root = () => {
     return (
@@ -22,6 +23,7 @@ const Root = () => {
                     <Route exact path="/villa/:subUri" component={VillaDetail}/>
                     <Route exact path="/blog" component={BlogGrid}/>
                     <Route exact path="/blog-details" component={BlogDetails}/>
+                    <Route exact path="/villa-ara" component={villaSearch}/>
                     <Route exact path="/iletisim" component={Contact}/>
                     
                 </Switch>
