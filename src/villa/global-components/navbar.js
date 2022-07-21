@@ -2,6 +2,7 @@ import React, {Component, useContext} from 'react';
 import {Link} from 'react-router-dom';
 import Social from '../section-components/social';
 import {GlobalContext} from "../global-context";
+import LikedVillas from "./LikedVillas";
 
 const Navbar = () => {
     const {regions, categories} = useContext(GlobalContext)
@@ -12,26 +13,33 @@ const Navbar = () => {
         return <ul>
             <li key={'home'}><Link to="/">Anasayfa</Link></li>
             <li key={'regions'}><Link to="#">Bölgeler</Link>
-                <ul className={type=='MOBILE'?'sub-menu':''}>
+                <ul className={type == 'MOBILE' ? 'sub-menu' : ''}>
                     {regions.map(item => (
-                        <li key={'region-'+item.id}><Link to={'/bolge/' + item.url}>{item.ad}</Link></li>
+                        <li key={'region-' + item.id}><Link to={'/bolge/' + item.url}>{item.ad}</Link></li>
                     ))}
 
                 </ul>
             </li>
             <li key={'categories'}><Link to="#">Kategoriler</Link>
-                <ul className={type=='MOBILE'?'sub-menu':''}>
+                <ul className={type == 'MOBILE' ? 'sub-menu' : ''}>
                     {categories.map(item => (
-                        <li key={'category-'+item.id}><Link to={'/kategori/' + item.url}>{item.ad}</Link></li>
+                        <li key={'category-' + item.id}><Link to={'/kategori/' + item.url}>{item.ad}</Link></li>
                     ))}
 
                 </ul>
             </li>
             <li key={'blog'}><Link to="/blog">Blog</Link></li>
             <li key={'contact'}><Link to="/iletisim">İletişim</Link></li>
+            <li key={'liked-villa'}>
+                <a href="#ltn__utilize-cart-menu" className="ltn__utilize-toggle">
+                    <span className="mini-cart-icon" style={{lineHeight:'37px'}}>
+                        <i className="flaticon-heart-1"/>
+                    </span>
+                </a>
+            </li>
         </ul>
     }
-    
+
     return (
         <div>
             <header className="ltn__header-area ltn__header-5 ltn__header-transparent--- gradient-color-4---">
@@ -92,8 +100,6 @@ const Navbar = () => {
                                 </div>
                             </div>
                             <div className="col ltn__header-options ltn__header-options-2 mb-sm-20">
-
-
                                 <div className="mobile-menu-toggle d-xl-none">
                                     <a href="#ltn__utilize-mobile-menu" className="ltn__utilize-toggle">
                                         <svg viewBox="0 0 800 600">
@@ -113,6 +119,7 @@ const Navbar = () => {
                     </div>
                 </div>
             </header>
+            <LikedVillas/>
             <div id="ltn__utilize-mobile-menu" className="ltn__utilize ltn__utilize-mobile-menu">
                 <div className="ltn__utilize-menu-inner ltn__scrollbar">
                     <div className="ltn__utilize-menu-head">

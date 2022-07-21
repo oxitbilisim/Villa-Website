@@ -1,22 +1,41 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from "prop-types";
+import {LikedVillaContext} from "../liked-villa-context";
+import CurrencyFormat from 'react-currency-format';
+import {currencySymbol} from "../Constants";
 
 const VillaCard = (props) => {
+    const [state, dispatch] = useContext(LikedVillaContext);
+
+    const toggleLike = (villaId) => {
+        if (state.likedVillaIds.includes(villaId)) {
+            dispatch({
+                type: 'UNLIKE',
+                payload: villaId,
+            });
+        } else {
+            dispatch({
+                type: 'LIKE',
+                payload: villaId,
+            });
+        }
+    }
+
     return <div>
         <div
             className="ltn__product-item ltn__product-item-4 ltn__product-item-5 text-center---">
             <div className="product-img go-top">
                 <Link
                     to={"/villa/" + props.data?.url} style={{textAlign: 'center'}}>
-                    <img src={`data:image/jpeg;base64,${props.data?.image}`}
+                    <img src={process.env.REACT_APP_API_ENDPOINT+"/VillaFE/GetVillaImage?id="+props.data?.imageId}
                          style={{maxHeight: '281px'}}/>
                 </Link>
             </div>
             <div className="product-info">
                 <h2 className="product-title go-top">
                     <Link to={"/villa/" + props.data?.url}>{props.data?.ad}</Link></h2>
-                <div className="product-img-location go-top">
+                <div className="product-img-location go-top mb-2">
                     <ul>
                         <li>
                             <Link
@@ -27,7 +46,8 @@ const VillaCard = (props) => {
                                     whiteSpace: 'nowrap',
                                     overflow: 'hidden'
                                 }}>
-                                <i className="flaticon-pin"/> {props.data?.il + ', ' + props.data?.ilce + ', ' + props.data?.mevki}</Link>
+                                <i className="flaticon-pin"/> {props.data?.il + ', ' + props.data?.ilce + ', ' + props.data?.mevki}
+                            </Link>
                         </li>
 
                     </ul>
@@ -46,11 +66,23 @@ const VillaCard = (props) => {
                     </ul>
 
                 </div>
-
+                <div className="product-hover-action mb-2 text-center">
+                    <ul>
+                        <li style={{backgroundColor: 'initial', color:'initial'}}>
+                            <a style={{cursor: 'pointer'}} onClick={() => toggleLike(props.data?.id)} title="Beğen">
+                                {state?.likedVillaIds?.includes(props.data?.id)?
+                                    <i style={{color: 'red'}} className="fa-solid fa-heart"/>
+                                    :<i className="flaticon-heart-1"/>
+                                }
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div className="product-info-bottom">
                 <div className="product-price">
-                    {props.data?.fiyat != null ? <span>{props.data?.fiyat + props.data?.paraBirimi}<label>/{props.data?.fiyatTuru}</label></span> :
+                    {props.data?.fiyat != null ?
+                        <span><CurrencyFormat value={props.data?.fiyat} displayType={'text'} thousandSeparator={true} prefix={currencySymbol(props.data?.paraBirimi)} /><label>/{props.data?.fiyatTuru}</label></span> :
                         <span>&nbsp;</span>}
                 </div>
             </div>

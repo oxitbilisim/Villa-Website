@@ -12,8 +12,6 @@ const CategoryVillas = (props) => {
 
     const subUri = props.match.params.subUri;
     
-    console.log(subUri);
-    console.table(categories);
     const currentCategory = categories.find(i => i.url === subUri);
     
     return <div>

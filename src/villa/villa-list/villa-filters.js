@@ -2,62 +2,72 @@ import React, {Component, useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import axios from "axios";
 import {GlobalContext} from "../global-context";
-import {initializedState} from "react-slick/lib/utils/innerSliderUtils";
 
 const VillaFilters = (props) => {
 
+    const arrayKeys = ['type', 'region', 'category', 'property'];
+    
     const queryParamToObject = () => {
         let qs = props.location.search;
         qs = qs.replaceAll('?', '');
 
         let obj = {};
         qs.split('&').forEach(i => {
+            if (i == null || i == '') {
+                return;
+            }
             const tmp = i.split('=');
             const key = tmp[0];
             let value = tmp[1];
-            console.log("key:"+key);
-            console.log("value:"+value);
-            if (value.includes(',')) {
-                value = value.split(',').reduce((prev, curr) =>{
-                    if(prev==null){
+            if (arrayKeys.includes(key)) {
+                value = value.split(',').reduce((prev, curr) => {
+                    if (prev == null) {
                         prev = [];
                     }
                     prev.push(curr);
                     return prev;
                 }, [])
-                console.log("=>"+value);
             }
             obj[key] = value;
         })
-
         return obj;
     }
-    
+
     const initializeFilterObject = () => {
         const obj = queryParamToObject();
-        return {
-            type: obj.type == null ? [] : obj,
-            region: obj.region == null ? [] : obj,
-            category: obj.category == null ? [] : obj,
-            property: obj.property == null ? [] : obj,
-            startPrice: obj.startPrice, endPrice: obj.endPrice
+        const initObject = {
+            type: obj.type == null ? [] : obj.type,
+            region: obj.region == null ? [] : obj.region,
+            category: obj.category == null ? [] : obj.category,
+            property: obj.property == null ? [] : obj.property,
+            startPrice: obj.startPrice,
+            endPrice: obj.endPrice,
+            name: obj.name
         };
+        return initObject;
     }
 
     const {regions, categories} = useContext(GlobalContext)
-
     const [villaProperties, setVillaProperties] = useState([]);
+    const [estates, setEstates] = useState([]);
     const [filterObject, setFilterObject] = useState(initializeFilterObject());
 
     useEffect(() => {
-        console.log("filterObject");
-        console.table(filterObject);
-        loadData();
+        loadVillasProperties();
+        loadEstates();
     }, [props.match.params.subUri]);
 
     const loadData = () => {
-        loadVillasProperties();
+        const qs = objectToQueryParam(filterObject);
+        axios.get(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/SearchVilla"+props.location.search)
+            .then((response) => {
+                
+            });
     }
+
+    useEffect(() => {
+        loadData();
+    }, [props.location.search]);
 
     const addFilter = (key, value) => {
         const filterObject_ = filterObject;
@@ -114,8 +124,7 @@ const VillaFilters = (props) => {
 
         return queryString;
     }
-
-
+    
     const reduceFilterArray = (arr) => {
         if (arr.length > 0) {
             return arr.reduce(
@@ -129,6 +138,12 @@ const VillaFilters = (props) => {
         axios.get(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetProperties")
             .then((response) => {
                 setVillaProperties(response.data);
+            });
+    }
+    const loadEstates = () => {
+        axios.get(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetEstates")
+            .then((response) => {
+                setEstates(response.data);
             });
     }
 
@@ -146,20 +161,7 @@ const VillaFilters = (props) => {
                 <div className="row">
                     <div className="col-lg-8 order-lg-2 mb-100">
                         <div className="ltn__shop-options">
-                            <ul className="justify-content-start">
-                                <li>
-                                    <div className="ltn__grid-list-tab-menu ">
-                                        <div className="nav">
-                                            <a className="active show" data-bs-toggle="tab"
-                                               href="#liton_product_grid"><i className="fas fa-th-large"/></a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li className="d-none">
-                                    <div className="showing-product-number text-right">
-                                        <span>Showing 1–12 of 18 results</span>
-                                    </div>
-                                </li>
+                            <ul className="justify-content-end">
                                 <li>
                                     <div className="short-by text-center">
                                         <select className="nice-select">
@@ -170,139 +172,147 @@ const VillaFilters = (props) => {
                                         </select>
                                     </div>
                                 </li>
-                                <li>
-                                    <div className="short-by text-center">
-                                        <select className="nice-select">
-                                            <option>12 Kayıt listele</option>
-                                            <option>20 Kayıt listele</option>
-                                            <option>30 Kayıt listele</option>
-                                            <option>50 Kayıt listele</option>
-                                            <option>100 Kayıt listele</option>
-                                        </select>
-                                    </div>
-                                </li>
                             </ul>
                         </div>
                         {props.children}
-                        <div className="ltn__pagination-area text-center">
-                            <div className="ltn__pagination">
-                                <ul>
-                                    <li><Link to="#"><i className="fas fa-angle-double-left"/></Link></li>
-                                    <li className="active"><Link to="#">1</Link></li>
-                                    <li><Link to="#">2</Link></li>
-                                    <li><Link to="#">3</Link></li>
-                                    <li><Link to="#">...</Link></li>
-                                    <li><Link to="#">10</Link></li>
-                                    <li><Link to="#"><i className="fas fa-angle-double-right"/></Link></li>
-                                </ul>
-                            </div>
-                        </div>
                     </div>
                     <div className="col-lg-4  mb-100">
                         <aside className="sidebar ltn__shop-sidebar">
-                            <h3 className="mb-10">Villa Ara</h3>
-
+                            <h3 className="mb-6">Villa Ara</h3>
+                            
                             {/* Advance Information widget */}
                             <div className="widget ltn__menu-widget">
-                                <h4 className="ltn__widget-title">Mülk Tipi</h4>
-                                <ul>
-                                    <li>
-                                        <label className="checkbox-item">Villa
-                                            <input type="checkbox" name={'type'} onChange={checkboxChange}
-                                                   value={'villa'}/>
-                                            <span className="checkmark"/>
-                                        </label>
-                                        <span className="categorey-no"></span>
-                                    </li>
-                                    <li>
-                                        <label className="checkbox-item">Apart
-                                            <input type="checkbox" name={'type'} onChange={checkboxChange}
-                                                   value={'apart'}/>
-                                            <span className="checkmark"/>
-                                        </label>
-                                        <span className="categorey-no"></span>
-                                    </li>
-                                    <li>
-                                        <label className="checkbox-item">Ev
-                                            <input type="checkbox" name={'type'} onChange={checkboxChange}
-                                                   value={'ev'}/>
-                                            <span className="checkmark"/>
-                                        </label>
-                                        <span className="categorey-no"></span>
-                                    </li>
-                                    <li>
-                                        <label className="checkbox-item">Bungalov
-                                            <input type="checkbox" name={'type'} onChange={checkboxChange}
-                                                   value={'bungalov'}/>
-                                            <span className="checkmark"/>
-                                        </label>
-                                        <span className="categorey-no"></span>
-                                    </li>
-
-                                </ul>
-                                <hr/>
-                                <h4 className="ltn__widget-title">Bölgeler</h4>
-                                <ul>
-                                    {
-                                        regions.map(item =>
-                                            <li key={'filter-region-' + item.id}>
-                                                <label className="checkbox-item">{item.ad}
-                                                    <input type="checkbox" name={'region'} onChange={checkboxChange}
-                                                           value={item.id}/>
-                                                    <span className="checkmark"/>
-                                                </label>
-                                                <span className="categorey-no"></span>
-                                            </li>
-                                        )
-                                    }
-
-                                </ul>
-                                <hr/>
-                                <h4 className="ltn__widget-title">Kategoriler</h4>
-                                <ul>
-                                    {
-                                        categories.map(item =>
-                                            <li key={'filter-region-' + item.id}>
-                                                <label className="checkbox-item">{item.ad}
-                                                    <input type="checkbox" name={'category'} onChange={checkboxChange}
-                                                           value={item.id}/>
-                                                    <span className="checkmark"/>
-                                                </label>
-                                                <span className="categorey-no"></span>
-                                            </li>
-                                        )
-                                    }
-                                </ul>
-
-                                <hr/>
+                                <div className="ltn__search-widget mb-30">
+                                    <form action="#">
+                                        <input type="text" name="search" placeholder="Villa Ara..."/>
+                                        <button type="submit"><i className="fas fa-search"/></button>
+                                    </form>
+                                </div>
                                 {/* Price Filter Widget */}
                                 <div className="widget--- ltn__price-filter-widget">
                                     <h4 className="ltn__widget-title ltn__widget-title-border---">Fiyat Aralığı</h4>
                                     <div className="price_filter">
-                                        <div className="price_slider_amount">
-                                            <input type="submit" value={'Filtrele'} defaultValue={""}/>
+                                        {/*<div className="price_slider_amount">
+                                            <input type="submit" value='Filtrele' defaultValue=""/>
                                             <input type="text" className="amount" name="price"
                                                    placeholder="Add Your Price"/>
                                         </div>
-                                        <div className="slider-range"/>
+                                        <div className="slider-range"/>*/}
                                     </div>
                                 </div>
-                                <hr/>
-                                <h4 className="ltn__widget-title">Villa Özellikleri</h4>
-                                <ul>
-                                    {villaProperties.map(item =>
-                                        <li key={'filter-properety-' + item.id}>
-                                            <label className="checkbox-item">{item.ad}
-                                                <input type="checkbox" name={'property'} onChange={checkboxChange}
-                                                       value={item.id}/>
-                                                <span className="checkmark"/>
-                                            </label>
-                                            <span className="categorey-no"></span>
-                                        </li>
-                                    )
-                                    }
-                                </ul>
 
+                            </div>
+                            
+                            <div className="ltn__faq-inner ltn__faq-inner-2">
+                                <div id="accordion_2">
+                                    {/* card */}
+                                    <div className="card">
+                                        <h6 className="collapsed ltn__card-title" data-bs-toggle="collapse" data-bs-target="#item-1" aria-expanded="false">
+                                            Mülk Tipi {filterObject.type.length>0?<sup>{filterObject.type.length}</sup>:null}
+                                        </h6>
+                                        <div id="item-1" className="collapse" data-bs-parent="#accordion_1">
+                                            <div className="card-body widget ltn__menu-widget" style={{border:'initial'}}>
+                                                <ul>
+                                                    {
+                                                        estates.map(item =>
+                                                            <li key={'filter-region-' + item.id}>
+                                                                <label className="checkbox-item">{item.ad}
+                                                                    <input type="checkbox"
+                                                                           name={'type'}
+                                                                           checked={filterObject?.type.includes(''+item.id)}
+                                                                           onChange={checkboxChange}
+                                                                           value={item.id}/>
+                                                                    <span className="checkmark"/>
+                                                                </label>
+                                                                <span className="categorey-no"></span>
+                                                            </li>
+                                                        )
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/* card */}
+                                    <div className="card">
+                                        <h6 className="collapsed ltn__card-title" data-bs-toggle="collapse" data-bs-target="#item-2" aria-expanded="false">
+                                            Bölgeler {filterObject.region.length>0?<sup>{filterObject.region.length}</sup>:null}
+                                        </h6>
+                                        <div id="item-2" className="collapse" data-bs-parent="#accordion_2">
+                                            <div className="card-body widget ltn__menu-widget" style={{border:'initial'}}>
+                                                <ul>
+                                                    {
+                                                        regions.map(item =>
+                                                            <li key={'filter-region-' + item.id}>
+                                                                <label className="checkbox-item">{item.ad}
+                                                                    <input type="checkbox"
+                                                                           name={'region'}
+                                                                           checked={filterObject?.region.includes(''+item.id)}
+                                                                           onChange={checkboxChange}
+                                                                           value={item.id}/>
+                                                                    <span className="checkmark"/>
+                                                                </label>
+                                                                <span className="categorey-no"></span>
+                                                            </li>
+                                                        )
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/* card */}
+                                    <div className="card">
+                                        <h6 className="collapsed ltn__card-title" data-bs-toggle="collapse" data-bs-target="#item-3" aria-expanded="false">
+                                            Kategoriler {filterObject.category.length>0?<sup>{filterObject.category.length}</sup>:null}
+                                        </h6>
+                                        <div id="item-3" className="collapse" data-bs-parent="#accordion_2">
+                                            <div className="card-body widget ltn__menu-widget" style={{border:'initial'}}>
+                                                <ul>
+                                                    {
+                                                        categories.map(item =>
+                                                            <li key={'filter-region-' + item.id}>
+                                                                <label className="checkbox-item">{item.ad}
+                                                                    <input type="checkbox"
+                                                                           name={'category'}
+                                                                           checked={filterObject?.category.includes(''+item.id)}
+                                                                           onChange={checkboxChange}
+                                                                           value={item.id}/>
+                                                                    <span className="checkmark"/>
+                                                                </label>
+                                                                <span className="categorey-no"></span>
+                                                            </li>
+                                                        )
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/* card */}
+                                    <div className="card">
+                                        <h6 className="collapsed ltn__card-title" data-bs-toggle="collapse" data-bs-target="#item-4" aria-expanded="false">
+                                            Villa Özellikleri {filterObject.property.length>0?<sup>{filterObject.property.length}</sup>:null}
+                                        </h6>
+                                        <div id="item-4" className="collapse" data-bs-parent="#accordion_2">
+                                            <div className="card-body widget ltn__menu-widget" style={{border:'initial'}}>
+                                                <ul>
+                                                    {villaProperties.map(item =>
+                                                        <li key={'filter-properety-' + item.id}>
+                                                            <label className="checkbox-item">{item.ad}
+                                                                <input type="checkbox"
+                                                                       name={'property'}
+                                                                       checked={filterObject?.property.includes(''+item.id)}
+                                                                       onChange={checkboxChange}
+                                                                       value={item.id}/>
+                                                                <span className="checkmark"/>
+                                                            </label>
+                                                            <span className="categorey-no"></span>
+                                                        </li>
+                                                    )
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                         </aside>

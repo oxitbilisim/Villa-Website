@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import Social from '../section-components/social';
 import axios from "axios";
 import {GlobalContext} from "../../villa/global-context";
+import LikedVillas from "./LikedVillas";
 
 const NavbarV3 = () => {
     const {regions, categories} = useContext(GlobalContext)
@@ -12,17 +13,17 @@ const NavbarV3 = () => {
         return <ul>
             <li key={'home'}><Link to="/">Anasayfa</Link></li>
             <li key={'regions'}><Link to="#">Bölgeler</Link>
-                <ul className={type=='MOBILE'?'sub-menu':''}>
+                <ul className={type == 'MOBILE' ? 'sub-menu' : ''}>
                     {regions.map(item => (
-                        <li key={'region-'+item.id}><Link to={'/bolge/' + item.url}>{item.ad}</Link></li>
+                        <li key={'region-' + item.id}><Link to={'/bolge/' + item.url}>{item.ad}</Link></li>
                     ))}
 
                 </ul>
             </li>
             <li key={'categories'}><Link to="#">Kategoriler</Link>
-                <ul className={type=='MOBILE'?'sub-menu':''}>
+                <ul className={type == 'MOBILE' ? 'sub-menu' : ''}>
                     {categories.map(item => (
-                        <li key={'category-'+item.id}><Link to={'/kategori/' + item.url}>{item.ad}</Link></li>
+                        <li key={'category-' + item.id}><Link to={'/kategori/' + item.url}>{item.ad}</Link></li>
                     ))}
 
                 </ul>
@@ -105,6 +106,7 @@ const NavbarV3 = () => {
                     </div>
                 </div>
             </header>
+            <LikedVillas/>
             <div id="ltn__utilize-mobile-menu" className="ltn__utilize ltn__utilize-mobile-menu">
                 <div className="ltn__utilize-menu-inner ltn__scrollbar">
                     <div className="ltn__utilize-menu-head">

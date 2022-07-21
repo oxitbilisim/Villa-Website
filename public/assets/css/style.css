@@ -14016,7 +14016,7 @@ input.cart-plus-minus-box {
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
   transition: 0.3s;
-  font-size: 18px;
+  font-size: 15px;
   margin-bottom: 0;
 }
 .ltn__faq-inner .card .ltn__card-title::before {
@@ -14055,10 +14055,10 @@ input.cart-plus-minus-box {
   background-color: var(--section-bg-1);
   color: var(--ltn__primary-color);
   font-size: 16px;
-  height: 40px;
-  width: 40px;
+  height: 25px;
+  width: 25px;
   text-align: center;
-  line-height: 40px;
+  line-height: 25px;
 }
 .ltn__faq-inner-2 .card .ltn__card-title[aria-expanded="true"] {
   background-color: transparent;
