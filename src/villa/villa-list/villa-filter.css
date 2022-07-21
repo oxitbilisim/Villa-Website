@@ -1,0 +1,20 @@
+.cart-plus-minus-custom {
+    height: 50px !important;
+    line-height: 47px !important;
+}
+.input-item-custom input{
+   height: 50px !important;
+    margin-bottom: 15px;
+}
+.input-item-custom{
+   height: 50px !important;
+}
+
+.title-filter{
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.filter-button-custom{
+    height: 50px;
+    line-height: 16px;
+}

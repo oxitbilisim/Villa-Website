@@ -2,11 +2,12 @@ import React, {Component, useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import axios from "axios";
 import {GlobalContext} from "../global-context";
+import './villa-filter.css';
 
 const VillaFilters = (props) => {
 
     const arrayKeys = ['type', 'region', 'category', 'property'];
-    
+
     const queryParamToObject = () => {
         let qs = props.location.search;
         qs = qs.replaceAll('?', '');
@@ -28,7 +29,7 @@ const VillaFilters = (props) => {
                     return prev;
                 }, [])
             }
-            obj[key] = value;
+            obj[key] = decodeURIComponent(value);
         })
         return obj;
     }
@@ -40,9 +41,10 @@ const VillaFilters = (props) => {
             region: obj.region == null ? [] : obj.region,
             category: obj.category == null ? [] : obj.category,
             property: obj.property == null ? [] : obj.property,
-            startPrice: obj.startPrice,
-            endPrice: obj.endPrice,
-            name: obj.name
+            startPrice: obj.startPrice == null ? '' : obj.startPrice,
+            endPrice: obj.endPrice == null ? '' : obj.endPrice,
+            name: obj.name == null ? '' : obj.name,
+            guestCount: obj.guestCount == null ? '2' : obj.guestCount,
         };
         return initObject;
     }
@@ -51,6 +53,10 @@ const VillaFilters = (props) => {
     const [villaProperties, setVillaProperties] = useState([]);
     const [estates, setEstates] = useState([]);
     const [filterObject, setFilterObject] = useState(initializeFilterObject());
+    const [filterName, setFilterName] = useState(filterObject?.name);
+    const [filterStartPrice, setFilterStartPrice] = useState(filterObject?.startPrice);
+    const [filterEndPrice, setFilterEndPrice] = useState(filterObject?.endPrice);
+    const [filterGuestCount, setFilterGuestCount] = useState(filterObject?.guestCount);
 
     useEffect(() => {
         loadVillasProperties();
@@ -59,9 +65,9 @@ const VillaFilters = (props) => {
 
     const loadData = () => {
         const qs = objectToQueryParam(filterObject);
-        axios.get(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/SearchVilla"+props.location.search)
+        axios.get(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/SearchVilla" + props.location.search)
             .then((response) => {
-                
+
             });
     }
 
@@ -115,8 +121,8 @@ const VillaFilters = (props) => {
                     item = key + '=' + arrstr;
                 }
             } else {
-                if (obj[key] != null) {
-                    item = key + '=' + obj[key];
+                if (obj[key] != null && obj[key].trim() != '') {
+                    item = key + '=' + encodeURIComponent(obj[key]);
                 }
             }
             return prev + (prev != '' && item != '' ? '&' : '') + item;
@@ -124,7 +130,7 @@ const VillaFilters = (props) => {
 
         return queryString;
     }
-    
+
     const reduceFilterArray = (arr) => {
         if (arr.length > 0) {
             return arr.reduce(
@@ -140,6 +146,7 @@ const VillaFilters = (props) => {
                 setVillaProperties(response.data);
             });
     }
+
     const loadEstates = () => {
         axios.get(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetEstates")
             .then((response) => {
@@ -152,6 +159,56 @@ const VillaFilters = (props) => {
             addFilter(e.target.name, e.target.value);
         } else {
             removeFilter(e.target.name, e.target.value);
+        }
+    }
+
+    const format = amount => {
+        return Number(amount)
+            .toFixed(2)
+            .replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    };
+
+    const formatCurrency = e => {
+        /*if(e.target.name=="min"){
+            setMinPrice(format(e.target.value));
+        }else if(e.target.name=="max"){
+            setMaxPrice(format(e.target.value));
+        }*/
+    }
+
+    const onChangeForm = (e) => {
+        if (e.target.name == 'name') {
+            setFilterName(e.target.value);
+        } else if (e.target.name == 'startPrice') {
+            setFilterStartPrice(e.target.value);
+        } else if (e.target.name == 'endPrice') {
+            setFilterEndPrice(e.target.value);
+        } else if (e.target.name == 'guestCount') {
+            setFilterGuestCount(e.target.value);
+        }
+        console.log(e.target.name);
+        console.log(e.target.value);
+    }
+    const filter = () => {
+        if (filterName != null && filterName?.trim() != '') {
+            addFilter('name', filterName);
+        }else{
+            removeFilter('name',null);
+        }
+        if (filterStartPrice != null && filterStartPrice?.trim() != '') {
+            addFilter('startPrice', filterStartPrice);
+        }else{
+            removeFilter('startPrice',null);
+        }
+        if (filterEndPrice != null && filterEndPrice?.trim() != '') {
+            addFilter('endPrice', filterEndPrice);
+        }else{
+            removeFilter('endPrice',null);
+        }
+        if (filterGuestCount != null && filterGuestCount?.trim() != '') {
+            addFilter('guestCount', filterGuestCount);
+        }else{
+            removeFilter('guestCount',null);
         }
     }
 
@@ -179,39 +236,65 @@ const VillaFilters = (props) => {
                     <div className="col-lg-4  mb-100">
                         <aside className="sidebar ltn__shop-sidebar">
                             <h3 className="mb-6">Villa Ara</h3>
-                            
+
                             {/* Advance Information widget */}
                             <div className="widget ltn__menu-widget">
                                 <div className="ltn__search-widget mb-30">
                                     <form action="#">
-                                        <input type="text" name="search" placeholder="Villa Ara..."/>
-                                        <button type="submit"><i className="fas fa-search"/></button>
+                                        <input type="text" value={filterName} onChange={onChangeForm} name="name"
+                                               placeholder="Villa Ara..."/>
                                     </form>
                                 </div>
-                                {/* Price Filter Widget */}
-                                <div className="widget--- ltn__price-filter-widget">
-                                    <h4 className="ltn__widget-title ltn__widget-title-border---">Fiyat Aralığı</h4>
-                                    <div className="price_filter">
-                                        {/*<div className="price_slider_amount">
-                                            <input type="submit" value='Filtrele' defaultValue=""/>
-                                            <input type="text" className="amount" name="price"
-                                                   placeholder="Add Your Price"/>
+                                <div className="row pb-4">
+                                    <div className="col-lg-12">
+                                        <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Fiyat
+                                            Aralığı</h4>
+                                    </div>
+                                    <div className="col-lg-6">
+                                        <label>En Düşük</label>
+                                        <div className="input-item input-item-custom">
+                                            <input type="text" name="startPrice" value={filterStartPrice} onChange={onChangeForm}/>
                                         </div>
-                                        <div className="slider-range"/>*/}
+                                    </div>
+                                    <div className="col-lg-6">
+                                        <label>En Yüksek</label>
+                                        <div className="input-item input-item-custom">
+                                            <input type="text" name="endPrice" value={filterEndPrice} onChange={onChangeForm}/>
+                                        </div>
                                     </div>
                                 </div>
 
+                                <div className="row pb-1">
+                                    <div className="col-lg-6">
+                                        <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Misafir
+                                            Sayısı</h4>
+                                        <div className="cart-plus-minus cart-plus-minus-custom">
+                                            <input type="text" min="1" defaultValue="2" value={filterGuestCount} name="guestCount"
+                                                   onChange={onChangeForm} className="cart-plus-minus-box"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-6 text-center">
+                                        <div className="btn-wrapper go-top">
+                                            <button onClick={filter}
+                                                    className="theme-btn-1 btn black-btn filter-button-custom">Filtrele
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            
+
                             <div className="ltn__faq-inner ltn__faq-inner-2">
                                 <div id="accordion_2">
                                     {/* card */}
                                     <div className="card">
-                                        <h6 className="collapsed ltn__card-title" data-bs-toggle="collapse" data-bs-target="#item-1" aria-expanded="false">
-                                            Mülk Tipi {filterObject.type.length>0?<sup>{filterObject.type.length}</sup>:null}
+                                        <h6 className="collapsed ltn__card-title" data-bs-toggle="collapse"
+                                            data-bs-target="#item-1" aria-expanded="false">
+                                            Mülk Tipi {filterObject.type.length > 0 ?
+                                            <sup>{filterObject.type.length}</sup> : null}
                                         </h6>
                                         <div id="item-1" className="collapse" data-bs-parent="#accordion_1">
-                                            <div className="card-body widget ltn__menu-widget" style={{border:'initial'}}>
+                                            <div className="card-body widget ltn__menu-widget"
+                                                 style={{border: 'initial'}}>
                                                 <ul>
                                                     {
                                                         estates.map(item =>
@@ -219,7 +302,7 @@ const VillaFilters = (props) => {
                                                                 <label className="checkbox-item">{item.ad}
                                                                     <input type="checkbox"
                                                                            name={'type'}
-                                                                           checked={filterObject?.type.includes(''+item.id)}
+                                                                           checked={filterObject?.type.includes('' + item.id)}
                                                                            onChange={checkboxChange}
                                                                            value={item.id}/>
                                                                     <span className="checkmark"/>
@@ -234,11 +317,14 @@ const VillaFilters = (props) => {
                                     </div>
                                     {/* card */}
                                     <div className="card">
-                                        <h6 className="collapsed ltn__card-title" data-bs-toggle="collapse" data-bs-target="#item-2" aria-expanded="false">
-                                            Bölgeler {filterObject.region.length>0?<sup>{filterObject.region.length}</sup>:null}
+                                        <h6 className="collapsed ltn__card-title" data-bs-toggle="collapse"
+                                            data-bs-target="#item-2" aria-expanded="false">
+                                            Bölgeler {filterObject.region.length > 0 ?
+                                            <sup>{filterObject.region.length}</sup> : null}
                                         </h6>
                                         <div id="item-2" className="collapse" data-bs-parent="#accordion_2">
-                                            <div className="card-body widget ltn__menu-widget" style={{border:'initial'}}>
+                                            <div className="card-body widget ltn__menu-widget"
+                                                 style={{border: 'initial'}}>
                                                 <ul>
                                                     {
                                                         regions.map(item =>
@@ -246,7 +332,7 @@ const VillaFilters = (props) => {
                                                                 <label className="checkbox-item">{item.ad}
                                                                     <input type="checkbox"
                                                                            name={'region'}
-                                                                           checked={filterObject?.region.includes(''+item.id)}
+                                                                           checked={filterObject?.region.includes('' + item.id)}
                                                                            onChange={checkboxChange}
                                                                            value={item.id}/>
                                                                     <span className="checkmark"/>
@@ -261,11 +347,14 @@ const VillaFilters = (props) => {
                                     </div>
                                     {/* card */}
                                     <div className="card">
-                                        <h6 className="collapsed ltn__card-title" data-bs-toggle="collapse" data-bs-target="#item-3" aria-expanded="false">
-                                            Kategoriler {filterObject.category.length>0?<sup>{filterObject.category.length}</sup>:null}
+                                        <h6 className="collapsed ltn__card-title" data-bs-toggle="collapse"
+                                            data-bs-target="#item-3" aria-expanded="false">
+                                            Kategoriler {filterObject.category.length > 0 ?
+                                            <sup>{filterObject.category.length}</sup> : null}
                                         </h6>
                                         <div id="item-3" className="collapse" data-bs-parent="#accordion_2">
-                                            <div className="card-body widget ltn__menu-widget" style={{border:'initial'}}>
+                                            <div className="card-body widget ltn__menu-widget"
+                                                 style={{border: 'initial'}}>
                                                 <ul>
                                                     {
                                                         categories.map(item =>
@@ -273,7 +362,7 @@ const VillaFilters = (props) => {
                                                                 <label className="checkbox-item">{item.ad}
                                                                     <input type="checkbox"
                                                                            name={'category'}
-                                                                           checked={filterObject?.category.includes(''+item.id)}
+                                                                           checked={filterObject?.category.includes('' + item.id)}
                                                                            onChange={checkboxChange}
                                                                            value={item.id}/>
                                                                     <span className="checkmark"/>
@@ -288,18 +377,21 @@ const VillaFilters = (props) => {
                                     </div>
                                     {/* card */}
                                     <div className="card">
-                                        <h6 className="collapsed ltn__card-title" data-bs-toggle="collapse" data-bs-target="#item-4" aria-expanded="false">
-                                            Villa Özellikleri {filterObject.property.length>0?<sup>{filterObject.property.length}</sup>:null}
+                                        <h6 className="collapsed ltn__card-title" data-bs-toggle="collapse"
+                                            data-bs-target="#item-4" aria-expanded="false">
+                                            Villa Özellikleri {filterObject.property.length > 0 ?
+                                            <sup>{filterObject.property.length}</sup> : null}
                                         </h6>
                                         <div id="item-4" className="collapse" data-bs-parent="#accordion_2">
-                                            <div className="card-body widget ltn__menu-widget" style={{border:'initial'}}>
+                                            <div className="card-body widget ltn__menu-widget"
+                                                 style={{border: 'initial'}}>
                                                 <ul>
                                                     {villaProperties.map(item =>
                                                         <li key={'filter-properety-' + item.id}>
                                                             <label className="checkbox-item">{item.ad}
                                                                 <input type="checkbox"
                                                                        name={'property'}
-                                                                       checked={filterObject?.property.includes(''+item.id)}
+                                                                       checked={filterObject?.property.includes('' + item.id)}
                                                                        onChange={checkboxChange}
                                                                        value={item.id}/>
                                                                 <span className="checkmark"/>

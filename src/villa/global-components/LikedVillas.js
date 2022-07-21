@@ -58,11 +58,12 @@ const LikedVillas = (props) => {
                     }
 
                 </div>
+                { state?.likedVillaIds.length>0? 
                 <div className="mini-cart-footer mt-0">
                     <div className="btn-wrapper go-top">
                         <button onClick={createCollection} className="theme-btn-2 btn btn-effect-2">Link Paylaş</button>
                     </div>
-                </div>
+                </div>: null }
                 { collectionGuid!=null?
                 <div className="footer-newsletter">
                     <form style={{height:'65px'}}>
