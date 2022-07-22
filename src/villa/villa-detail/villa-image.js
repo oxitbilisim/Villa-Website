@@ -12,7 +12,7 @@ const VillaImage = (props) => {
         dots: false,
         infinite: true,
         speed: 500,
-        slidesToShow: 4,
+        slidesToShow: 3,
         slidesToScroll: 1,
         centerMode: true
     };
@@ -30,7 +30,7 @@ const VillaImage = (props) => {
                 props.list.map(item =>
                     <div key={'img-' + item.id}>
                         
-                            <a href={process.env.REACT_APP_API_ENDPOINT+"/VillaFE/GetVillaImage?id=" + item.id} data-rel="lightcase:myCollection">
+                            <a href={process.env.REACT_APP_API_ENDPOINT+"/VillaFE/GetVillaImage?id=" + item.id} data-rel="lightcase:myCollection:slideshow">
                                 <img src={process.env.REACT_APP_API_ENDPOINT+"/VillaFE/GetVillaImage?id=" + item.id} alt="Image"/>
                             </a>
                      

@@ -14,3 +14,9 @@ export const currencySymbol = (currency) => {
       return '';
   }
 }
+
+export const pricePeriod = (key) => {
+    if(key=='Gunluk'){
+        return 'Günlük';
+    }
+}

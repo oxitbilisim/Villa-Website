@@ -21,6 +21,8 @@ const VillaExplanation = (props) => {
         {villaText?.blocks?.map(item =>
             <p key={'text-'+item.key}>{item.text}</p>
         )}
+        <p>Giriş Saati : 16:00</p>
+        <p>Çıkış Saati : 10.00</p>
     </div>
 }
 

@@ -3,12 +3,13 @@ import {Link} from 'react-router-dom';
 import Social from '../section-components/social';
 import {GlobalContext} from "../global-context";
 import LikedVillas from "./LikedVillas";
+import {LikedVillaContext} from "../liked-villa-context";
 
 
 const Navbar = () => {
     const {regions, categories} = useContext(GlobalContext)
     let publicUrl = process.env.PUBLIC_URL + '/'
-
+    const [state, dispatch] = useContext(LikedVillaContext);
 
     const renderMenu = (type) => {
         return <ul>
@@ -35,6 +36,7 @@ const Navbar = () => {
                 <a href="#ltn__utilize-cart-menu" className="ltn__utilize-toggle">
                     <span className="mini-cart-icon" style={{lineHeight:'37px'}}>
                         <i className="flaticon-heart-1"/>
+                        <sup>{state?.likedVillaIds?.length}</sup>
                     </span>
                 </a>
             </li>

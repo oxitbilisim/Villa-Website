@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import PropTypes from "prop-types";
 import {LikedVillaContext} from "../liked-villa-context";
 import CurrencyFormat from 'react-currency-format';
-import {currencySymbol} from "../Constants";
+import {currencySymbol, pricePeriod} from "../Constants";
 
 const VillaCard = (props) => {
     const [state, dispatch] = useContext(LikedVillaContext);
@@ -40,13 +40,13 @@ const VillaCard = (props) => {
                         <li>
                             <Link
                                 to={"/villa/" + props.data?.url}
-                                title={props.data?.il + ', ' + props.data?.ilce + ', ' + props.data?.mevki}
+                                title={props.data?.il + ', ' + props.data?.bolge + ', ' + props.data?.mevki}
                                 style={{
                                     textOverflow: 'ellipsis',
                                     whiteSpace: 'nowrap',
                                     overflow: 'hidden'
                                 }}>
-                                <i className="flaticon-pin"/> {props.data?.il + ', ' + props.data?.ilce + ', ' + props.data?.mevki}
+                                <i className="flaticon-pin"/> {props.data?.il + ', ' + props.data?.bolge + ', ' + props.data?.mevki}
                             </Link>
                         </li>
 
@@ -82,7 +82,7 @@ const VillaCard = (props) => {
             <div className="product-info-bottom">
                 <div className="product-price">
                     {props.data?.fiyat != null ?
-                        <span><CurrencyFormat value={props.data?.fiyat} displayType={'text'} thousandSeparator={true} prefix={currencySymbol(props.data?.paraBirimi)} /><label>/{props.data?.fiyatTuru}</label></span> :
+                        <span><CurrencyFormat value={props.data?.fiyat} displayType={'text'} thousandSeparator={true} prefix={currencySymbol(props.data?.paraBirimi)} /><label>/{pricePeriod(props.data?.fiyatTuru)}</label></span> :
                         <span>&nbsp;</span>}
                 </div>
             </div>

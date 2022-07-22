@@ -10,7 +10,7 @@ import {LikedVillaContext} from "../liked-villa-context";
 import './villa-info.css';
 import VillaCalendar from "./villa-calendar";
 import CurrencyFormat from "react-currency-format";
-import {currencySymbol} from "../Constants";
+import {currencySymbol, pricePeriod} from "../Constants";
 
 const VillaInfo = (props) => {
     const [state, dispatch] = useContext(LikedVillaContext);
@@ -43,7 +43,7 @@ const VillaInfo = (props) => {
                         </a>
                         </div>
                         <label><span className="ltn__secondary-color">
-							<i className="flaticon-pin"/></span> {props.data?.lokasyon.bolgeId},{props.data?.lokasyon.ilceAd},{props.data?.lokasyon.mevki}
+							<i className="flaticon-pin"/></span> {props.data?.lokasyon.ilceIlAd},{props.data?.lokasyon.bolgeAd},{props.data?.lokasyon.mevki}
                         </label>
 
                         <ul className="ltn__list-item-2 ltn__list-item-2-before ltn__flat-info">
@@ -69,7 +69,7 @@ const VillaInfo = (props) => {
 
                         <div className="widget ltn__author-widget" style={{padding:'35px 30px 30px 35px'}}>
                             <div className="ltn__author-widget-inner text-center">
-                                <h3 style={{color:'#de7f16'}}><CurrencyFormat value={props.data?.villa.fiyat} displayType={'text'} thousandSeparator={true} prefix={currencySymbol(props.data?.villa.paraBirimi)} /><label style={{fontWeight:'normal'}}>/{props.data?.villa.fiyatTuru}</label></h3>
+                                <h3 style={{color:'#de7f16'}}><CurrencyFormat value={props.data?.villa.fiyat} displayType={'text'} thousandSeparator={true} prefix={currencySymbol(props.data?.villa.paraBirimi)} /><label style={{fontWeight:'normal'}}>/{pricePeriod(props.data?.villa.fiyatTuru)}</label></h3>
                             </div>
                         </div>
                         

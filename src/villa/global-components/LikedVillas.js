@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {LikedVillaContext} from "../liked-villa-context";
 import axios from "axios";
 import CurrencyFormat from "react-currency-format";
-import {currencySymbol} from "../Constants";
+import {currencySymbol, pricePeriod} from "../Constants";
 
 const LikedVillas = (props) => {
     const [state, dispatch] = useContext(LikedVillaContext);
@@ -32,6 +32,10 @@ const LikedVillas = (props) => {
                 setCollectionGuid(window.location.origin + '/collection/' + response.data);
             });
     }
+    
+    const copyToClipboard = (e) => {
+        navigator.clipboard.writeText(collectionGuid).then(r => {});
+    }
 
     return <div>
         <div id="ltn__utilize-cart-menu" className="ltn__utilize ltn__utilize-cart-menu">
@@ -54,9 +58,14 @@ const LikedVillas = (props) => {
                                 <div className="mini-cart-info go-top">
                                     <h6><Link to="/product-details">{item.ad}</Link></h6>
                                     <span className="mini-cart-quantity">
-                                        {item?.fiyat != null ? <CurrencyFormat value={item?.fiyat} displayType={'text'}
+                                        {item?.fiyat != null ? 
+                                            <>
+                                            <CurrencyFormat value={item?.fiyat} displayType={'text'}
                                                                                thousandSeparator={true}
-                                                                               prefix={currencySymbol(item?.paraBirimi)}/> : null}</span>
+                                                                               prefix={currencySymbol(item?.paraBirimi)}/>
+                                            /{pricePeriod(item?.fiyatTuru)}
+                                            </>
+                                            : null}</span>
                                 </div>
                             </div>
                         )
@@ -75,9 +84,7 @@ const LikedVillas = (props) => {
                         <form style={{height: '65px'}}>
                             <input type="text" name="link" value={collectionGuid} placeholder=""/>
                             <div className="btn-wrapper">
-                                <button onClick={() => {
-                                    navigator.clipboard.writeText(collectionGuid).then()
-                                }} className="theme-btn-1 btn" type="button"><i className="fa-solid fa-copy"/></button>
+                                <button onClick={copyToClipboard} className="theme-btn-1 btn" type="button"><i className="fa-solid fa-copy"/></button>
                             </div>
                         </form>
                     </div> : null}

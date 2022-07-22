@@ -5371,7 +5371,7 @@ ul.wp-block-latest-posts.is-grid.alignwide {
     top 0.2s ease 0.1s;
   transition: opacity 0.2s ease 0.1s, visibility 0.2s ease 0.1s,
     top 0.2s ease 0.1s;
-  min-width: 230px;
+  min-width: 240px;
   padding: 15px 0;
   -webkit-box-shadow: var(--ltn__box-shadow-4);
   box-shadow: var(--ltn__box-shadow-4);
@@ -11103,7 +11103,7 @@ ul.wp-block-latest-posts.is-grid.alignwide {
   margin-bottom: 20px;
 }
 .ltn__category-item-5 a .category-title {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
   font-family: var(--ltn__heading-font);
   color: var(--ltn__heading-color);
