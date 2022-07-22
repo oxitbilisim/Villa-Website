@@ -1,0 +1,10 @@
+.villa-title h1
+{
+    display: inline;
+}
+.villa-title a
+{
+    display: inline;
+    margin-left: 30px;
+    font-size: 30px;
+}

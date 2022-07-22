@@ -19,7 +19,7 @@ class CallToActonV1 extends Component {
 			            <p>Detaylı filtreleme ile aradığınız villayı bulmadınız yardımcı olabiliriz.</p>
 			          </div>
 			          <div className="btn-wrapper go-top">
-			            <Link className="btn btn-effect-3 btn-white" to="/contact">Tüm Villalar <i className="icon-next" /></Link>
+			            <Link className="btn btn-effect-3 btn-white" to="/villa-ara">Tüm Villalar <i className="icon-next" /></Link>
 			          </div>
 			        </div>
 			      </div>

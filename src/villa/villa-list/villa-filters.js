@@ -19,23 +19,25 @@ const VillaFilters = (props) => {
             }
             const tmp = i.split('=');
             const key = tmp[0];
-            let value = tmp[1];
+            let value = decodeURIComponent(tmp[1]);
             if (arrayKeys.includes(key)) {
                 value = value.split(',').reduce((prev, curr) => {
                     if (prev == null) {
                         prev = [];
                     }
-                    prev.push(curr);
+                    prev.push(decodeURIComponent(curr));
                     return prev;
                 }, [])
             }
-            obj[key] = decodeURIComponent(value);
+            obj[key] = value;
         })
         return obj;
     }
 
     const initializeFilterObject = () => {
         const obj = queryParamToObject();
+        console.log("initializeFilterObject");
+        console.table(obj);
         const initObject = {
             type: obj.type == null ? [] : obj.type,
             region: obj.region == null ? [] : obj.region,
@@ -70,10 +72,14 @@ const VillaFilters = (props) => {
 
             });
     }
+    
 
     useEffect(() => {
         loadData();
     }, [props.location.search]);
+    useEffect(() => {
+        console.table(filterObject)
+    }, []);
 
     const addFilter = (key, value) => {
         const filterObject_ = filterObject;
@@ -205,10 +211,22 @@ const VillaFilters = (props) => {
         }else{
             removeFilter('endPrice',null);
         }
-        if (filterGuestCount != null && filterGuestCount?.trim() != '') {
+        if (filterGuestCount != null && filterGuestCount?.trim() != '' && filterGuestCount!='0') {
             addFilter('guestCount', filterGuestCount);
         }else{
             removeFilter('guestCount',null);
+        }
+        return false;
+    }
+    
+    const onSubmit = (event) => {
+        event.preventDefault();
+        filter();
+    }
+
+    const _handleKeyDown = (e) =>{
+        if (e.key === 'Enter') {
+            filter();
         }
     }
 
@@ -239,11 +257,10 @@ const VillaFilters = (props) => {
 
                             {/* Advance Information widget */}
                             <div className="widget ltn__menu-widget">
+                                <form onSubmit={onSubmit}>
                                 <div className="ltn__search-widget mb-30">
-                                    <form action="#">
                                         <input type="text" value={filterName} onChange={onChangeForm} name="name"
                                                placeholder="Villa Ara..."/>
-                                    </form>
                                 </div>
                                 <div className="row pb-4">
                                     <div className="col-lg-12">
@@ -263,13 +280,22 @@ const VillaFilters = (props) => {
                                         </div>
                                     </div>
                                 </div>
+                                <div className="row pb-4">
+                                    <div className="col-lg-12">
+                                        <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Tarih
+                                            Aralığı</h4>
+                                    </div>
+                                    <div className="col-lg-12">
+                                        
+                                    </div>
+                                </div>
 
                                 <div className="row pb-1">
                                     <div className="col-lg-6">
                                         <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Misafir
                                             Sayısı</h4>
                                         <div className="cart-plus-minus cart-plus-minus-custom">
-                                            <input type="text" min="1" defaultValue="2" value={filterGuestCount} name="guestCount"
+                                            <input type="text" min="1" value={filterGuestCount} name="guestCount"
                                                    onChange={onChangeForm} className="cart-plus-minus-box"/>
                                         </div>
                                     </div>
@@ -281,6 +307,7 @@ const VillaFilters = (props) => {
                                         </div>
                                     </div>
                                 </div>
+                                </form>
                             </div>
 
                             <div className="ltn__faq-inner ltn__faq-inner-2">

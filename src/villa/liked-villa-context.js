@@ -16,7 +16,7 @@ export const LikedVillaContextProvider = (props) => {
 
     const likeVilla = (state,villaId) => {
         let tmpData = state.likedVillaIds;
-        if (!tmpData.includes(villaId)) {
+        if (!tmpData.includes(villaId) && villaId!=null) {
             tmpData.push(villaId);
             localStorage.setItem('likedVillaIds', JSON.stringify(tmpData));
         }

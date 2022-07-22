@@ -4,6 +4,7 @@ import Social from '../section-components/social';
 import {GlobalContext} from "../global-context";
 import LikedVillas from "./LikedVillas";
 
+
 const Navbar = () => {
     const {regions, categories} = useContext(GlobalContext)
     let publicUrl = process.env.PUBLIC_URL + '/'

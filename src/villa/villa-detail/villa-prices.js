@@ -8,7 +8,7 @@ const VillaPrices = (props) => {
         <h4 className="title-2">Fiyatlar</h4>
         <div className="ltn__apartments-plan-area product-details-apartments-plan mb-60">
             <div
-                className="ltn__tab-menu ltn__tab-menu-2 ltn__tab-menu-top-right-- text-uppercase--- text-center---">
+                className=" d-none ltn__tab-menu ltn__tab-menu-2 ltn__tab-menu-top-right-- text-uppercase--- text-center---">
                 <div className="nav">
                     <a className="active show" data-bs-toggle="tab" href="#liton_tab_3_1">TL</a>
 
@@ -27,7 +27,7 @@ const VillaPrices = (props) => {
                                                 className="ltn__select-availability-table d-none d-md-block">
                                                 <ul className="ltn__select-availability-table-head">
                                                     <li><b>Tarih</b></li>
-                                                    <li><b>En Az Kiralama Günü</b></li>
+                                                    <li><b>En Az Kiralama</b></li>
                                                     <li><b>Fiyat(Gecelik) </b></li>
 
                                                 </ul>

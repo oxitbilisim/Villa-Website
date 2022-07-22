@@ -20,14 +20,18 @@ const SimilarVillas = (props) => {
     }
 
     return <div>
-        <h4 className="title-2">Benzer Villalar</h4>
-        <div className="row">
-            {list.map(item => (
-                <div key={'popular-villa-' + item.id} className="col-xl-6 col-sm-6 col-12">
-                    <VillaCard data={item}/>
+        {list.length > 0 ?
+            <>
+                <h4 className="title-2">Benzer Villalar</h4>
+                <div className="row">
+                    {list.map(item => (
+                        <div key={'popular-villa-' + item.id} className="col-xl-6 col-sm-6 col-12">
+                            <VillaCard data={item}/>
+                        </div>
+                    ))}
                 </div>
-            ))}
-        </div>
+            </>
+            : null}
     </div>
 }
 

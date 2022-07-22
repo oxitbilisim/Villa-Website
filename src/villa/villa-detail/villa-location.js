@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const VillaLocation = (props) =>{
         return <div>
             <h4 className="title-2">Villa Konumu</h4>
-            <div className="property-details-google-map mb-90">
+            <div className="property-details-google-map mb-50">
                 <iframe
                     src={"//maps.google.com/maps?q="+props.data?.map+"&z=10&output=embed"}
                     width="100%"
