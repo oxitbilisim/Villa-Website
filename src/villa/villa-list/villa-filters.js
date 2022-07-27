@@ -1,13 +1,20 @@
-import React, {Component, useContext, useEffect, useState} from 'react';
+import React, {Component, useContext, useEffect, useRef, useState} from 'react';
 import {Link} from 'react-router-dom';
 import axios from "axios";
 import {GlobalContext} from "../global-context";
 import './villa-filter.css';
+import {DateRangePicker} from "react-dates/esm";
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
+import './react_dates_overrides.css';
+import moment from "moment";
+import $ from "jquery";
 
 const VillaFilters = (props) => {
 
     const arrayKeys = ['type', 'region', 'category', 'property'];
-
+    const [focusedInput,setFocusedInput] = useState();
+    const guestCountRef = useRef();
     const queryParamToObject = () => {
         let qs = props.location.search;
         qs = qs.replaceAll('?', '');
@@ -36,8 +43,6 @@ const VillaFilters = (props) => {
 
     const initializeFilterObject = () => {
         const obj = queryParamToObject();
-        console.log("initializeFilterObject");
-        console.table(obj);
         const initObject = {
             type: obj.type == null ? [] : obj.type,
             region: obj.region == null ? [] : obj.region,
@@ -47,6 +52,8 @@ const VillaFilters = (props) => {
             endPrice: obj.endPrice == null ? '' : obj.endPrice,
             name: obj.name == null ? '' : obj.name,
             guestCount: obj.guestCount == null ? '2' : obj.guestCount,
+            startDate: obj.startDate == null ? '' : obj.startDate,
+            endDate: obj.endDate == null ? '' : obj.endDate,
         };
         return initObject;
     }
@@ -58,8 +65,11 @@ const VillaFilters = (props) => {
     const [filterName, setFilterName] = useState(filterObject?.name);
     const [filterStartPrice, setFilterStartPrice] = useState(filterObject?.startPrice);
     const [filterEndPrice, setFilterEndPrice] = useState(filterObject?.endPrice);
+    const [filterStartDate, setFilterStartDate] = useState(filterObject?.startDate!=null&&filterObject?.startDate!=''?moment(filterObject?.startDate):null);
+    const [filterEndDate, setFilterEndDate] = useState(filterObject?.endDate!=null && filterObject?.endDate!=''?moment(filterObject?.endDate):null);
     const [filterGuestCount, setFilterGuestCount] = useState(filterObject?.guestCount);
-
+    
+    
     useEffect(() => {
         loadVillasProperties();
         loadEstates();
@@ -77,9 +87,7 @@ const VillaFilters = (props) => {
     useEffect(() => {
         loadData();
     }, [props.location.search]);
-    useEffect(() => {
-        console.table(filterObject)
-    }, []);
+    
 
     const addFilter = (key, value) => {
         const filterObject_ = filterObject;
@@ -92,7 +100,6 @@ const VillaFilters = (props) => {
             filterObject_[key] = value;
         }
         const qs = objectToQueryParam(filterObject_);
-        console.log(qs);
         redirectToSearch(qs);
         setFilterObject(filterObject_);
     }
@@ -109,7 +116,6 @@ const VillaFilters = (props) => {
         }
 
         const qs = objectToQueryParam(filterObject_);
-        console.log(qs);
         redirectToSearch(qs);
         setFilterObject(filterObject_);
     }
@@ -168,20 +174,6 @@ const VillaFilters = (props) => {
         }
     }
 
-    const format = amount => {
-        return Number(amount)
-            .toFixed(2)
-            .replace(/\d(?=(\d{3})+\.)/g, '$&,');
-    };
-
-    const formatCurrency = e => {
-        /*if(e.target.name=="min"){
-            setMinPrice(format(e.target.value));
-        }else if(e.target.name=="max"){
-            setMaxPrice(format(e.target.value));
-        }*/
-    }
-
     const onChangeForm = (e) => {
         if (e.target.name == 'name') {
             setFilterName(e.target.value);
@@ -192,9 +184,9 @@ const VillaFilters = (props) => {
         } else if (e.target.name == 'guestCount') {
             setFilterGuestCount(e.target.value);
         }
-        console.log(e.target.name);
-        console.log(e.target.value);
     }
+    
+    
     const filter = () => {
         if (filterName != null && filterName?.trim() != '') {
             addFilter('name', filterName);
@@ -211,10 +203,23 @@ const VillaFilters = (props) => {
         }else{
             removeFilter('endPrice',null);
         }
-        if (filterGuestCount != null && filterGuestCount?.trim() != '' && filterGuestCount!='0') {
-            addFilter('guestCount', filterGuestCount);
+        //if (filterGuestCount != null && filterGuestCount?.trim() != '' && filterGuestCount!='0') {
+        const guestCount = $(guestCountRef.current).val();
+        setFilterGuestCount(guestCount);
+        if (guestCount != null && guestCount?.trim() != '' && guestCount!='0') {
+            addFilter('guestCount', guestCount);
         }else{
             removeFilter('guestCount',null);
+        }
+        if (filterStartDate != null) {
+            addFilter('startDate', filterStartDate.format("yyyy-MM-DD"));
+        }else{
+            removeFilter('startDate',null);
+        }
+        if (filterEndDate != null) {
+            addFilter('endDate', filterEndDate.format("yyyy-MM-DD"));
+        }else{
+            removeFilter('endDate',null);
         }
         return false;
     }
@@ -222,12 +227,6 @@ const VillaFilters = (props) => {
     const onSubmit = (event) => {
         event.preventDefault();
         filter();
-    }
-
-    const _handleKeyDown = (e) =>{
-        if (e.key === 'Enter') {
-            filter();
-        }
     }
 
     return <div>
@@ -285,8 +284,23 @@ const VillaFilters = (props) => {
                                         <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Tarih
                                             Aralığı</h4>
                                     </div>
-                                    <div className="col-lg-12">
-                                        
+                                    <div className="col-lg-12 filter-data-range">
+                                        <DateRangePicker
+                                            startDatePlaceholderText="Giriş Tarihi"
+                                            endDatePlaceholderText="Çıkış Tarihi"
+                                            displayFormat={"DD.MM.YYYY"}
+                                            firstDayOfWeek={1}
+                                            startDate={filterStartDate} // momentPropTypes.momentObj or null,
+                                            startDateId="startDate" // PropTypes.string.isRequired,
+                                            endDate={filterEndDate} // momentPropTypes.momentObj or null,
+                                            endDateId="endDate" // PropTypes.string.isRequired,
+                                            onDatesChange={({ startDate, endDate }) => {
+                                                setFilterStartDate(startDate);
+                                                setFilterEndDate(endDate);
+                                            }} // PropTypes.func.isRequired,
+                                            focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                                            onFocusChange={setFocusedInput} // PropTypes.func.isRequired,
+                                        />
                                     </div>
                                 </div>
 
@@ -295,13 +309,13 @@ const VillaFilters = (props) => {
                                         <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Misafir
                                             Sayısı</h4>
                                         <div className="cart-plus-minus cart-plus-minus-custom">
-                                            <input type="text" min="1" value={filterGuestCount} name="guestCount"
+                                            <input type="text" id={"guestInput"} min="1" ref={guestCountRef} value={filterGuestCount} name="guestCount"
                                                    onChange={onChangeForm} className="cart-plus-minus-box"/>
                                         </div>
                                     </div>
                                     <div className="col-lg-6 text-center">
                                         <div className="btn-wrapper go-top">
-                                            <button onClick={filter}
+                                            <button onClick={filter} style={{zIndex:0}}
                                                     className="theme-btn-1 btn black-btn filter-button-custom">Filtrele
                                             </button>
                                         </div>

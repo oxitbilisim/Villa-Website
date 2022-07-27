@@ -82,7 +82,7 @@ const VillaCard = (props) => {
             <div className="product-info-bottom">
                 <div className="product-price">
                     {props.data?.fiyat != null ?
-                        <span><CurrencyFormat value={props.data?.fiyat} displayType={'text'} thousandSeparator={true} prefix={currencySymbol(props.data?.paraBirimi)} /><label>/{pricePeriod(props.data?.fiyatTuru)}</label></span> :
+                        <span><CurrencyFormat value={props.data?.fiyat} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={currencySymbol(props.data?.paraBirimi)} /><label>/{pricePeriod(props.data?.fiyatTuru)}</label></span> :
                         <span>&nbsp;</span>}
                 </div>
             </div>

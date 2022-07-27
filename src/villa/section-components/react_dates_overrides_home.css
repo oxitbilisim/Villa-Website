@@ -1,0 +1,41 @@
+.home-date-range .DateRangePicker{
+    width: 100%;
+}
+.home-date-range .DateRangePickerInput__withBorder{
+    border: initial;
+}
+.home-date-range .DateRangePickerInput{
+    width: 100%;
+    background: initial;
+}
+.home-date-range .DateInput{
+    width: 165px !important;
+}
+.home-date-range .DateInput_input{
+    margin-bottom: 0px !important;
+    width: 165px !important;
+    padding-right: 20px !important;
+}
+.home-date-range .CalendarDay__selected_span {
+    background: var(--ltn__secondary-color);
+
+}
+
+.CalendarDay__selected {
+    background: var(--ltn__secondary-color);
+    color: white;
+}
+
+.CalendarDay__selected:hover {
+    background: var(--ltn__secondary-color);
+    color: white;
+}
+   
+.CalendarDay__hovered_span:hover,
+.CalendarDay__hovered_span {
+    background: var(--ltn__secondary-color);;
+}
+
+.DayPicker_weekHeader_li{
+    margin-top: 0px !important;
+}

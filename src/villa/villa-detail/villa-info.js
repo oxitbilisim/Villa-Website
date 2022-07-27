@@ -69,7 +69,7 @@ const VillaInfo = (props) => {
 
                         <div className="widget ltn__author-widget" style={{padding:'35px 30px 30px 35px'}}>
                             <div className="ltn__author-widget-inner text-center">
-                                <h3 style={{color:'#de7f16'}}><CurrencyFormat value={props.data?.villa.fiyat} displayType={'text'} thousandSeparator={true} prefix={currencySymbol(props.data?.villa.paraBirimi)} /><label style={{fontWeight:'normal'}}>/{pricePeriod(props.data?.villa.fiyatTuru)}</label></h3>
+                                <h3 style={{color:'#de7f16'}}><CurrencyFormat value={props.data?.villa.fiyat} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={currencySymbol(props.data?.villa.paraBirimi)} /><label style={{fontWeight:'normal'}}>/{pricePeriod(props.data?.villa.fiyatTuru)}</label></h3>
                             </div>
                         </div>
                         

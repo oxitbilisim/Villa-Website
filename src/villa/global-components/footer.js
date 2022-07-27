@@ -40,7 +40,7 @@ const Footer = (props) => {
             $('body').attr("style", "");
         });
     }, [])
-   
+
     return (
         <footer className="ltn__footer-area  ">
             <div className="footer-top-area  section-bg-2 plr--5">
@@ -121,6 +121,15 @@ const Footer = (props) => {
                                 <div className="ltn__social-media mt-20">
                                     <Social/>
                                 </div>
+                                <div style={{textAlign:'center'}}>
+                                    <h6 className='mt-2' style={{fontSize: '12px', textAlign: 'center'}}>Acentamız
+                                        TURSAB güvencesi ile hizmet vermektedir</h6>
+                                    <a href="https://www.tursab.org.tr/tr/ddsv" target="_blank"
+                                       className="tursab">
+                                        <img src={"/assets/img/tursab.39a6ebb.png"}
+                                                               style={{height: "90px"}} />
+                                        </a>
+                                </div>
                             </div>
                         </div>
 
@@ -129,7 +138,7 @@ const Footer = (props) => {
             </div>
             <Copyright/>
         </footer>
-    )
+)
 }
 
 

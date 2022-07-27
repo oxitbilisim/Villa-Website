@@ -37,7 +37,7 @@ const CollectionList = (props) => {
                                             <td className="cart-product-info text-left">
                                                 <h4><Link target={'_blank'} to={"/villa/" + item?.url}>{item?.ad}</Link></h4>
                                             </td>
-                                            <td className="cart-product-price text-left"><span><CurrencyFormat value={item?.fiyat} displayType={'text'} thousandSeparator={true} prefix={currencySymbol(item.paraBirimi)} /><label>/{pricePeriod(item?.fiyatTuru)}</label></span></td>
+                                            <td className="cart-product-price text-left"><span><CurrencyFormat value={item?.fiyat} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={currencySymbol(item.paraBirimi)} /><label>/{pricePeriod(item?.fiyatTuru)}</label></span></td>
                                         </tr>
                                     )
                                 }

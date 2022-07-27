@@ -1,13 +1,52 @@
-import React, {Component, useContext} from 'react';
+import React, {Component, useContext, useEffect, useRef, useState} from 'react';
 import {Link} from 'react-router-dom';
 import { DatePicker } from 'antd';
 import {GlobalContext} from "../global-context";
-const { RangePicker } = DatePicker;
+import {DateRangePicker} from "react-dates/esm";
+import moment from "moment";
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
+import './react_dates_overrides_home.css';
+import './banner-v5.css';
+import $ from "jquery";
 
 const BannerV5 = () => {
     const {regions, categories} = useContext(GlobalContext);
+    const [filterStartDate, setFilterStartDate] = useState();
+    const [filterEndDate, setFilterEndDate] = useState();
+    const [focusedInput,setFocusedInput] = useState();
+    const [filterGuestCount, setFilterGuestCount] = useState();
 
-    return <div className="ltn__slider-area ltn__slider-4">
+    const selectRef = useRef();
+
+    const onChangeGuestCount = (e) => {
+        setFilterGuestCount(e.target.value);
+    }
+    
+    const filter = () => {
+        let qs = "?";
+        let firstFilterAdded = false; 
+        const region = $(selectRef.current).val();
+        if(region!=null && region?.trim()!=''){
+            qs = qs+"region="+encodeURIComponent(region);
+            firstFilterAdded = true;
+        }
+        if(filterGuestCount!=null && filterGuestCount?.trim()!=''){
+            qs = qs+(firstFilterAdded?"&":"")+"guestCount="+encodeURIComponent(filterGuestCount);
+            firstFilterAdded = true;
+        }
+        if(filterStartDate!=null){
+            qs = qs+(firstFilterAdded?"&":"")+"startDate="+encodeURIComponent(filterStartDate.format("yyyy-MM-DD"));
+            firstFilterAdded = true;
+        }
+        if(filterEndDate!=null){
+            qs = qs+(firstFilterAdded?"&":"")+"endDate="+encodeURIComponent(filterEndDate.format("yyyy-MM-DD"));
+            
+        }
+        window.location.href = '/villa-ara'+qs;
+    };
+    
+    return <div className="banner-v5-custom-style">
         <div
             className="ltn__slide-one-active----- slick-slide-arrow-1----- slick-slide-dots-1----- arrow-white----- ltn__slide-animation-active">
             {/* ltn__slide-item */}
@@ -23,39 +62,49 @@ const BannerV5 = () => {
                                         <div className="tab-content">
                                             <div className="tab-pane fade active show" id="ltn__form_tab_1_1">
                                                 <div className="car-dealer-form-inner">
-                                                    <form action="#" className="ltn__car-dealer-form-box row">
+                                                    <form className="ltn__car-dealer-form-box row">
                                                         <div
                                                             className="col-lg-3 col-md-6">
-                                                            <select className="nice-select">
-                                                                <option>Bölge</option>
+                                                            <select ref={selectRef} className="nice-select">
+                                                                <option value={''}>Bölge</option>
                                                                 {regions.map(item =>
-                                                                    <option key={'region-opt-'+item.id}>{item.ad}</option>
+                                                                    <option value={item.id} key={'region-opt-'+item.id}>{item.ad}</option>
                                                                 )}
                                                             </select>
                                                         </div>
                                                         <div
                                                             className="col-lg-3 col-md-6">
-                                                            <select>
-                                                                <option>Kişi Sayısı</option>
-                                                                <option>2</option>
-                                                                <option>3</option>
-                                                                <option>4</option>
-                                                                <option>5</option>
-                                                                <option>6+</option>
-                                                            </select>
+                                                            <div className="input-item input-item-name">
+                                                                <input onChange={onChangeGuestCount} onKeyPress={(event) => {
+                                                                    if (!/[0-9]/.test(event.key)) {
+                                                                        event.preventDefault();
+                                                                    }
+                                                                }} type="text" className="mb-0" name="ltn__name" placeholder="Misafir Sayısı" />
+                                                            </div>
                                                         </div>
-                                                        <div className="col-lg-3 col-md-6">
-                                                                                
+                                                        <div className="col-lg-4 col-md-6 home-date-range">
+                                                            <DateRangePicker
+                                                                startDatePlaceholderText="Giriş Tarihi"
+                                                                endDatePlaceholderText="Çıkış Tarihi"
+                                                                displayFormat={"DD.MM.YYYY"}
+                                                                firstDayOfWeek={1}
+                                                                startDate={filterStartDate} // momentPropTypes.momentObj or null,
+                                                                startDateId="startDate" // PropTypes.string.isRequired,
+                                                                endDate={filterEndDate} // momentPropTypes.momentObj or null,
+                                                                endDateId="endDate" // PropTypes.string.isRequired,
+                                                                onDatesChange={({ startDate, endDate }) => {
+                                                                    setFilterStartDate(startDate);
+                                                                    setFilterEndDate(endDate);
+                                                                }} // PropTypes.func.isRequired,
+                                                                focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                                                                onFocusChange={setFocusedInput} // PropTypes.func.isRequired,
+                                                            />       
                                                         </div>
 
 
-                                                        <div className="car-price-filter-range   col-lg-3">
-
-
+                                                        <div className="col-lg-2">
                                                             {/* <button type="submit" class="btn theme-btn-1 btn-effect-1 text-uppercase">Search Inventory</button> */}
-                                                            <Link to="/shop-right-sidebar"
-                                                                  className="btn theme-btn-1 btn-effect-1 text-uppercase  ">VİLLA
-                                                                ARA</Link>
+                                                            <button type="button" onClick={filter} className="btn theme-btn-1 btn-effect-1 text-uppercase">VİLLA ARA</button>
 
                                                         </div>
                                                     </form>

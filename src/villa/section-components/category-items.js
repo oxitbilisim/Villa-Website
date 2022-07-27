@@ -16,7 +16,7 @@ const CategoryItems = () => {
                     </div>
                 </div>
             </div>
-            <div className="row ltn__category-slider-active--- slick-arrow-1 justify-content-center go-top">
+            <div className="row justify-content-center go-top">
                 {categories.map(item => (
                     <div key={'category-'+item.id} className="col-lg-3 col-md-4 col-sm-6 col-6">
                         <div className="ltn__category-item ltn__category-item-5 ltn__category-item-5-2 text-center---">

@@ -15,8 +15,7 @@ const RegionItems = () => {
                     </div>
                 </div>
             </div>
-            <div className="row">
-
+            <div className="row justify-content-center">
                 {regions.map(item => (
                     <div key={'region-'+item.id} className="col-lg-4 col-md-6">
                         <div className="ltn__banner-item ltn__banner-style-4 text-color-white bg_image"
