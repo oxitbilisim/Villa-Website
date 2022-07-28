@@ -6,22 +6,24 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.scss";
 import "slick-carousel/slick/slick-theme.scss";
 import './villa-image.css'
+import $ from "jquery";
 
 const VillaImage = (props) => {
     const settings = {
         dots: false,
         infinite: true,
         speed: 500,
-        slidesToShow: 3,
+        slidesToShow: 4,
         slidesToScroll: 1,
         centerMode: true
     };
     useEffect(() => {
+    
         const minscript = document.createElement("script");
         minscript.async = true;
         minscript.src = "/assets/js/main.js";
         document.body.appendChild(minscript);
-
+        //$('.ltn__img-slider-area').lightcase();
     }, [props.list]);
 
     return <div>
@@ -30,8 +32,8 @@ const VillaImage = (props) => {
                 props.list.map(item =>
                     <div key={'img-' + item.id}>
                         
-                            <a href={process.env.REACT_APP_API_ENDPOINT+"/VillaFE/GetVillaImage?id=" + item.id} data-rel="lightcase:myCollection:slideshow">
-                                <img src={process.env.REACT_APP_API_ENDPOINT+"/VillaFE/GetVillaImage?id=" + item.id} alt="Image"/>
+                            <a href={process.env.REACT_APP_API_ENDPOINT+"/VillaFE/villa-image/"+item.id+".jpg"} data-rel="lightcase:myCollection:slideshow">
+                                <img src={process.env.REACT_APP_API_ENDPOINT+"/VillaFE/villa-image/"+item.id+".jpg"} alt="Image"/>
                             </a>
                      
                     </div>

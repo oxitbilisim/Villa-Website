@@ -18,13 +18,15 @@ const RegionItems = () => {
             <div className="row justify-content-center">
                 {regions.map(item => (
                     <div key={'region-'+item.id} className="col-lg-4 col-md-6">
+                        <Link to={'/bolge/' + item.url}>
                         <div className="ltn__banner-item ltn__banner-style-4 text-color-white bg_image"
                              style={{backgroundImage: "url('"+process.env.REACT_APP_API_ENDPOINT+"/VillaFE/GetRegionImage?id="+item.id+"')"}}>
                             <div className="ltn__banner-info">
-                                <h3><Link to={'/bolge/' + item.url}> {item.ad} </Link></h3>
+                                <h3> {item.ad} </h3>
                                 <mark> {item.toplam} Villa</mark>
                             </div>
                         </div>
+                        </Link>
                     </div>
                 ))}
             </div>

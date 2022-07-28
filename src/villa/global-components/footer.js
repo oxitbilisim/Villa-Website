@@ -60,6 +60,15 @@ const Footer = (props) => {
                                     sunmaktayız.</p>
 
                             </div>
+                            <div>
+                                <h6 className='mt-2' style={{fontSize: '12px'}}>Acentamız
+                                    TURSAB güvencesi ile hizmet vermektedir</h6>
+                                <a href="https://www.tursab.org.tr/tr/ddsv" target="_blank"
+                                   className="tursab">
+                                    <img src={"/assets/img/tursab.39a6ebb.png"}
+                                         style={{height: "90px"}} />
+                                </a>
+                            </div>
                         </div>
                         <div className="col-xl-3 col-md-6 col-sm-6 col-12">
                             <div className="footer-widget footer-menu-widget clearfix">
@@ -120,15 +129,6 @@ const Footer = (props) => {
                                 </div>
                                 <div className="ltn__social-media mt-20">
                                     <Social/>
-                                </div>
-                                <div style={{textAlign:'center'}}>
-                                    <h6 className='mt-2' style={{fontSize: '12px', textAlign: 'center'}}>Acentamız
-                                        TURSAB güvencesi ile hizmet vermektedir</h6>
-                                    <a href="https://www.tursab.org.tr/tr/ddsv" target="_blank"
-                                       className="tursab">
-                                        <img src={"/assets/img/tursab.39a6ebb.png"}
-                                                               style={{height: "90px"}} />
-                                        </a>
                                 </div>
                             </div>
                         </div>

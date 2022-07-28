@@ -26,7 +26,7 @@ const Root = () => {
                         <Route exact path="/villa/:subUri" component={VillaDetail}/>
                         <Route exact path="/collection/:subUri" component={Collection}/>
                         <Route exact path="/blog" component={BlogGrid}/>
-                        <Route exact path="/blog-details" component={BlogDetails}/>
+                        <Route exact path="/blog/:subUri" component={BlogDetails}/>
                         <Route exact path="/villa-ara" component={villaSearch}/>
                         <Route exact path="/iletisim" component={Contact}/>
                     </Switch>
