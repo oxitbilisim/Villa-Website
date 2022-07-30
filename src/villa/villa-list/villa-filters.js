@@ -269,13 +269,21 @@ const VillaFilters = (props) => {
                                     <div className="col-lg-6">
                                         <label>En Düşük</label>
                                         <div className="input-item input-item-custom">
-                                            <input type="text" name="startPrice" value={filterStartPrice} onChange={onChangeForm}/>
+                                            <input type="text" name="startPrice" onKeyPress={(event) => {
+                                                if (!/[0-9]/.test(event.key)) {
+                                                    event.preventDefault();
+                                                }
+                                            }} value={filterStartPrice} onChange={onChangeForm}/>
                                         </div>
                                     </div>
                                     <div className="col-lg-6">
                                         <label>En Yüksek</label>
                                         <div className="input-item input-item-custom">
-                                            <input type="text" name="endPrice" value={filterEndPrice} onChange={onChangeForm}/>
+                                            <input type="text" name="endPrice" onKeyPress={(event) => {
+                                                if (!/[0-9]/.test(event.key)) {
+                                                    event.preventDefault();
+                                                }
+                                            }} value={filterEndPrice} onChange={onChangeForm}/>
                                         </div>
                                     </div>
                                 </div>
