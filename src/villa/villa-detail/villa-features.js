@@ -5,8 +5,7 @@ import moment from "moment";
 
 const VillaFeatures = (props) => {
     return <div>
-        <h4 className="title-2 mb-10">Özellikler</h4>
-        <div className="property-details-amenities mb-60">
+        <div className="property-details-amenities">
             <div className="row">
                 <div className="col-lg-12 col-md-12">
                     <p>Havuz Özellikleri: {props.dataPool?.havuzOzellik}</p>
@@ -14,7 +13,7 @@ const VillaFeatures = (props) => {
                 {
                     [...Array(Math.ceil(props.data?.length/5)).keys()].map(p =>
                     
-                        <div className="col-lg-4 col-md-6">
+                        <div key={'item-'+p} className="col-lg-4 col-md-6">
                             <div className="ltn__menu-widget">
                                 <div className="ltn__blog-meta-btn">
                                     <div className="ltn__blog-meta">

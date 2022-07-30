@@ -1,19 +1,45 @@
 import React, {Component, useContext, useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
 import PropTypes from "prop-types";
-import VillaLocation from "./villa-location";
-import VillaPrices from "./villa-prices";
-import VillaFeatures from "./villa-features";
-import VillaExplanation from "./villa-explanation";
-import SimilarVillas from "../section-components/similar-villas";
 import {LikedVillaContext} from "../liked-villa-context";
 import './villa-info.css';
-import VillaCalendar from "./villa-calendar";
 import CurrencyFormat from "react-currency-format";
-import {currencySymbol, pricePeriod} from "../Constants";
+import {currencySymbol, pricePeriod, serverDateFormat} from "../Constants";
+import Tabs from "./tabs";
+import {DateRangePicker} from "react-dates/esm";
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
+import './css/react_dates_overrides.css';
+import moment from "moment";
+import axios from "axios";
 
 const VillaInfo = (props) => {
+    const [reservations, setReservations] = useState([]);
     const [state, dispatch] = useContext(LikedVillaContext);
+    const [focusedInput, setFocusedInput] = useState();
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
+    const [filterGuestCount, setFilterGuestCount] = useState();
+
+    const onChangeGuestCount = (e) => {
+        setFilterGuestCount(e.target.value);
+    }
+
+    useEffect(() => {
+        if (props.data?.villa?.id != null) {
+            loadReservationData(props.data?.villa?.id, moment().year());
+        }
+
+    }, [props.data])
+
+    const loadReservationData = (id, year) => {
+        axios.get(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetVillaReservations?id=" + id + "&year=" + year)
+            .then((response) => {
+                setReservations(response.data);
+                console.log(response.data);
+            }).finally(() => {
+        })
+    }
+
     const toggleLike = (villaId) => {
         if (state.likedVillaIds.includes(villaId)) {
             dispatch({
@@ -27,20 +53,51 @@ const VillaInfo = (props) => {
             });
         }
     }
+
+    const dayBlocker = (day) => {
+        const result = reservations.find(r => {
+            const start = moment(r.start, serverDateFormat);
+            const end = moment(r.end, serverDateFormat);
+
+            if (day.isBetween(start, end, 'days', "()")) {
+                return true;
+            } else {
+                return false;
+            }
+        })
+
+        return result == null ? false : true;
+    }
+
+    const dayHighlighted = (day) => {
+        const result = reservations.find(r => {
+            const start = moment(r.start, serverDateFormat);
+            const end = moment(r.end, serverDateFormat);
+
+            if (day.format(serverDateFormat) == start.format(serverDateFormat) || day.format(serverDateFormat) == end.format(serverDateFormat)) {
+                return true;
+            } else {
+                return false;
+            }
+        })
+
+        return result == null ? false : true;
+    }
+
     return <div className="ltn__shop-details-area pb-10">
         <div className="container">
             <div className="row">
                 <div className="col-lg-8 col-md-12">
                     <div className="ltn__shop-details-inner ltn__page-details-inner mb-60">
                         <div className={'villa-title mt-4'}>
-                        <h1>{props.data?.villa.ad} </h1>
-                        <a style={{cursor: 'pointer'}}
-                           onClick={() => toggleLike(props.data?.villa.id)} title="Beğen">
-                            {state?.likedVillaIds?.includes(props.data?.villa.id) ?
-                                <i style={{color: 'red'}} className="fa-solid fa-heart"/>
-                                : <i className="flaticon-heart-1"/>
-                            }
-                        </a>
+                            <h1>{props.data?.villa.ad} </h1>
+                            <a style={{cursor: 'pointer'}}
+                               onClick={() => toggleLike(props.data?.villa.id)} title="Beğen">
+                                {state?.likedVillaIds?.includes(props.data?.villa.id) ?
+                                    <i style={{color: 'red'}} className="fa-solid fa-heart"/>
+                                    : <i className="flaticon-heart-1"/>
+                                }
+                            </a>
                         </div>
                         <label><span className="ltn__secondary-color">
 							<i className="flaticon-pin"/></span> {props.data?.lokasyon.ilceIlAd},{props.data?.lokasyon.bolgeAd},{props.data?.lokasyon.mevki}
@@ -55,24 +112,59 @@ const VillaInfo = (props) => {
                             </li>
 
                         </ul>
-                        <VillaCalendar />
-                        <VillaExplanation data={props.data?.icerik}/>
-                        <VillaFeatures data={props.data?.ozellik} dataPool={props.data?.gorunum}/>
-                        <VillaLocation data={props.data?.lokasyon}/>
-                        <VillaPrices data={props.data?.periyodikFiyat}/>
-                        <SimilarVillas limit={2}/>
+
+                        <Tabs data={props.data} reservations={reservations}/>
+
                     </div>
                 </div>
 
                 <div className="col-lg-4 go-top">
                     <aside className="sidebar ltn__shop-sidebar ltn__right-sidebar---">
 
-                        <div className="widget ltn__author-widget" style={{padding:'35px 30px 30px 35px'}}>
+                        <div className="widget ltn__author-widget" style={{padding: '35px 15px 30px 15px'}}>
                             <div className="ltn__author-widget-inner text-center">
-                                <h3 style={{color:'#de7f16'}}><CurrencyFormat value={props.data?.villa.fiyat} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={currencySymbol(props.data?.villa.paraBirimi)} /><label style={{fontWeight:'normal'}}>/{pricePeriod(props.data?.villa.fiyatTuru)}</label></h3>
+                                <h3 style={{color: '#de7f16'}}><CurrencyFormat value={props.data?.villa.fiyat}
+                                                                               displayType={'text'}
+                                                                               thousandSeparator={'.'}
+                                                                               decimalSeparator={','}
+                                                                               prefix={currencySymbol(props.data?.villa.paraBirimi)}/><label
+                                    style={{fontWeight: 'normal'}}>/{pricePeriod(props.data?.villa.fiyatTuru)}</label>
+                                </h3>
+                            </div>
+
+                            <div className="col-lg-12 filter-data-range">
+                                <DateRangePicker
+                                    minimumNights={1}
+                                    startDatePlaceholderText="Giriş Tarihi"
+                                    endDatePlaceholderText="Çıkış Tarihi"
+                                    displayFormat={"DD.MM.YYYY"}
+                                    firstDayOfWeek={1}
+                                    startDate={startDate} // momentPropTypes.momentObj or null,
+                                    startDateId="startDate" // PropTypes.string.isRequired,
+                                    endDate={endDate} // momentPropTypes.momentObj or null,
+                                    endDateId="endDate" // PropTypes.string.isRequired,
+                                    onDatesChange={({startDate, endDate}) => {
+                                        setStartDate(startDate);
+                                        setEndDate(endDate);
+                                    }} // PropTypes.func.isRequired,
+                                    focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                                    onFocusChange={setFocusedInput} // PropTypes.func.isRequired,
+                                    isDayBlocked={dayBlocker}
+                                    isDayHighlighted={dayHighlighted}
+                                />
+                            </div>
+                            <div
+                                className="col-lg-12 mt-2">
+                                <div className="input-item input-item-name">
+                                    <input onChange={onChangeGuestCount} onKeyPress={(event) => {
+                                        if (!/[0-9]/.test(event.key)) {
+                                            event.preventDefault();
+                                        }
+                                    }} type="text" className="mb-0" name="ltn__name" placeholder="Misafir Sayısı"/>
+                                </div>
                             </div>
                         </div>
-                        
+
                     </aside>
                 </div>
             </div>

@@ -5,8 +5,7 @@ import moment from "moment";
 
 const VillaPrices = (props) => {
     return <div>
-        <h4 className="title-2">Fiyatlar</h4>
-        <div className="ltn__apartments-plan-area product-details-apartments-plan mb-60">
+        <div className="ltn__apartments-plan-area product-details-apartments-plan">
             <div
                 className=" d-none ltn__tab-menu ltn__tab-menu-2 ltn__tab-menu-top-right-- text-uppercase--- text-center---">
                 <div className="nav">
