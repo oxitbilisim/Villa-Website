@@ -26,13 +26,13 @@ const BlogGrid = () => {
                             <div key={'blog-'+item.id} className="col-lg-4 col-sm-6 col-12">
                                 <div className="ltn__blog-item ltn__blog-item-3">
                                     <div className="ltn__blog-img">
-                                        <Link to={"/blog/"+item.url}><img src={process.env.REACT_APP_API_ENDPOINT+"/VillaFE/GetBlogImage?id=" + item.id} alt="#"/></Link>
+                                        <Link to={"/blog/"+item.url}><img height={250} src={process.env.REACT_APP_API_ENDPOINT+"/VillaFE/GetBlogImage?id=" + item.id} alt="#"/></Link>
                                     </div>
                                     <div className="ltn__blog-brief">
 
                                         <h3 className="ltn__blog-title"><Link to={"/blog/"+item.url}>{item.baslik}</Link></h3>
                                         <div className="ltn__blog-meta-btn">
-                                            <div className="ltn__blog-meta">
+                                            <div className="ltn__blog-meta is-hide" >
                                                 <ul>
                                                     {item.createDate != null ? <li className="ltn__blog-date"><i
                                                         className="far fa-calendar-alt"/>{moment(item.createDate).format('dd.MM.yyyy')}
@@ -50,7 +50,7 @@ const BlogGrid = () => {
                     }
 
                 </div>
-                <div className="row">
+                <div className="row is-hide">
                     <div className="col-lg-12">
                         <div className="ltn__pagination-area text-center">
                             <div className="ltn__pagination">

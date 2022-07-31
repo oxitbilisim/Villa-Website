@@ -10,7 +10,7 @@ const BlogDetails = (props) => {
     const [detail, setDetail] = useState();
     useEffect(()=>{
         if(props?.data?.blogIcerik[0]?.icerik!=null){
-            setDetail(JSON.parse(props?.data?.blogIcerik[0]?.icerik));  
+            setDetail(JSON.parse(props?.data?.blogIcerik[0]?.icerik));
             console.log(JSON.parse(props?.data?.blogIcerik[0]?.icerik));
         }
     },[props.data])
@@ -37,15 +37,15 @@ const BlogDetails = (props) => {
                                         </li> : null}
                                     </ul>
                                 </div>
-                                <p style={{textAlign:'center'}}>
+                                <p style={{textAlign:'left'}}>
                                     <img style={{maxHeight:'350px'}} src={process.env.REACT_APP_API_ENDPOINT+"/VillaFE/GetBlogImage?id=" + props.data?.id} alt="Image" />
                                 </p>
-                                <p>{detail?.blocks.map(item => 
+                                <p>{detail?.blocks.map(item =>
                                         <>{item.text}</>
                                 )}</p>
 
                             </div>
-                            
+
 
                         </div>
                     </div>

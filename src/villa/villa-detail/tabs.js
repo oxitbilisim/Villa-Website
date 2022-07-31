@@ -10,11 +10,10 @@ import VillaCalendar from "./villa-calendar";
 const Tabs = (props) => {
 
     return <div className={"ltn__apartments-plan-area mt-5"}>
-        <div className="container">
-            <div className="row">
-                <div className="col-lg-12">
+
+
                     <div
-                        className="ltn__tab-menu ltn__tab-menu-3 ltn__tab-menu-top-right-- text-uppercase--- text-center">
+                        className="ltn__tab-menu ltn__tab-menu-3 ltn__tab-menu-top-right-- text-uppercase--- text-left">
                         <div className="nav">
                             <a data-bs-toggle="tab" href="#liton_tab_3_1">Açıklama</a>
                             <a data-bs-toggle="tab" href="#liton_tab_3_2">Özellikler</a>
@@ -41,9 +40,8 @@ const Tabs = (props) => {
                         </div>
                     </div>
 
-                </div>
-            </div>
-        </div>
+
+
     </div>
 }
 
