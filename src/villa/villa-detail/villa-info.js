@@ -88,8 +88,12 @@ const VillaInfo = (props) => {
         <div className="container">
             <div className="row">
                 <div className="col-lg-8 col-md-12">
+
+
                     <div className="ltn__shop-details-inner ltn__page-details-inner mb-60">
-                        <div className={'villa-title mt-4'}>
+  <div className="row">
+                     <div className="col-lg-7 col-md-12">
+                         <div className={'villa-title mt-2'}>
                             <h1>{props.data?.villa.ad} </h1>
                             <a style={{cursor: 'pointer'}}
                                onClick={() => toggleLike(props.data?.villa.id)} title="Beğen">
@@ -98,10 +102,15 @@ const VillaInfo = (props) => {
                                     : <i className="flaticon-heart-1"/>
                                 }
                             </a>
-                        </div>
-                        <label><span className="ltn__secondary-color">
+                         <br/>
+                              <label><span className="ltn__secondary-color ">
 							<i className="flaticon-pin"/></span> {props.data?.lokasyon.ilceIlAd},{props.data?.lokasyon.bolgeAd},{props.data?.lokasyon.mevki}
                         </label>
+
+                        </div>
+                          </div>
+                          <div className="col-lg-5 col-md-12 mt-3" style={{textAlignLast: 'right'}} >
+
 
                         <ul className="ltn__list-item-2 ltn__list-item-2-before ltn__flat-info">
                             <li><span>{props.data?.villa.kapasite} <i className="flaticon-user"></i></span>Kapasite</li>
@@ -112,6 +121,9 @@ const VillaInfo = (props) => {
                             </li>
 
                         </ul>
+                          </div>
+                     </div>
+
 
                         <Tabs data={props.data} reservations={reservations}/>
 

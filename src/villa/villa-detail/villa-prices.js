@@ -20,7 +20,7 @@ const VillaPrices = (props) => {
                             <div className="container">
 
                                 <div className="row">
-                                    <div className="col-lg-12">
+                                    <div className="col-lg-9">
                                         <div className="ltn__select-availability-table-wrap">
                                             <div
                                                 className="ltn__select-availability-table d-none d-md-block">
@@ -35,7 +35,7 @@ const VillaPrices = (props) => {
                                                     <ul key={'price-'+item.id} className="ltn__select-availability-table-row">
                                                         <li>{moment(item.baslangic, serverDateFormat).format(dateFormat) +" - "+ moment(item.bitis, serverDateFormat).format(dateFormat)}</li>
                                                         <li>{item.enAzKiralama} Gece</li>
-                                                        <li>{item.fiyat} {item.paraBirimiAd}</li>
+                                                        <li><b>{item.fiyat} {item.paraBirimiAd}</b></li>
 
                                                     </ul>
                                                 ))}
@@ -43,6 +43,18 @@ const VillaPrices = (props) => {
                                             </div>
 
                                         </div>
+                                    </div>
+
+
+                                    <div className="col-lg-3 mt-5">
+                                          <div className="widget ltn__author-widget" style={{padding: '10px'}}>
+                            <p style={{fontSize:12}}><b>Kiralama Kaporası: </b> 35 %</p>
+                            <p style={{fontSize:12}}><b>Hasar Depozitosu: </b> 1250 TL</p>
+                            <p style={{fontSize:12}}><b>Ekstra Temizlik Ücreti: </b> 400 TL</p>
+
+
+ </div>
+
                                     </div>
                                 </div>
                             </div>

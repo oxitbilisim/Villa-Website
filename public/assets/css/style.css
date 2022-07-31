@@ -10447,6 +10447,7 @@ ul.wp-block-latest-posts.is-grid.alignwide {
 
 #lightcase-info {
   color: var(--ltn__color-1);
+  display: none !important;
 }
 
 #lightcase-caption {
@@ -15097,7 +15098,7 @@ input.cart-plus-minus-box {
   position: relative;
   margin-right: 30px;
   max-width: 160px;
-  font-size: 14px;
+  font-size: 16px;
 }
 .ltn__list-item-2 li span {
   display: block;
@@ -17155,6 +17156,7 @@ input.cart-plus-minus-box {
   -ms-flex: 1;
   flex: 1;
   text-align: center;
+  font-size: 15px;
 }
 
 .ltn__select-availability-table .ltn__select-availability-table-head {

@@ -76,7 +76,7 @@ const Footer = (props) => {
                                 <div className="footer-menu go-top">
                                     <ul>
                                         {regions.map(item => (
-                                            <li key={'footer-region-' + item.id}><Link to={item.url}>{item.ad}</Link>
+                                            <li key={'footer-region-' + item.id}><Link to={'/bolge/' +item.url}>{item.ad}</Link>
                                             </li>
                                         ))}
                                     </ul>
@@ -89,7 +89,7 @@ const Footer = (props) => {
                                 <div className="footer-menu go-top">
                                     <ul>
                                         {categories.map(item => (
-                                            <li key={'footer-category-' + item.id}><Link to={item.url}>{item.ad}</Link>
+                                            <li key={'footer-category-' + item.id}><Link to={'/kategori/' +item.url}>{item.ad}</Link>
                                             </li>
                                         ))}
                                     </ul>
