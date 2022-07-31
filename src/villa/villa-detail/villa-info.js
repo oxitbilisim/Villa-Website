@@ -11,6 +11,8 @@ import 'react-dates/lib/css/_datepicker.css';
 import './css/react_dates_overrides.css';
 import moment from "moment";
 import axios from "axios";
+import {objectToQueryParam, queryParamToObject} from "../common-lib";
+import {end} from "npm-check/lib/util/cli-emoji";
 
 const VillaInfo = (props) => {
     const [reservations, setReservations] = useState([]);
@@ -30,6 +32,37 @@ const VillaInfo = (props) => {
         }
 
     }, [props.data])
+
+    useEffect(() => {
+        const cachedFilters = localStorage.getItem('searchParams')
+        if (cachedFilters != null) {
+            const filterObject = queryParamToObject(cachedFilters);
+            if (filterObject.startDate != null) {
+                setStartDate(moment(filterObject.startDate));
+            }
+            if (filterObject.endDate != null) {
+                setEndDate(moment(filterObject?.endDate));
+            }
+            if (filterObject.guestCount != null) {
+                setFilterGuestCount(filterObject?.guestCount);
+            }
+        }
+    }, [])
+
+    useEffect(() => {
+        if (startDate != null &&
+            endDate != null &&
+            filterGuestCount != null && filterGuestCount != 0) {
+            props.data?.villa.id;
+            const qs = "?startDate="+encodeURIComponent(startDate.format(serverDateFormat))
+                +"&endDate="+encodeURIComponent(endDate.format(serverDateFormat))
+                +"&guestCount="+encodeURIComponent(filterGuestCount)
+            axios.get(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/CostCalculate" + qs)
+                .then((response) => {
+
+                });
+        }
+    }, [startDate, endDate, filterGuestCount])
 
     const loadReservationData = (id, year) => {
         axios.get(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetVillaReservations?id=" + id + "&year=" + year)
@@ -156,11 +189,13 @@ const VillaInfo = (props) => {
                             <div
                                 className="col-lg-12 mt-2">
                                 <div className="input-item input-item-name">
-                                    <input onChange={onChangeGuestCount} onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }} type="text" className="mb-0" name="ltn__name" placeholder="Misafir Sayısı"/>
+                                    <input onChange={onChangeGuestCount} value={filterGuestCount}
+                                           onKeyPress={(event) => {
+                                               if (!/[0-9]/.test(event.key)) {
+                                                   event.preventDefault();
+                                               }
+                                           }} type="text" className="mb-0" name="ltn__name"
+                                           placeholder="Misafir Sayısı"/>
                                 </div>
                             </div>
                         </div>

@@ -9,40 +9,17 @@ import 'react-dates/lib/css/_datepicker.css';
 import './react_dates_overrides.css';
 import moment from "moment";
 import $ from "jquery";
+import {objectToQueryParam, queryParamToObject} from "../common-lib";
 
 const VillaFilters = (props) => {
 
-    const arrayKeys = ['type', 'region', 'category', 'property'];
+    
     const [focusedInput,setFocusedInput] = useState();
     const guestCountRef = useRef();
-    const queryParamToObject = () => {
-        let qs = props.location.search;
-        qs = qs.replaceAll('?', '');
-
-        let obj = {};
-        qs.split('&').forEach(i => {
-            if (i == null || i == '') {
-                return;
-            }
-            const tmp = i.split('=');
-            const key = tmp[0];
-            let value = decodeURIComponent(tmp[1]);
-            if (arrayKeys.includes(key)) {
-                value = value.split(',').reduce((prev, curr) => {
-                    if (prev == null) {
-                        prev = [];
-                    }
-                    prev.push(decodeURIComponent(curr));
-                    return prev;
-                }, [])
-            }
-            obj[key] = value;
-        })
-        return obj;
-    }
+    
 
     const initializeFilterObject = () => {
-        const obj = queryParamToObject();
+        const obj = queryParamToObject(props.location.search);
         const initObject = {
             type: obj.type == null ? [] : obj.type,
             region: obj.region == null ? [] : obj.region,
@@ -69,25 +46,10 @@ const VillaFilters = (props) => {
     const [filterEndDate, setFilterEndDate] = useState(filterObject?.endDate!=null && filterObject?.endDate!=''?moment(filterObject?.endDate):null);
     const [filterGuestCount, setFilterGuestCount] = useState(filterObject?.guestCount);
     
-    
     useEffect(() => {
         loadVillasProperties();
         loadEstates();
     }, [props.match.params.subUri]);
-
-    const loadData = () => {
-        const qs = objectToQueryParam(filterObject);
-        axios.get(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/SearchVilla" + props.location.search)
-            .then((response) => {
-
-            });
-    }
-    
-
-    useEffect(() => {
-        loadData();
-    }, [props.location.search]);
-    
 
     const addFilter = (key, value) => {
         const filterObject_ = filterObject;
@@ -100,6 +62,7 @@ const VillaFilters = (props) => {
             filterObject_[key] = value;
         }
         const qs = objectToQueryParam(filterObject_);
+        localStorage.setItem('searchParams',qs)
         redirectToSearch(qs);
         setFilterObject(filterObject_);
     }
@@ -116,40 +79,13 @@ const VillaFilters = (props) => {
         }
 
         const qs = objectToQueryParam(filterObject_);
+        localStorage.setItem('searchParams',qs)
         redirectToSearch(qs);
         setFilterObject(filterObject_);
     }
 
     const redirectToSearch = (qs) => {
         props.history.push("/villa-ara?" + qs);
-    }
-
-    const objectToQueryParam = (obj) => {
-        var queryString = Object.keys(obj).reduce((prev, key) => {
-            let item = '';
-            if (Array.isArray(obj[key])) {
-                const arrstr = reduceFilterArray(obj[key])
-                if (arrstr != null) {
-                    item = key + '=' + arrstr;
-                }
-            } else {
-                if (obj[key] != null && obj[key].trim() != '') {
-                    item = key + '=' + encodeURIComponent(obj[key]);
-                }
-            }
-            return prev + (prev != '' && item != '' ? '&' : '') + item;
-        }, '');
-
-        return queryString;
-    }
-
-    const reduceFilterArray = (arr) => {
-        if (arr.length > 0) {
-            return arr.reduce(
-                (prev, curr) => prev + (prev != '' ? ',' : '') + curr, ''
-            )
-        }
-        return null;
     }
 
     const loadVillasProperties = () => {
