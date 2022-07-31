@@ -11871,7 +11871,7 @@ ul.wp-block-latest-posts.is-grid.alignwide {
 
 .ltn__blog-title {
   margin-bottom: 20px;
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 600;
 }
 
@@ -12407,7 +12407,7 @@ ul.wp-block-latest-posts.is-grid.alignwide {
 
 .ltn__page-details-inner .ltn__blog-title {
   margin-top: 0;
-  font-size: 30px;
+  font-size: 24px;
 }
 
 .ltn__page-details-inner .ltn__blog-img {
@@ -12425,7 +12425,7 @@ ul.wp-block-latest-posts.is-grid.alignwide {
 /* blog-details-wrap */
 .ltn__blog-details-wrap {
   border: 2px solid var(--border-color-11);
-  padding: 50px;
+  padding: 0 50px;
 }
 
 blockquote {
@@ -18089,6 +18089,13 @@ input.cart-plus-minus-box {
 }
 .is-hide {
   display: none;
+}
+.slick-prev{
+  left:0 !important;
+
+}
+.slick-next{
+  right: 0 !important;
 }
 
 /* ----------------------------------------------------
