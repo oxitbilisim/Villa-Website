@@ -163,6 +163,20 @@ const VillaInfo = (props) => {
                                     }} type="text" className="mb-0" name="ltn__name" placeholder="Misafir Sayısı"/>
                                 </div>
                             </div>
+
+                        <div className="col-lg-12 col-md-12 mt-3">
+
+                            <p><b>02/10/2022 - 08/10/2022  </b> 6 Gece</p>
+                            <p><b>Toplam Tutar: </b> 10.000 TL</p>
+                            <p><b>Ön Ödeme: </b> 3.000 TL</p>
+                            <p><b>Depozito: </b> 1.000 TL</p>
+                            <p><b>Fiyata Dahil Olanlar: </b> Konaklama, Elektrik,Su, Doğalgaz, İnternet, Giriş Temizliği,Havuz Temizliği</p>
+
+                        </div>
+
+
+
+
                         </div>
 
                     </aside>
