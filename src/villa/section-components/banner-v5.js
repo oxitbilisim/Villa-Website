@@ -9,6 +9,7 @@ import 'react-dates/lib/css/_datepicker.css';
 import './react_dates_overrides_home.css';
 import './banner-v5.css';
 import $ from "jquery";
+import {queryParamToObject} from "../common-lib";
 
 const BannerV5 = () => {
     const {regions, categories} = useContext(GlobalContext);
@@ -18,6 +19,25 @@ const BannerV5 = () => {
     const [filterGuestCount, setFilterGuestCount] = useState();
 
     const selectRef = useRef();
+
+    useEffect(() => {
+        const cachedFilters = localStorage.getItem('searchParams')
+        if (cachedFilters != null) {
+            const filterObject = queryParamToObject(cachedFilters);
+            if (filterObject.startDate != null) {
+                setFilterStartDate(moment(filterObject.startDate));
+            }
+            if (filterObject.endDate != null) {
+                setFilterEndDate(moment(filterObject?.endDate));
+            }
+            if (filterObject.guestCount != null) {
+                setFilterGuestCount(filterObject?.guestCount);
+            }
+            if(filterObject.region?.length>0){
+                $(selectRef.current).val(filterObject.region[0]);
+            }
+        }
+    }, [])
 
     const onChangeGuestCount = (e) => {
         setFilterGuestCount(e.target.value);
@@ -43,6 +63,7 @@ const BannerV5 = () => {
             qs = qs+(firstFilterAdded?"&":"")+"endDate="+encodeURIComponent(filterEndDate.format("yyyy-MM-DD"));
             
         }
+        localStorage.setItem('searchParams',qs)
         window.location.href = '/villa-ara'+qs;
     };
     
@@ -75,7 +96,7 @@ const BannerV5 = () => {
                                                         <div
                                                             className="col-lg-3 col-md-6">
                                                             <div className="input-item input-item-name">
-                                                                <input onChange={onChangeGuestCount} onKeyPress={(event) => {
+                                                                <input onChange={onChangeGuestCount} value={filterGuestCount} onKeyPress={(event) => {
                                                                     if (!/[0-9]/.test(event.key)) {
                                                                         event.preventDefault();
                                                                     }

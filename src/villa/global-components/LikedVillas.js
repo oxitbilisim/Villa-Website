@@ -50,14 +50,14 @@ const LikedVillas = (props) => {
                         list.map(item =>
                             <div key={'liked-villa-' + item.id} className="mini-cart-item clearfix">
                                 <div className="mini-cart-img go-top">
-                                    <Link to="/product-details"><img
+                                    <Link to={"/villa/" + item?.url} target={"_blank"}><img
                                         src={process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetVillaImage?id=" + item.imageId}
                                         alt="Image"/></Link>
                                     <span onClick={() => unlike(item.id)} className="mini-cart-item-delete"><i
                                         className="icon-cancel"/></span>
                                 </div>
                                 <div className="mini-cart-info go-top">
-                                    <h6><Link to="/product-details">{item.ad}</Link></h6>
+                                    <h6><Link to={"/villa/" + item?.url} target={"_blank"}>{item.ad}</Link></h6>
                                     <span className="mini-cart-quantity">
                                         {item?.fiyat != null ?
                                             <>

@@ -18,7 +18,22 @@ const VillaCalendar = (props) => {
             const start = moment(r.start, serverDateFormat);
             const end = moment(r.end, serverDateFormat);
 
-            if (day.isBetween(start, end,'days',"[]")) {
+            if (day.isBetween(start, end, 'days', "()")) {
+                return true;
+            } else {
+                return false;
+            }
+        })
+
+        return result == null ? false : true;
+    }
+
+    const dayHighlighted = (day) => {
+        const result = props.reservations.find(r => {
+            const start = moment(r.start, serverDateFormat);
+            const end = moment(r.end, serverDateFormat);
+
+            if (day.format(serverDateFormat) == start.format(serverDateFormat) || day.format(serverDateFormat) == end.format(serverDateFormat)) {
                 return true;
             } else {
                 return false;
@@ -28,7 +43,7 @@ const VillaCalendar = (props) => {
         return result == null ? false : true;
     }
     
-    return <div>
+    return <div className={'filter-data-range'}>
         <DayPickerRangeController
             numberOfMonths={2}
             firstDayOfWeek={1}
@@ -41,6 +56,7 @@ const VillaCalendar = (props) => {
             focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
             onFocusChange={setFocusedInput} // PropTypes.func.isRequired,
             isDayBlocked={dayBlocker}
+            isDayHighlighted={dayHighlighted}
         />
     </div>
 }

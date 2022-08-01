@@ -16,25 +16,35 @@
     padding-right: 20px !important;
 }
 .filter-data-range .CalendarDay__selected_span {
-    background: var(--ltn__secondary-color);
+    background: var(--ltn__secondary-color) !important;
 
 }
 
 .filter-data-range .CalendarDay__selected {
-    background: var(--ltn__secondary-color);
+    background: var(--ltn__secondary-color) !important;
     color: white;
 }
 
 .filter-data-range .CalendarDay__selected:hover {
-    background: var(--ltn__secondary-color);
+    background: var(--ltn__secondary-color) !important;
     color: white;
 }
 
 .filter-data-range .CalendarDay__hovered_span:hover,
 .filter-data-range .CalendarDay__hovered_span {
-    background: var(--ltn__secondary-color);;
+    background: var(--ltn__secondary-color) !important;
 }
 
 .filter-data-range .DayPicker_weekHeader_li{
     margin-top: 0px !important;
+}
+
+.filter-data-range .CalendarDay__highlighted_calendar{
+    background: linear-gradient(0deg,#fff,#fff 50%,#f4af35 50%,#f4af35)!important;
+}
+
+.filter-data-range .CalendarDay__blocked_calendar {
+    background: #f4af35;
+    border: 1px solid #cacccd;
+    color: #7f7f7f;
 }
