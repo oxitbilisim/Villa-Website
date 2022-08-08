@@ -63,6 +63,7 @@ const LikedVillas = (props) => {
                                             <>
                                                 <CurrencyFormat value={item?.fiyat} displayType={'text'}
                                                                 thousandSeparator={'.'} decimalSeparator={','}
+                                                                decimalScale={0}
                                                                 prefix={currencySymbol(item?.paraBirimi)}/>
                                                 /{pricePeriod(item?.fiyatTuru)}
                                             </>

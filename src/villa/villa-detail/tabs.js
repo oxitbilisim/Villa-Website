@@ -10,8 +10,6 @@ import VillaCalendar from "./villa-calendar";
 const Tabs = (props) => {
 
     return <div className={"ltn__apartments-plan-area mt-5"}>
-
-
                     <div
                         className="ltn__tab-menu ltn__tab-menu-3 ltn__tab-menu-top-right-- text-uppercase--- text-left">
                         <div className="nav">

@@ -2,11 +2,11 @@ export const dateFormat = 'DD.MM.YYYY';
 export const serverDateFormat = 'YYYY-MM-DD';
 
 export const currencySymbol = (currency) => {
-  if(currency=='TL'){
+  if(currency=='TRY'){
       return '₺';
   }else if(currency=='USD'){
       return '$';
-  }else if(currency=='EURO'){
+  }else if(currency=='EUR'){
       return '€';
   }else if(currency=='GBP'){
       return '£';

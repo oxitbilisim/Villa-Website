@@ -1,20 +1,33 @@
 import React, {Component} from 'react';
 import PropTypes from "prop-types";
-import {dateFormat, serverDateFormat} from "../Constants";
+import {currencySymbol, dateFormat, serverDateFormat} from "../Constants";
 import moment from "moment";
+import CurrencyFormat from "react-currency-format";
 
 const VillaPrices = (props) => {
+
+    let currencyList = props.data?.reduce((previous, currentObj, index) => {
+            if (!previous.includes(currentObj.paraBirimiAd)) {
+                previous.push(currentObj.paraBirimiAd);
+            }
+            return previous;
+        },
+        []);
+
     return <div>
         <div className="ltn__apartments-plan-area product-details-apartments-plan">
             <div
-                className=" d-none ltn__tab-menu ltn__tab-menu-2 ltn__tab-menu-top-right-- text-uppercase--- text-center---">
+                className="ltn__tab-menu ltn__tab-menu-2 ltn__tab-menu-top-right-- text-uppercase--- text-center---">
                 <div className="nav">
-                    <a className="active show" data-bs-toggle="tab" href="#liton_tab_3_1">TL</a>
+                    {currencyList.map((item,index) =>
+                        <a key={'t-'+index} className={index == 0?"active show":""} data-bs-toggle="tab" href={"#liton_tab_1_"+index}>{item}</a>
+                    )}
 
                 </div>
             </div>
             <div className="tab-content">
-                <div className="tab-pane fade active show" id="liton_tab_3_1">
+                {currencyList.map((currency,index) =>
+                <div key={'t-'+index} className={"tab-pane fade"+(index == 0?" active show":"")} id={"liton_tab_1_"+index}>
                     <div className="ltn__product-tab-content-inner">
                         <div className="select-availability-area pb-20">
                             <div className="container">
@@ -31,11 +44,12 @@ const VillaPrices = (props) => {
 
                                                 </ul>
 
-                                                {props.data?.map(item => (
-                                                    <ul key={'price-'+item.id} className="ltn__select-availability-table-row">
-                                                        <li>{moment(item.baslangic, serverDateFormat).format(dateFormat) +" - "+ moment(item.bitis, serverDateFormat).format(dateFormat)}</li>
+                                                {props.data?.filter(i => i.paraBirimiAd==currency).map(item => (
+                                                    <ul key={'price-' + item.id}
+                                                        className="ltn__select-availability-table-row">
+                                                        <li>{moment(item.baslangic, serverDateFormat).format(dateFormat) + " - " + moment(item.bitis, serverDateFormat).format(dateFormat)}</li>
                                                         <li>{item.enAzKiralama} Gece</li>
-                                                        <li><b>{item.fiyat} {item.paraBirimiAd}</b></li>
+                                                        <li><b><CurrencyFormat value={item.fiyat} displayType={'text'} decimalScale={0} thousandSeparator={'.'} decimalSeparator={','} prefix={currencySymbol(item.paraBirimiAd)} /></b></li>
 
                                                     </ul>
                                                 ))}
@@ -50,6 +64,8 @@ const VillaPrices = (props) => {
                         </div>
                     </div>
                 </div>
+                )}
+                
             </div>
         </div>
     </div>
