@@ -20,9 +20,9 @@ class CopyRight extends Component {
 				<div className="col-md-8 col-12 align-self-center">
 					<div className="ltn__copyright-menu text-end">
 					<ul className="go-top">
-						<li><Link to="/about">Kiralama Sözleşmesi</Link></li>
-						<li><Link to="/about">Hesap numaralarımız</Link></li>
-						<li><Link to="/about">Hakkımızda</Link></li>
+						<li><Link to="/sayfa/kiralama-sozlesmesi">Kiralama Sözleşmesi</Link></li>
+						<li><Link to="/sayfa/hesap-numaralarimiz">Hesap numaralarımız</Link></li>
+						<li><Link to="/sayfa/hakkimizda">Hakkımızda</Link></li>
 					</ul>
 					</div>
 				</div>

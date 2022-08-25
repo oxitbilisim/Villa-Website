@@ -13,6 +13,8 @@ import BlogDetails from "./villa/blog-details";
 import villaSearch from "./villa/villa-search";
 import LikedVillaContextProvider from "./villa/liked-villa-context";
 import Collection from "./villa/collection";
+import VillaReservation from "./villa/villa-reservation/villa-reservation";
+import Page from "./villa/page";
 
 const Root = () => {
     return (
@@ -29,6 +31,8 @@ const Root = () => {
                         <Route exact path="/blog/:subUri" component={BlogDetails}/>
                         <Route exact path="/villa-ara" component={villaSearch}/>
                         <Route exact path="/iletisim" component={Contact}/>
+                        <Route exact path="/rezervasyon/:subUri" component={VillaReservation}/>
+                        <Route exact path="/sayfa/:subUri" component={Page}/>
                     </Switch>
                 </LikedVillaContextProvider>
             </GlobalContextProvider>

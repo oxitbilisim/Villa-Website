@@ -17,6 +17,7 @@ const BannerV5 = () => {
     const [filterEndDate, setFilterEndDate] = useState();
     const [focusedInput,setFocusedInput] = useState();
     const [filterGuestCount, setFilterGuestCount] = useState();
+    const [filterName, setFilterName] = useState();
 
     const selectRef = useRef();
 
@@ -42,6 +43,9 @@ const BannerV5 = () => {
     const onChangeGuestCount = (e) => {
         setFilterGuestCount(e.target.value);
     }
+    const onChangeName = (e) => {
+        setFilterName(e.target.value);
+    }
     
     const filter = () => {
         let qs = "?";
@@ -55,6 +59,10 @@ const BannerV5 = () => {
             qs = qs+(firstFilterAdded?"&":"")+"guestCount="+encodeURIComponent(filterGuestCount);
             firstFilterAdded = true;
         }
+        if(filterName!=null && filterName?.trim()!=''){
+            qs = qs+(firstFilterAdded?"&":"")+"name="+encodeURIComponent(filterName);
+            firstFilterAdded = true;
+        }
         if(filterStartDate!=null){
             qs = qs+(firstFilterAdded?"&":"")+"startDate="+encodeURIComponent(filterStartDate.format("yyyy-MM-DD"));
             firstFilterAdded = true;
@@ -66,6 +74,11 @@ const BannerV5 = () => {
         localStorage.setItem('searchParams',qs)
         window.location.href = '/villa-ara'+qs;
     };
+
+    const onSubmit = (event) => {
+        event.preventDefault();
+        filter();
+    }
     
     return <div className="banner-v5-custom-style">
         <div
@@ -83,9 +96,9 @@ const BannerV5 = () => {
                                         <div className="tab-content">
                                             <div className="tab-pane fade active show" id="ltn__form_tab_1_1">
                                                 <div className="car-dealer-form-inner">
-                                                    <form className="ltn__car-dealer-form-box row">
+                                                    <form onSubmit={onSubmit} className="ltn__car-dealer-form-box row">
                                                         <div
-                                                            className="col-lg-3 col-md-6">
+                                                            className="col-lg-4 col-md-6">
                                                             <select ref={selectRef} className="nice-select">
                                                                 <option value={''}>Bölge</option>
                                                                 {regions.map(item =>
@@ -94,7 +107,7 @@ const BannerV5 = () => {
                                                             </select>
                                                         </div>
                                                         <div
-                                                            className="col-lg-3 col-md-6">
+                                                            className="col-lg-4 col-md-6">
                                                             <div className="input-item input-item-name">
                                                                 <input onChange={onChangeGuestCount} value={filterGuestCount} onKeyPress={(event) => {
                                                                     if (!/[0-9]/.test(event.key)) {
@@ -121,11 +134,15 @@ const BannerV5 = () => {
                                                                 onFocusChange={setFocusedInput} // PropTypes.func.isRequired,
                                                             />       
                                                         </div>
+                                                        <div className="col-lg-8 col-md-6 mt-2">
+                                                            <div className="input-item input-item-name">
+                                                                <input onChange={onChangeName} value={filterName} type="text" className="mb-0" name="ltn__name" placeholder="Villa" />
+                                                            </div>
+                                                        </div>
 
-
-                                                        <div className="col-lg-2">
+                                                        <div className="col-lg-4 mt-2 text-center">
                                                             {/* <button type="submit" class="btn theme-btn-1 btn-effect-1 text-uppercase">Search Inventory</button> */}
-                                                            <button type="button" onClick={filter} className="btn theme-btn-1 btn-effect-1 text-uppercase">VİLLA ARA</button>
+                                                            <button type="submit" onClick={filter} className="btn theme-btn-1 btn-effect-1 text-uppercase">VİLLA ARA</button>
 
                                                         </div>
                                                     </form>

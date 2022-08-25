@@ -10,6 +10,7 @@ import './react_dates_overrides.css';
 import moment from "moment";
 import $ from "jquery";
 import {objectToQueryParam, queryParamToObject} from "../common-lib";
+import {tm} from "npm-check/lib/util/cli-emoji";
 
 const VillaFilters = (props) => {
 
@@ -129,13 +130,28 @@ const VillaFilters = (props) => {
         }else{
             removeFilter('name',null);
         }
-        if (filterStartPrice != null && filterStartPrice?.trim() != '') {
-            addFilter('startPrice', filterStartPrice);
+        let filterStartPrice_ = filterStartPrice;
+        let filterEndPrice_ = filterEndPrice;
+        if(filterStartPrice_!=null 
+            && filterEndPrice_!=null
+            && filterStartPrice_.trim()!=""
+            && filterEndPrice_.trim()!=""
+            && Number(filterStartPrice_)>Number(filterEndPrice_)){
+            const tmp_ = filterStartPrice_;
+            filterStartPrice_ = filterEndPrice_;
+            filterEndPrice_ = tmp_;
+            
+            setFilterStartPrice(filterStartPrice_);
+            setFilterEndPrice(filterEndPrice_);
+        }
+        
+        if (filterStartPrice_ != null && filterStartPrice_?.trim() != '') {
+            addFilter('startPrice', filterStartPrice_);
         }else{
             removeFilter('startPrice',null);
         }
-        if (filterEndPrice != null && filterEndPrice?.trim() != '') {
-            addFilter('endPrice', filterEndPrice);
+        if (filterEndPrice_ != null && filterEndPrice_?.trim() != '') {
+            addFilter('endPrice', filterEndPrice_);
         }else{
             removeFilter('endPrice',null);
         }

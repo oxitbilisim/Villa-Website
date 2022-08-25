@@ -3,8 +3,7 @@ import axios from "axios";
 import Navbar from "../global-components/navbar";
 import CallToActionV1 from "../section-components/call-to-action-v1";
 import Footer from "../global-components/footer";
-import VillaImage from "./villa-image";
-import VillaInfo from "./villa-info";
+import ReservationDetail from "./reservation-detail";
 
 const VillaDetail = (props) => {
     const [data, setData] = useState(null);
@@ -25,8 +24,7 @@ const VillaDetail = (props) => {
 
     return <div>
         <Navbar/>
-        {loaded?<VillaImage list={data?.images}/>:null}
-        {loaded?<VillaInfo {...props} data={data}/>:null}
+        <ReservationDetail data={data} {...props} />
         <CallToActionV1/>
         <Footer/>
     </div>

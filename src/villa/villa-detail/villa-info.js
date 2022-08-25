@@ -1,4 +1,4 @@
-import React, {Component, useContext, useEffect, useState} from 'react';
+import React, {Component, useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {LikedVillaContext} from "../liked-villa-context";
 import './villa-info.css';
@@ -11,6 +11,7 @@ import 'react-dates/lib/css/_datepicker.css';
 import './css/react_dates_overrides.css';
 import moment from "moment";
 import axios from "axios";
+import $ from "jquery";
 import {objectToQueryParam, queryParamToObject} from "../common-lib";
 
 const VillaInfo = (props) => {
@@ -20,6 +21,8 @@ const VillaInfo = (props) => {
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
     const [priceCalc, setPriceCalc] = useState(null);
+    const [guestCount, setGuestCount] = useState();
+    const guestCountRef = useRef();
 
     useEffect(() => {
         if (props.data?.villa?.id != null) {
@@ -37,6 +40,9 @@ const VillaInfo = (props) => {
             }
             if (filterObject.endDate != null) {
                 setEndDate(moment(filterObject?.endDate));
+            }
+            if (filterObject.guestCount != null) {
+                setGuestCount(filterObject?.guestCount);
             }
         }
     }, [])
@@ -71,10 +77,10 @@ const VillaInfo = (props) => {
                 }).catch(() => {
                 setPriceCalc(null);
             });
-        }else{
+        } else {
             setPriceCalc(null);
         }
-    }, [startDate, endDate])
+    }, [startDate, endDate, guestCount])
 
     const loadReservationData = (id, year) => {
         axios.get(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetVillaReservations?id=" + id + "&year=" + year)
@@ -126,6 +132,27 @@ const VillaInfo = (props) => {
         })
 
         return result == null ? false : true;
+    }
+
+    const onChangeForm = (e) => {
+        if (e.target.name == 'guestCount') {
+            setGuestCount(e.target.value);
+        }
+    }
+    
+    const goToReservation = () => {
+        const qs = localStorage.getItem("searchParams");
+        const obj = qs != null ? queryParamToObject(qs) : {};
+        
+        const guestCount_ = $(guestCountRef.current).val();
+        if(guestCount_==null){
+            $(guestCountRef.current).focus();
+            return;
+        }
+        setGuestCount(guestCount_);
+        obj.guestCount = guestCount_;
+        const subUri = props.match.params.subUri;
+        props.history.push("/rezervasyon/"+subUri+"?" + objectToQueryParam(obj));
     }
 
     return <div className="ltn__shop-details-area pb-10">
@@ -212,7 +239,17 @@ const VillaInfo = (props) => {
                                 />
                             </div>
 
-                            {priceCalc != null ?
+                            <div className="col-lg-12 text-center mt-2">
+                                <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Misafir
+                                    Sayısı</h4>
+                                <div className="cart-plus-minus cart-plus-minus-custom" style={{width:'initial'}}>
+                                    <input type="text" id={"guestInput"} min="1" ref={guestCountRef} value={guestCount}
+                                           name="guestCount"
+                                           onChange={onChangeForm} className="cart-plus-minus-box"/>
+                                </div>
+                            </div>
+
+                            {priceCalc != null ?<>
                                 <div className="col-lg-12 col-md-12 mt-3">
                                     <div className="shoping-cart-total">
                                         <table className="table">
@@ -238,7 +275,8 @@ const VillaInfo = (props) => {
                                             <tr>
                                                 <td>Depozito</td>
                                                 <td><CurrencyFormat value={priceCalc.deposit} displayType={'text'}
-                                                                    thousandSeparator={'.'} decimalSeparator={','} decimalScale={0}
+                                                                    thousandSeparator={'.'} decimalSeparator={','}
+                                                                    decimalScale={0}
                                                                     prefix={currencySymbol(priceCalc?.currency)}/></td>
                                             </tr>
                                             <tr>
@@ -249,17 +287,25 @@ const VillaInfo = (props) => {
                                                                     decimalSeparator={','} decimalScale={0}
                                                                     prefix={currencySymbol(priceCalc?.currency)}/></td>
                                             </tr>
-                                            <tr style={{fontSize:'14px'}}>
+                                            <tr style={{fontSize: '14px'}}>
                                                 <td colSpan={2}><strong>Fiyata Dahil Olanlar</strong></td>
                                             </tr>
-                                            <tr style={{fontSize:'14px'}}>
+                                            <tr style={{fontSize: '14px'}}>
                                                 <td colSpan={2}>{priceCalc.incluededInPrice}</td>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div style={{clear:'both'}}></div>
-                                </div> : null
+                                    <div style={{clear: 'both'}}></div>
+                                </div>
+                                <div className="col-lg-12 text-center">
+                                    <div className="btn-wrapper go-top">
+                                        <button onClick={goToReservation} style={{zIndex:0}}
+                                                className="theme-btn-1 btn black-btn filter-button-custom">Rezervasyon Yap
+                                        </button>
+                                    </div>
+                                </div>
+                            </>: null
                             }
 
                         </div>
