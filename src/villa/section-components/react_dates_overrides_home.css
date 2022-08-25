@@ -39,3 +39,9 @@
 .DayPicker_weekHeader_li{
     margin-top: 0px !important;
 }
+
+.DayPickerKeyboardShortcuts_show__bottomRight {
+    bottom: 0;
+    right: 0;
+    display: none;
+}

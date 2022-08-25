@@ -11,14 +11,14 @@ const VillaFeatures = (props) => {
                     <p>Havuz Özellikleri: {props.dataPool?.havuzOzellik}</p>
                 </div>
                 {
-                    [...Array(Math.ceil(props.data?.length/5)).keys()].map(p =>
+                    [...Array(Math.ceil(props.data?.length)).keys()].map(p =>
                     
                         <div key={'item-'+p} className="col-lg-4 col-md-6">
                             <div className="ltn__menu-widget">
                                 <div className="ltn__blog-meta-btn">
                                     <div className="ltn__blog-meta">
                                         <ul>
-                                            {props.data?.slice(p*5,(p*5)+5).map(item => (
+                                            {props.data?.slice(p,p+1).map(item => (
                                                 <li style={{display:'flex', alignItems:'center'}} key={'property-'+item.id} className="ltn__blog-date">
                                                     <i className="far fa-check-square"></i>{item.ozellikAd}
                                                 </li>
