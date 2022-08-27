@@ -10,7 +10,7 @@ import './react_dates_overrides.css';
 import moment from "moment";
 import $ from "jquery";
 import {objectToQueryParam, queryParamToObject} from "../common-lib";
-import {tm} from "npm-check/lib/util/cli-emoji";
+import PropTypes from "prop-types";
 
 const VillaFilters = (props) => {
 
@@ -31,7 +31,7 @@ const VillaFilters = (props) => {
             name: obj.name == null ? '' : obj.name,
             guestCount: obj.guestCount == null ? '2' : obj.guestCount,
             startDate: obj.startDate == null ? '' : obj.startDate,
-            endDate: obj.endDate == null ? '' : obj.endDate,
+            endDate: obj.endDate == null ? '' : obj.endDate
         };
         return initObject;
     }
@@ -172,6 +172,12 @@ const VillaFilters = (props) => {
             addFilter('endDate', filterEndDate.format("yyyy-MM-DD"));
         }else{
             removeFilter('endDate',null);
+        }
+        if(props.regionPageId!=null){
+            addFilter('region', props.regionPageId);
+        }
+        if(props.categoryPageId!=null){
+            addFilter('category', props.categoryPageId);
         }
         return false;
     }
@@ -416,8 +422,13 @@ const VillaFilters = (props) => {
     </div>
 }
 
-VillaFilters.propTypes = {};
+VillaFilters.propTypes = {
+    regionPageId:PropTypes.any,
+    categoryPageId:PropTypes.any
+};
 
-VillaFilters.defaultProps = {};
+VillaFilters.defaultProps = {
+    
+};
 
 export default VillaFilters

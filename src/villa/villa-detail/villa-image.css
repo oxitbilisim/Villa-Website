@@ -1,1 +1,16 @@
 .slider_custom_padding{}
+
+.slick-track
+{
+    display: flex !important;
+}
+
+.slick-slide
+{
+    width:auto !important;
+    height: inherit !important;
+}
+
+.slick-slide img {
+    height: 250px;
+}

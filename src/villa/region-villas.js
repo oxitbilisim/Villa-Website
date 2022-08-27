@@ -12,11 +12,12 @@ const RegionVillas = (props) => {
 
     const subUri = props.match.params.subUri;
     const currentRegion = regions.find(i => i.url === subUri);
-
+console.log("currentRegion")
+console.log(currentRegion)
     return <div>
         <Navbar/>
         <PageHeader headertitle={currentRegion?.ad}/>
-        <VillaFilters {...props}>
+        <VillaFilters regionPageId={currentRegion?.id} {...props}>
             <VillaListV1 type='REGION' {...props} />
         </VillaFilters>
 

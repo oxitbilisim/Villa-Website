@@ -25,7 +25,9 @@ const VillaCard = (props) => {
     return <div>
         <div
             className="ltn__product-item ltn__product-item-4 ltn__product-item-5 text-center---">
-            <div className="product-img go-top">
+            <div className="product-img go-top" style={{height:'250px',display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'}}>
                 <Link
                     to={"/villa/" + props.data?.url} style={{textAlign: 'center'}}>
                     <img src={process.env.REACT_APP_API_ENDPOINT+"/VillaFE/GetVillaImage?id="+props.data?.imageId}

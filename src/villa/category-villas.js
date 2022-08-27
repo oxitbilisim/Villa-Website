@@ -17,7 +17,7 @@ const CategoryVillas = (props) => {
     return <div>
         <Navbar />
         <PageHeader headertitle={currentCategory?.ad} />
-        <VillaFilters {...props}>
+        <VillaFilters categoryPageId={currentCategory?.id} {...props}>
             <VillaListV1 type='CATEGORY' {...props} />
         </VillaFilters>
         <CallToActionV1 />

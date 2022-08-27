@@ -152,7 +152,7 @@ const ReservationDetail = (props) => {
                                                   placeholder=""
                                                   defaultValue={""}/>
                                     </div>
-                                    <h6>Ödeme Yönteminiz</h6>
+                                    <h6>Ek Hizmetler</h6>
                                     <div className="form-check">
                                         <input className="form-check-input" onChange={paymentMethod} type="radio"
                                                name="flexRadioDefault"

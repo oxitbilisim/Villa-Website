@@ -15,6 +15,7 @@ const VillaImage = (props) => {
         speed: 500,
         slidesToShow: 4,
         slidesToScroll: 1,
+        adaptiveHeight: false,
         centerMode: true
     };
     useEffect(() => {
@@ -27,7 +28,7 @@ const VillaImage = (props) => {
     }, [props.list]);
 
     return <div>
-        <Slider className='ltn__img-slider-area' {...settings}>
+        <Slider {...settings}>
             {
                 props.list.map(item =>
                     <div key={'img-' + item.id}>
