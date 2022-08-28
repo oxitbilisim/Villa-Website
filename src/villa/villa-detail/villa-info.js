@@ -21,7 +21,7 @@ const VillaInfo = (props) => {
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
     const [priceCalc, setPriceCalc] = useState(null);
-    const [guestCount, setGuestCount] = useState();
+    const [guestCount, setGuestCount] = useState(2);
     const guestCountRef = useRef();
 
     useEffect(() => {

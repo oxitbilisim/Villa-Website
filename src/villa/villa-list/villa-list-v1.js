@@ -70,17 +70,17 @@ const VillaListV1 = (props) => {
                             </div>
                         ))}
 
-                    </div>
-
-                    <div className="col-lg-6 text-center">
-                        <div className="btn-wrapper">
-                            {maxPN > pn ?
-                                <button onClick={loadMore} style={{zIndex: 0}}
-                                        className="theme-btn-1 btn black-btn filter-button-custom">Daha Fazla
-                                </button>
-                                : null}
+                        <div className="col-lg-12 text-center">
+                            <div className="btn-wrapper">
+                                {maxPN > pn ?
+                                    <button onClick={loadMore} style={{zIndex: 0}}
+                                            className="theme-btn-1 btn black-btn filter-button-custom">Daha Fazla
+                                    </button>
+                                    : null}
+                            </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>

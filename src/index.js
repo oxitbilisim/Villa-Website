@@ -15,6 +15,7 @@ import LikedVillaContextProvider from "./villa/liked-villa-context";
 import Collection from "./villa/collection";
 import VillaReservation from "./villa/villa-reservation/villa-reservation";
 import Page from "./villa/page";
+import VillaReservationComplete from "./villa/villa-reservation/villa-reservation-complete";
 
 const Root = () => {
     return (
@@ -32,6 +33,7 @@ const Root = () => {
                         <Route exact path="/villa-ara" component={villaSearch}/>
                         <Route exact path="/iletisim" component={Contact}/>
                         <Route exact path="/rezervasyon/:subUri" component={VillaReservation}/>
+                        <Route exact path="/rezervasyon-tamamlandi/:subUri" component={VillaReservationComplete}/>
                         <Route exact path="/sayfa/:subUri" component={Page}/>
                     </Switch>
                 </LikedVillaContextProvider>

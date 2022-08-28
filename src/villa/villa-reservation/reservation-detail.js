@@ -1,8 +1,6 @@
 import React, {Component, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import parse from 'html-react-parser';
 import PropTypes from "prop-types";
-import VillaInfo from "../villa-detail/villa-info";
 import {objectToQueryParam, queryParamToObject} from "../common-lib";
 import moment from "moment";
 import './reservation-detail.css';
@@ -11,15 +9,83 @@ import axios from "axios";
 import CurrencyFormat from "react-currency-format";
 
 const ReservationDetail = (props) => {
+    const [formName, setFormName] = useState('');
+    const [formPhone, setFormPhone] = useState('');
+    const [formEmail, setFormEmail] = useState('');
+    const [formNote, setFormNote] = useState('');
     const [priceCalc, setPriceCalc] = useState(null);
+    const [extraServices, setExtraServices] = useState([]);
+    const [selectedExtraServices, setSelectedExtraServices] = useState([]);
+    const [errorMessage, setErrorMessage] = useState(null);
+
     const obj = queryParamToObject(props.location.search);
 
-    const paymentMethod = (e) => {
+    const onChangeExtraServices = (e) => {
+        console.log(e.currentTarget.name);
         console.log(e.currentTarget.value);
+        console.log(e.currentTarget.checked);
+        const esId = e.currentTarget.value;
+        let esList = selectedExtraServices;
+        if (e.currentTarget.checked) {
+            if (!esList.includes(esId)) {
+                esList.push(esId);
+            }
+        } else {
+            if (esList.includes(esId)) {
+                esList = esList.filter(i => i != esId);
+            }
+        }
+        setSelectedExtraServices(esList);
+    }
+
+    const onChangeForm = (e) => {
+        console.log(e.currentTarget.name);
+        console.log(e.currentTarget.value);
+        if (e.currentTarget.name == 'name') {
+            setFormName(e.currentTarget.value);
+        } else if (e.currentTarget.name == 'phone') {
+            setFormPhone(e.currentTarget.value);
+        } else if (e.currentTarget.name == 'email') {
+            setFormEmail(e.currentTarget.value);
+        } else if (e.currentTarget.name == 'note') {
+            setFormNote(e.currentTarget.value);
+        }
+    }
+
+    const sendReservation = () => {
+        setErrorMessage(null);
+        
+        if(
+            formName==null || formName.trim()=="" ||
+            formPhone==null || formPhone.trim()=="" ||
+            formEmail==null || formEmail.trim()==""
+        ){
+            setErrorMessage("Kişisel bilgiler alanını boş bırakamazsınız!");
+            return;
+        }
+        
+        const data = {
+            villaId: props.data?.villa?.id,
+            startDate: obj.startDate,
+            endDate: obj.endDate,
+            name: formName,
+            phone: formPhone,
+            email: formEmail,
+            guestCount: obj.guestCount,
+            note: formNote,
+            extraServices: selectedExtraServices.map(i => Number(i))
+        }
+
+        axios.post(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/SaveReservation", data)
+            .then((response) => {
+                props.history.push("/rezervasyon-tamamlandi/" + response.data);
+            }).catch((e) => {
+            setErrorMessage(e.response.data);
+        });
     }
 
     useEffect(() => {
-        if(props.data!=null) {
+        if (props.data != null) {
             axios.get(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/CostCalculate" + props.location.search + "&id=" + props.data?.villa?.id)
                 .then((response) => {
                     setPriceCalc(response.data);
@@ -27,7 +93,15 @@ const ReservationDetail = (props) => {
                 setPriceCalc(null);
             });
         }
-    }, [props.location?.search,props.data])
+    }, [props.location?.search, props.data])
+
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetAllExtraServices")
+            .then((response) => {
+                setExtraServices(response.data);
+            }).catch(() => {
+        });
+    }, [])
 
     return (<div className="ltn__checkout-area mb-105">
         <div className="container">
@@ -65,13 +139,13 @@ const ReservationDetail = (props) => {
                                 </div>
                             </div>
                             <div className="guest-count mt-2">
-                                {obj.guestCount != null ?obj.guestCount+" Kişi": null}
+                                {obj.guestCount != null ? obj.guestCount + " Kişi" : null}
                             </div>
 
 
-                            {priceCalc != null ?<>
+                            {priceCalc != null ? <>
                                 <div className="col-lg-12 col-md-12 mt-3">
-                                    <div className="shoping-cart-total" style={{textAlign:'initial'}}>
+                                    <div className="shoping-cart-total" style={{textAlign: 'initial'}}>
                                         <table className="table">
                                             <tbody>
                                             <tr>
@@ -115,9 +189,9 @@ const ReservationDetail = (props) => {
                                     </div>
                                     <div style={{clear: 'both'}}></div>
                                 </div>
-                            </>: null
+                            </> : null
                             }
-                            
+
                         </div>
                     </div>
                 </div>
@@ -131,57 +205,56 @@ const ReservationDetail = (props) => {
                                     <div className="row">
                                         <div className="col-md-12">
                                             <div className="input-item input-item-name ltn__custom-icon">
-                                                <input type="text" name="name" placeholder="Adınız Soyadınız"/>
+                                                <input type="text" name="name" value={formName} onChange={onChangeForm}
+                                                       placeholder="Adınız Soyadınız"/>
                                             </div>
                                         </div>
                                         <div className="col-md-12">
                                             <div className="input-item input-item-email ltn__custom-icon">
-                                                <input type="email" name="email" placeholder="E-posta Adresiniz"/>
+                                                <input type="email" name="email" value={formEmail}
+                                                       onChange={onChangeForm} placeholder="E-posta Adresiniz"/>
                                             </div>
                                         </div>
                                         <div className="col-md-12">
                                             <div className="input-item input-item-phone ltn__custom-icon">
-                                                <input type="text" name="phone"
+                                                <input type="text" name="phone" value={formPhone}
+                                                       onChange={onChangeForm}
                                                        placeholder="Telefon Numaranız"/>
                                             </div>
                                         </div>
                                     </div>
                                     <h6>Notunuz</h6>
                                     <div className="input-item input-item-textarea ltn__custom-icon">
-                                        <textarea name="message"
+                                        <textarea name="note" value={formNote} onChange={onChangeForm}
                                                   placeholder=""
                                                   defaultValue={""}/>
                                     </div>
                                     <h6>Ek Hizmetler</h6>
-                                    <div className="form-check">
-                                        <input className="form-check-input" onChange={paymentMethod} type="radio"
-                                               name="flexRadioDefault"
-                                               id="flexRadioDefault1" value={'KREDITCARD'}/>
-                                        <label className="form-check-label" htmlFor="flexRadioDefault1">
-                                            Kredi Kartı
-                                        </label>
-                                    </div>
-                                    <div className="form-check">
-                                        <input className="form-check-input" onChange={paymentMethod} type="radio"
-                                               name="flexRadioDefault"
-                                               id="flexRadioDefault2" value={'BANKTRANSFER'}/>
-                                        <label className="form-check-label" htmlFor="flexRadioDefault2">
-                                            Banka Havalesi
-                                        </label>
-                                    </div>
-                                    <div className="form-check">
-                                        <input className="form-check-input" onChange={paymentMethod} type="radio"
-                                               name="flexRadioDefault"
-                                               id="flexRadioDefault3" value={'WESTERNUNION'}/>
-                                        <label className="form-check-label" htmlFor="flexRadioDefault3">
-                                            Western Union
-                                        </label>
-                                    </div>
+                                    {
+                                        extraServices.map(item =>
+                                            <div className="form-check">
+                                                <input className="form-check-input" onChange={onChangeExtraServices}
+                                                       type="checkbox"
+                                                       name="flexRadioDefault"
+                                                       id={"es-" + item.id} value={item.id}/>
+                                                <label className="form-check-label" htmlFor={"es-" + item.id}>
+                                                    {item.ad}
+                                                </label>
+                                            </div>
+                                        )
+                                    }
+
                                     <div className="col-md-12" style={{textAlign: 'right'}}>
                                         <button className="btn theme-btn-1 btn-effect-1 text-uppercase"
-                                                type="submit">Place order
+                                                onClick={sendReservation}
+                                                type="button">Rezervasyon Yap
                                         </button>
                                     </div>
+                                    {errorMessage != null ?
+                                        <div className="col-md-12 text-center mt-3">
+                                            {errorMessage}
+                                        </div>
+                                        : null}
                                 </form>
                             </div>
                         </div>

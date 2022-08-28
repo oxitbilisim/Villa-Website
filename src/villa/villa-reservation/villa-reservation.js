@@ -5,7 +5,7 @@ import CallToActionV1 from "../section-components/call-to-action-v1";
 import Footer from "../global-components/footer";
 import ReservationDetail from "./reservation-detail";
 
-const VillaDetail = (props) => {
+const VillaReservation = (props) => {
     const [data, setData] = useState(null);
     const [loaded, setLoaded] = useState(false);
     useEffect(() => {
@@ -30,4 +30,4 @@ const VillaDetail = (props) => {
     </div>
 }
 
-export default VillaDetail
+export default VillaReservation
