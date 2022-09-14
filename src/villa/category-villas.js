@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import PageHeader from './global-components/page-header';
 import CallToActionV1 from './section-components/call-to-action-v1';
 import Footer from './global-components/footer';
@@ -9,7 +9,7 @@ import VillaFilters from "./villa-list/villa-filters";
 
 const CategoryVillas = (props) => {
     const {regions, categories} = useContext(GlobalContext);
-
+    const [totalCount, setTotalCount] = useState(0);
     const subUri = props.match.params.subUri;
     
     const currentCategory = categories.find(i => i.url === subUri);
@@ -17,8 +17,8 @@ const CategoryVillas = (props) => {
     return <div>
         <Navbar />
         <PageHeader headertitle={currentCategory?.ad} />
-        <VillaFilters categoryPageId={currentCategory?.id} {...props}>
-            <VillaListV1 type='CATEGORY' {...props} />
+        <VillaFilters categoryPageId={currentCategory?.id} {...props} totalCount={totalCount}>
+            <VillaListV1 type='CATEGORY' {...props} setTotalCountParent={setTotalCount} />
         </VillaFilters>
         <CallToActionV1 />
         <Footer />

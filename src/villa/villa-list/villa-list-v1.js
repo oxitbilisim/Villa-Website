@@ -9,6 +9,7 @@ const VillaListV1 = (props) => {
     const [list, setList] = useState([]);
     const [pn, setPn] = useState(1);
     const [maxPN, setMaxPN] = useState(1);
+    const [totalCount, setTotalCount] = useState(-1);
     const {regions, categories} = useContext(GlobalContext)
 
     useEffect(() => {
@@ -17,6 +18,10 @@ const VillaListV1 = (props) => {
         setMaxPN(1);
         loadData(1);
     }, [props.match.params.subUri, props.location.search]);
+
+    const setTotalCountParent = (c) => {
+        props.setTotalCountParent(c);
+    }
 
     const loadData = (pn) => {
         let apiUri = '';
@@ -32,27 +37,27 @@ const VillaListV1 = (props) => {
             apiUri = '/VillaFE/GetKategoriVillas' + queryParams;
         } else if (props.type === 'SEARCH') {
             let qs = props.location.search;
-            if(!qs.startsWith("?")){
-                qs = "?"+qs;
+            if (!qs.startsWith("?")) {
+                qs = "?" + qs;
             }
             apiUri = "/VillaFE/SearchVilla" + qs + '&pn=' + pn;
         }
 
         axios.get(process.env.REACT_APP_API_ENDPOINT + apiUri)
             .then((response) => {
-                if(pn==1){
+                if (pn == 1) {
                     setList(response.data.data)
-                }else {
-                    setList([...list,...response.data.data]);
+                } else {
+                    setList([...list, ...response.data.data]);
                 }
+                setTotalCount(response.data.count);
+                setTotalCountParent(response.data.count);
                 setMaxPN(response.data.totalPage);
-                console.log(response.data);
             });
     }
 
     const loadMore = () => {
         const newPN = pn + 1;
-        console.log("pn:"+pn+" newPN:"+newPN+" maxPN:"+maxPN)
         if (newPN <= maxPN) {
             setPn(newPN);
             loadData(newPN);
@@ -64,6 +69,7 @@ const VillaListV1 = (props) => {
             <div className="tab-pane fade active show" id="liton_product_grid">
                 <div className="ltn__product-tab-content-inner ltn__product-grid-view">
                     <div className="row">
+                        {totalCount == 0 ? <div className="text-center">Kayıt bulunamadı!</div> : null}
                         {list?.map(item => (
                             <div key={'villa-' + item.id} className="col-xl-6 col-sm-6 col-12">
                                 <VillaCard data={item}/>
@@ -80,7 +86,7 @@ const VillaListV1 = (props) => {
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -89,10 +95,12 @@ const VillaListV1 = (props) => {
 
 VillaListV1.propTypes = {
     type: PropTypes.string,
+    setTotalCountParent: PropTypes.func,
 };
 
 VillaListV1.defaultProps = {
-    type: 'REGION'
+    type: 'REGION',
+    setTotalCountParent: () => {}
 };
 
 export default VillaListV1

@@ -14,10 +14,8 @@ import PropTypes from "prop-types";
 
 const VillaFilters = (props) => {
 
-    
-    const [focusedInput,setFocusedInput] = useState();
+    const [focusedInput, setFocusedInput] = useState();
     const guestCountRef = useRef();
-    
 
     const initializeFilterObject = () => {
         const obj = queryParamToObject(props.location.search);
@@ -43,10 +41,10 @@ const VillaFilters = (props) => {
     const [filterName, setFilterName] = useState(filterObject?.name);
     const [filterStartPrice, setFilterStartPrice] = useState(filterObject?.startPrice);
     const [filterEndPrice, setFilterEndPrice] = useState(filterObject?.endPrice);
-    const [filterStartDate, setFilterStartDate] = useState(filterObject?.startDate!=null&&filterObject?.startDate!=''?moment(filterObject?.startDate):null);
-    const [filterEndDate, setFilterEndDate] = useState(filterObject?.endDate!=null && filterObject?.endDate!=''?moment(filterObject?.endDate):null);
+    const [filterStartDate, setFilterStartDate] = useState(filterObject?.startDate != null && filterObject?.startDate != '' ? moment(filterObject?.startDate) : null);
+    const [filterEndDate, setFilterEndDate] = useState(filterObject?.endDate != null && filterObject?.endDate != '' ? moment(filterObject?.endDate) : null);
     const [filterGuestCount, setFilterGuestCount] = useState(filterObject?.guestCount);
-    
+
     useEffect(() => {
         loadVillasProperties();
         loadEstates();
@@ -63,7 +61,7 @@ const VillaFilters = (props) => {
             filterObject_[key] = value;
         }
         const qs = objectToQueryParam(filterObject_);
-        localStorage.setItem('searchParams',qs);
+        localStorage.setItem('searchParams', qs);
         redirectToSearch(qs);
         setFilterObject(filterObject_);
     }
@@ -80,7 +78,7 @@ const VillaFilters = (props) => {
         }
 
         const qs = objectToQueryParam(filterObject_);
-        localStorage.setItem('searchParams',qs)
+        localStorage.setItem('searchParams', qs)
         redirectToSearch(qs);
         setFilterObject(filterObject_);
     }
@@ -122,66 +120,66 @@ const VillaFilters = (props) => {
             setFilterGuestCount(e.target.value);
         }
     }
-    
-    
+
+
     const filter = () => {
         if (filterName != null && filterName?.trim() != '') {
             addFilter('name', filterName);
-        }else{
-            removeFilter('name',null);
+        } else {
+            removeFilter('name', null);
         }
         let filterStartPrice_ = filterStartPrice;
         let filterEndPrice_ = filterEndPrice;
-        if(filterStartPrice_!=null 
-            && filterEndPrice_!=null
-            && filterStartPrice_.trim()!=""
-            && filterEndPrice_.trim()!=""
-            && Number(filterStartPrice_)>Number(filterEndPrice_)){
+        if (filterStartPrice_ != null
+            && filterEndPrice_ != null
+            && filterStartPrice_.trim() != ""
+            && filterEndPrice_.trim() != ""
+            && Number(filterStartPrice_) > Number(filterEndPrice_)) {
             const tmp_ = filterStartPrice_;
             filterStartPrice_ = filterEndPrice_;
             filterEndPrice_ = tmp_;
-            
+
             setFilterStartPrice(filterStartPrice_);
             setFilterEndPrice(filterEndPrice_);
         }
-        
+
         if (filterStartPrice_ != null && filterStartPrice_?.trim() != '') {
             addFilter('startPrice', filterStartPrice_);
-        }else{
-            removeFilter('startPrice',null);
+        } else {
+            removeFilter('startPrice', null);
         }
         if (filterEndPrice_ != null && filterEndPrice_?.trim() != '') {
             addFilter('endPrice', filterEndPrice_);
-        }else{
-            removeFilter('endPrice',null);
+        } else {
+            removeFilter('endPrice', null);
         }
         //if (filterGuestCount != null && filterGuestCount?.trim() != '' && filterGuestCount!='0') {
         const guestCount = $(guestCountRef.current).val();
         setFilterGuestCount(guestCount);
-        if (guestCount != null && guestCount?.trim() != '' && guestCount!='0') {
+        if (guestCount != null && guestCount?.trim() != '' && guestCount != '0') {
             addFilter('guestCount', guestCount);
-        }else{
-            removeFilter('guestCount',null);
+        } else {
+            removeFilter('guestCount', null);
         }
         if (filterStartDate != null) {
             addFilter('startDate', filterStartDate.format("yyyy-MM-DD"));
-        }else{
-            removeFilter('startDate',null);
+        } else {
+            removeFilter('startDate', null);
         }
         if (filterEndDate != null) {
             addFilter('endDate', filterEndDate.format("yyyy-MM-DD"));
-        }else{
-            removeFilter('endDate',null);
+        } else {
+            removeFilter('endDate', null);
         }
-        if(props.regionPageId!=null){
+        if (props.regionPageId != null) {
             addFilter('region', props.regionPageId);
         }
-        if(props.categoryPageId!=null){
+        if (props.categoryPageId != null) {
             addFilter('category', props.categoryPageId);
         }
         return false;
     }
-    
+
     const onSubmit = (event) => {
         event.preventDefault();
         filter();
@@ -194,6 +192,12 @@ const VillaFilters = (props) => {
                     <div className="col-lg-8 order-lg-2 mb-100">
                         <div className="ltn__shop-options">
                             <ul className="justify-content-end">
+                                {props.totalCount > 0 ?
+                                    <li>
+                                        <div className="short-by text-center">
+                                            Toplam {props.totalCount} villa bulundu
+                                        </div>
+                                    </li> : null}
                                 <li>
                                     <div className="short-by text-center">
                                         <select className="nice-select">
@@ -215,78 +219,79 @@ const VillaFilters = (props) => {
                             {/* Advance Information widget */}
                             <div className="widget ltn__menu-widget">
                                 <form onSubmit={onSubmit}>
-                                <div className="ltn__search-widget mb-30">
+                                    <div className="ltn__search-widget mb-30">
                                         <input type="text" value={filterName} onChange={onChangeForm} name="name"
                                                placeholder="Villa Ara..."/>
-                                </div>
-                                <div className="row pb-4">
-                                    <div className="col-lg-12">
-                                        <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Fiyat
-                                            Aralığı</h4>
                                     </div>
-                                    <div className="col-lg-6">
-                                        <label>En Düşük</label>
-                                        <div className="input-item input-item-custom">
-                                            <input type="text" name="startPrice" onKeyPress={(event) => {
-                                                if (!/[0-9]/.test(event.key)) {
-                                                    event.preventDefault();
-                                                }
-                                            }} value={filterStartPrice} onChange={onChangeForm}/>
+                                    <div className="row pb-4">
+                                        <div className="col-lg-12">
+                                            <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Fiyat
+                                                Aralığı</h4>
+                                        </div>
+                                        <div className="col-lg-6">
+                                            <label>En Düşük</label>
+                                            <div className="input-item input-item-custom">
+                                                <input type="text" name="startPrice" onKeyPress={(event) => {
+                                                    if (!/[0-9]/.test(event.key)) {
+                                                        event.preventDefault();
+                                                    }
+                                                }} value={filterStartPrice} onChange={onChangeForm}/>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-6">
+                                            <label>En Yüksek</label>
+                                            <div className="input-item input-item-custom">
+                                                <input type="text" name="endPrice" onKeyPress={(event) => {
+                                                    if (!/[0-9]/.test(event.key)) {
+                                                        event.preventDefault();
+                                                    }
+                                                }} value={filterEndPrice} onChange={onChangeForm}/>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-lg-6">
-                                        <label>En Yüksek</label>
-                                        <div className="input-item input-item-custom">
-                                            <input type="text" name="endPrice" onKeyPress={(event) => {
-                                                if (!/[0-9]/.test(event.key)) {
-                                                    event.preventDefault();
-                                                }
-                                            }} value={filterEndPrice} onChange={onChangeForm}/>
+                                    <div className="row pb-4">
+                                        <div className="col-lg-12">
+                                            <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Tarih
+                                                Aralığı</h4>
+                                        </div>
+                                        <div className="col-lg-12 filter-data-range">
+                                            <DateRangePicker
+                                                startDatePlaceholderText="Giriş Tarihi"
+                                                endDatePlaceholderText="Çıkış Tarihi"
+                                                displayFormat={"DD.MM.YYYY"}
+                                                firstDayOfWeek={1}
+                                                startDate={filterStartDate} // momentPropTypes.momentObj or null,
+                                                startDateId="startDate" // PropTypes.string.isRequired,
+                                                endDate={filterEndDate} // momentPropTypes.momentObj or null,
+                                                endDateId="endDate" // PropTypes.string.isRequired,
+                                                onDatesChange={({startDate, endDate}) => {
+                                                    setFilterStartDate(startDate);
+                                                    setFilterEndDate(endDate);
+                                                }} // PropTypes.func.isRequired,
+                                                focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                                                onFocusChange={setFocusedInput} // PropTypes.func.isRequired,
+                                            />
                                         </div>
                                     </div>
-                                </div>
-                                <div className="row pb-4">
-                                    <div className="col-lg-12">
-                                        <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Tarih
-                                            Aralığı</h4>
-                                    </div>
-                                    <div className="col-lg-12 filter-data-range">
-                                        <DateRangePicker
-                                            startDatePlaceholderText="Giriş Tarihi"
-                                            endDatePlaceholderText="Çıkış Tarihi"
-                                            displayFormat={"DD.MM.YYYY"}
-                                            firstDayOfWeek={1}
-                                            startDate={filterStartDate} // momentPropTypes.momentObj or null,
-                                            startDateId="startDate" // PropTypes.string.isRequired,
-                                            endDate={filterEndDate} // momentPropTypes.momentObj or null,
-                                            endDateId="endDate" // PropTypes.string.isRequired,
-                                            onDatesChange={({ startDate, endDate }) => {
-                                                setFilterStartDate(startDate);
-                                                setFilterEndDate(endDate);
-                                            }} // PropTypes.func.isRequired,
-                                            focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                                            onFocusChange={setFocusedInput} // PropTypes.func.isRequired,
-                                        />
-                                    </div>
-                                </div>
 
-                                <div className="row pb-1">
-                                    <div className="col-lg-6">
-                                        <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Misafir
-                                            Sayısı</h4>
-                                        <div className="cart-plus-minus cart-plus-minus-custom">
-                                            <input type="text" id={"guestInput"} min="1" ref={guestCountRef} value={filterGuestCount} name="guestCount"
-                                                   onChange={onChangeForm} className="cart-plus-minus-box"/>
+                                    <div className="row pb-1">
+                                        <div className="col-lg-6">
+                                            <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Misafir
+                                                Sayısı</h4>
+                                            <div className="cart-plus-minus cart-plus-minus-custom">
+                                                <input type="text" id={"guestInput"} min="1" ref={guestCountRef}
+                                                       value={filterGuestCount} name="guestCount"
+                                                       onChange={onChangeForm} className="cart-plus-minus-box"/>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-6 text-center">
+                                            <div className="btn-wrapper go-top">
+                                                <button onClick={filter} style={{zIndex: 0}}
+                                                        className="theme-btn-1 btn black-btn filter-button-custom">Filtrele
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-lg-6 text-center">
-                                        <div className="btn-wrapper go-top">
-                                            <button onClick={filter} style={{zIndex:0}}
-                                                    className="theme-btn-1 btn black-btn filter-button-custom">Filtrele
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
                                 </form>
                             </div>
 
@@ -423,12 +428,11 @@ const VillaFilters = (props) => {
 }
 
 VillaFilters.propTypes = {
-    regionPageId:PropTypes.any,
-    categoryPageId:PropTypes.any
+    regionPageId: PropTypes.any,
+    categoryPageId: PropTypes.any,
+    totalCount: PropTypes.any
 };
 
-VillaFilters.defaultProps = {
-    
-};
+VillaFilters.defaultProps = {};
 
 export default VillaFilters

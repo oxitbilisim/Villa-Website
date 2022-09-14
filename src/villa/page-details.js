@@ -1,12 +1,18 @@
 import React, {Component, useEffect, useState} from 'react';
 import PropTypes from "prop-types";
+import draftToHtml from "draftjs-to-html";
 
 const PageDetails = (props) => {
     const [detail, setDetail] = useState();
     useEffect(()=>{
         if(props?.data?.sayfaIcerik[0]?.icerik!=null){
-            setDetail(JSON.parse(props?.data?.sayfaIcerik[0]?.icerik));
-            console.log(JSON.parse(props?.data?.sayfaIcerik[0]?.icerik));
+            try {
+                const jo = JSON.parse(props?.data?.sayfaIcerik[0]?.icerik);
+                setDetail(draftToHtml(jo));    
+            }catch (e) {
+                
+            }
+            
         }
     },[props.data])
 
@@ -17,13 +23,8 @@ const PageDetails = (props) => {
                     <div className="col-lg-12">
                         <div className="ltn__blog-details-wrap">
                             <div className="ltn__page-details-inner ltn__blog-details-inner">
-                                <p>{detail?.blocks.map(item =>
-                                        <>{item.text}</>
-                                )}</p>
-
+                                <div dangerouslySetInnerHTML={{ __html: detail }}></div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>

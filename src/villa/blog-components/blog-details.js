@@ -5,13 +5,14 @@ import Sidebar from './sidebar';
 import PropTypes from "prop-types";
 import VillaImage from "../villa-detail/villa-image";
 import moment from "moment/moment";
+import draftToHtml from "draftjs-to-html";
 
 const BlogDetails = (props) => {
     const [detail, setDetail] = useState();
     useEffect(()=>{
         if(props?.data?.blogIcerik[0]?.icerik!=null){
-            setDetail(JSON.parse(props?.data?.blogIcerik[0]?.icerik));
-            console.log(JSON.parse(props?.data?.blogIcerik[0]?.icerik));
+            const jo = JSON.parse(props?.data?.blogIcerik[0]?.icerik);
+            setDetail(draftToHtml(jo));
         }
     },[props.data])
 
@@ -40,10 +41,7 @@ const BlogDetails = (props) => {
                                 <p style={{textAlign:'left'}}>
                                     <img style={{maxHeight:'350px'}} src={process.env.REACT_APP_API_ENDPOINT+"/VillaFE/GetBlogImage?id=" + props.data?.id} alt="Image" />
                                 </p>
-                                <p>{detail?.blocks.map(item =>
-                                        <>{item.text}</>
-                                )}</p>
-
+                                <div dangerouslySetInnerHTML={{ __html: detail }}></div>
                             </div>
 
 
