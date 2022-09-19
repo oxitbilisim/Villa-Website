@@ -3,16 +3,33 @@ import {Link} from 'react-router-dom';
 import PropTypes from "prop-types";
 import {LikedVillaContext} from "../liked-villa-context";
 import CurrencyFormat from 'react-currency-format';
-import {currencySymbol, pricePeriod} from "../Constants";
+import {currencySymbol, pricePeriod, serverDateFormat} from "../Constants";
+import {queryParamToObject} from "../common-lib";
+import moment from "moment";
 
 const VillaCard = (props) => {
     const [state, dispatch] = useContext(LikedVillaContext);
 
+    const getDates = () => {
+        const qs = localStorage.getItem('searchParams');
+        const searchObject = queryParamToObject(qs);
+        if (searchObject.startDate == null) {
+            searchObject.startDate = moment().format(serverDateFormat)
+        }
+        if (searchObject.endDate == null) {
+            searchObject.endDate = moment().add(1, 'days').format(serverDateFormat)
+        }
+
+        return [searchObject.startDate, searchObject.endDate];
+    }
+    
     const toggleLike = (villaId) => {
-        if (state.likedVillaIds.includes(villaId)) {
+        if (state.likedVillaIds.filter(i => i.villaId == props.data?.id && i.startDate == getDates()[0] && i.endDate == getDates()[1]).length > 0) {
             dispatch({
                 type: 'UNLIKE',
                 payload: villaId,
+                startDate: getDates()[0],
+                endDate: getDates()[1]
             });
         } else {
             dispatch({
@@ -72,7 +89,7 @@ const VillaCard = (props) => {
                     <ul>
                         <li style={{backgroundColor: 'initial', color:'initial'}}>
                             <a style={{cursor: 'pointer'}} onClick={() => toggleLike(props.data?.id)} title="Beğen">
-                                {state?.likedVillaIds?.includes(props.data?.id)?
+                                {state?.likedVillaIds?.filter(i => i.villaId == props.data?.id && i.startDate == getDates()[0] && i.endDate == getDates()[1]).length > 0?
                                     <i style={{color: 'red'}} className="fa-solid fa-heart"/>
                                     :<i className="flaticon-heart-1"/>
                                 }
@@ -85,6 +102,11 @@ const VillaCard = (props) => {
                 <div className="product-price">
                     {props.data?.fiyat != null ?
                         <span><CurrencyFormat value={props.data?.fiyat} displayType={'text'} thousandSeparator={'.'} decimalScale={0} decimalSeparator={','} prefix={currencySymbol(props.data?.paraBirimi)} /><label>/{pricePeriod(props.data?.fiyatTuru)}</label></span> :
+                        <span>&nbsp;</span>}
+                </div>
+                <div className="product-price">
+                    {props.data?.toplamFiyat != null && props.data?.toplamFiyat != props.data?.fiyat ?
+                        <span><CurrencyFormat value={props.data?.toplamFiyat} displayType={'text'} thousandSeparator={'.'} decimalScale={0} decimalSeparator={','} prefix={currencySymbol(props.data?.paraBirimi)} /><label>/Toplam</label></span> :
                         <span>&nbsp;</span>}
                 </div>
             </div>

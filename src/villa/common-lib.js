@@ -20,6 +20,7 @@ export const objectToQueryParam = (obj) => {
 }
 
 export const queryParamToObject = (qs) => {
+    qs = qs==null?'':qs;
     qs = qs.replaceAll('?', '');
 
     let obj = {};

@@ -48,6 +48,15 @@ const VillaFilters = (props) => {
     useEffect(() => {
         loadVillasProperties();
         loadEstates();
+        
+        if(props.regionPageId!=null) {
+            let filterObject_ = filterObject;
+            filterObject_.region.push(''+props.regionPageId);
+        }
+        if(props.categoryPageId!=null) {
+            let filterObject_ = filterObject;
+            filterObject_.category.push(''+props.categoryPageId);
+        }
     }, [props.match.params.subUri]);
 
     const addFilter = (key, value) => {

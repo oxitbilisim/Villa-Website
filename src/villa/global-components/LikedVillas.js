@@ -4,7 +4,9 @@ import PropTypes from "prop-types";
 import {LikedVillaContext} from "../liked-villa-context";
 import axios from "axios";
 import CurrencyFormat from "react-currency-format";
-import {currencySymbol, pricePeriod} from "../Constants";
+import {currencySymbol, dateFormat, pricePeriod, serverDateFormat} from "../Constants";
+import { v4 as uuid } from 'uuid';
+import moment from "moment";
 
 const LikedVillas = (props) => {
     const [state, dispatch] = useContext(LikedVillaContext);
@@ -12,22 +14,30 @@ const LikedVillas = (props) => {
     const [collectionGuid, setCollectionGuid] = useState(null);
 
     useEffect(() => {
-        axios.post(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetVillaByIds", {ids: state?.likedVillaIds})
+        axios.post(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetVillaByIds", state?.likedVillaIds)
             .then((response) => {
                 setList(response.data);
             });
         setCollectionGuid(null);
     }, [state])
 
-    const unlike = (villaId) => {
+    const unlike = (villaId, startDate, endDate) => {
         dispatch({
             type: 'UNLIKE',
             payload: villaId,
+            startDate: startDate,
+            endDate: endDate
+        });
+    }
+    const unlikeAll = () => {
+        dispatch({
+            type: 'UNLIKEALL',
+            payload: 0,
         });
     }
 
     const createCollection = () => {
-        axios.post(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/CreateCollection", {ids: state?.likedVillaIds})
+        axios.post(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/CreateCollection", state?.likedVillaIds)
             .then((response) => {
                 setCollectionGuid(window.location.origin + '/collection/' + response.data);
             });
@@ -46,28 +56,42 @@ const LikedVillas = (props) => {
                     <button className="ltn__utilize-close">×</button>
                 </div>
                 <div className="mini-cart-product-area ltn__scrollbar">
+                    {list.length > 0 ?
+                        <div key={'liked-villa-' + 0} className="mini-cart-item p-1 mb-0 clearfix">
+                        <span onClick={unlikeAll} style={{position: 'initial', float: 'right'}}
+                              className="mini-cart-item-delete"><i
+                            className="icon-cancel"/></span>
+                        </div> : null}
                     {
                         list.map(item =>
-                            <div key={'liked-villa-' + item.id} className="mini-cart-item clearfix">
+                            <div key={uuid()} className="mini-cart-item clearfix">
                                 <div className="mini-cart-img go-top">
-                                    <Link to={"/villa/" + item?.url} target={"_blank"}><img
-                                        src={process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetVillaImage?id=" + item.imageId}
+                                    <Link to={"/villa/" + item?.villa.url} target={"_blank"}><img
+                                        src={process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetVillaImage?id=" + item.villa.imageId}
                                         alt="Image"/></Link>
-                                    <span onClick={() => unlike(item.id)} className="mini-cart-item-delete"><i
+                                    <span onClick={() => unlike(item.villa.id, item.startDate, item.endDate)}
+                                          className="mini-cart-item-delete"><i
                                         className="icon-cancel"/></span>
                                 </div>
                                 <div className="mini-cart-info go-top">
-                                    <h6><Link to={"/villa/" + item?.url} target={"_blank"}>{item.ad}</Link></h6>
+                                    <h6><Link to={"/villa/" + item?.villa.url} target={"_blank"}>{item.villa.ad}</Link>
+                                    </h6>
                                     <span className="mini-cart-quantity">
-                                        {item?.fiyat != null ?
+                                        {item?.villa.fiyat != null ?
                                             <>
-                                                <CurrencyFormat value={item?.fiyat} displayType={'text'}
+                                                <CurrencyFormat value={item?.villa.toplamFiyat} displayType={'text'}
                                                                 thousandSeparator={'.'} decimalSeparator={','}
                                                                 decimalScale={0}
-                                                                prefix={currencySymbol(item?.paraBirimi)}/>
-                                                /{pricePeriod(item?.fiyatTuru)}
+                                                                prefix={currencySymbol(item?.villa.paraBirimi)}/>
+
                                             </>
                                             : null}</span>
+                                     / 
+                                    <span className="mini-cart-quantity" style={{fontSize:'12px', fontStyle:'italic'}}>
+                                        {moment(item.startDate, serverDateFormat).format(dateFormat)} 
+                                        -
+                                        {moment(item.endDate, serverDateFormat).format(dateFormat)}
+                                    </span>
                                 </div>
                             </div>
                         )

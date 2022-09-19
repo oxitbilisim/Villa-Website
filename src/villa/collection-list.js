@@ -3,7 +3,8 @@ import {Link} from 'react-router-dom';
 import parse from 'html-react-parser';
 import axios from "axios";
 import CurrencyFormat from "react-currency-format";
-import {currencySymbol, pricePeriod} from "./Constants";
+import {currencySymbol, dateFormat, pricePeriod, serverDateFormat} from "./Constants";
+import moment from "moment";
 
 const CollectionList = (props) => {
     const [list, setList] = useState([]);
@@ -28,20 +29,32 @@ const CollectionList = (props) => {
                                 <tbody>
                                 {
                                     list.map(item =>
-                                        <tr style={{display:'revert'}}>
-                                            <td className="cart-product-image" width='100px'>
-                                                <Link target={'_blank'} to={"/villa/" + item?.url}>
-                                                    <img src={process.env.REACT_APP_API_ENDPOINT+"/VillaFE/GetVillaImage?id="+item?.imageId} alt="#"/>
-                                                </Link>
-                                            </td>
-                                            <td className="cart-product-info text-left">
-                                                <h4><Link target={'_blank'} to={"/villa/" + item?.url}>{item?.ad}</Link></h4>
-                                            </td>
-                                            <td className="cart-product-price text-left"><span><CurrencyFormat value={item?.fiyat} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={currencySymbol(item.paraBirimi)} /><label>/{pricePeriod(item?.fiyatTuru)}</label></span></td>
-                                        </tr>
+                                            <tr style={{display: 'revert'}}>
+                                                <td className="cart-product-image" width='100px'>
+                                                    <Link target={'_blank'} to={"/villa/" + item?.villa.url}>
+                                                        <img
+                                                            src={process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetVillaImage?id=" + item?.villa.imageId}
+                                                            alt="#"/>
+                                                    </Link>
+                                                </td>
+                                                <td className="cart-product-info text-left">
+                                                    <h4><Link target={'_blank'}
+                                                              to={"/villa/" + item?.villa.url}>{item?.villa.ad}</Link></h4>
+                                                </td>
+                                                <td className="cart-product-price text-left"><span><CurrencyFormat
+                                                    value={item?.villa.toplamFiyat} displayType={'text'} thousandSeparator={'.'}
+                                                    decimalSeparator={','}
+                                                    prefix={currencySymbol(item.villa.paraBirimi)}/><label>/
+                                                    <span className="mini-cart-quantity" style={{fontSize: '12px', fontStyle: 'italic'}}>
+                                                        {moment(item.startDate, serverDateFormat).format(dateFormat)}
+                                                        -
+                                                        {moment(item.endDate, serverDateFormat).format(dateFormat)}
+                                                    </span></label></span>
+                                                </td>
+                                            </tr>
                                     )
                                 }
-                                
+
 
                                 </tbody>
                             </table>
