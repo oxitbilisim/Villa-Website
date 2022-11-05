@@ -30,7 +30,7 @@ const VillaImage = (props) => {
     return <div>
         <Slider {...settings}>
             {
-                props.list.map(item =>
+                props.list.sort((a,b) => (a.sirano > b.sirano) ? 1 : ((b.sirano > a.sirano) ? -1 : 0)).map(item =>
                     <div key={'img-' + item.id}>
                         
                             <a href={process.env.REACT_APP_API_ENDPOINT+"/VillaFE/villa-image/"+item.id+".jpg"} data-rel="lightcase:myCollection:slideshow">

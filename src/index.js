@@ -16,8 +16,12 @@ import Collection from "./villa/collection";
 import VillaReservation from "./villa/villa-reservation/villa-reservation";
 import Page from "./villa/page";
 import VillaReservationComplete from "./villa/villa-reservation/villa-reservation-complete";
+import moment from "moment";
+import 'moment/locale/tr';
+import ReservationInformation from "./villa/reservation_information";
 
 const Root = () => {
+    moment.locale('tr');
     return (
         <BrowserRouter basename="/">
             <GlobalContextProvider>
@@ -35,6 +39,7 @@ const Root = () => {
                         <Route exact path="/rezervasyon/:subUri" component={VillaReservation}/>
                         <Route exact path="/rezervasyon-tamamlandi/:subUri" component={VillaReservationComplete}/>
                         <Route exact path="/sayfa/:subUri" component={Page}/>
+                        <Route exact path="/bilgilendirme/:subUri" component={ReservationInformation}/>
                     </Switch>
                 </LikedVillaContextProvider>
             </GlobalContextProvider>

@@ -24,7 +24,24 @@
     background: var(--ltn__secondary-color) !important;
     color: white;
 }
-
+.filter-data-range .CalendarDay__selected_start > div {
+    height: 100%;
+    line-height: 35px;
+    color: black;
+    background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 51%, rgba(222,127,22,1) 51%, rgba(222,127,22,1) 100%);
+}
+.filter-data-range .CalendarDay__selected_start .endClose {
+    background: linear-gradient(135deg, rgba(244,175,53,1) 0%, rgba(244,175,53,1) 49%, rgba(244,175,53,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 51%, rgba(222,127,22,1) 51%, rgba(222,127,22,1) 100%) !important;
+}
+.filter-data-range .CalendarDay__selected_end .startClose {
+    background: linear-gradient(315deg, rgba(244,175,53,1) 0%, rgba(244,175,53,1) 49%, rgba(244,175,53,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 51%, rgba(222,127,22,1) 51%, rgba(222,127,22,1) 100%) !important;
+}
+.filter-data-range .CalendarDay__selected_end > div {
+    height: 100%;
+    line-height: 35px;
+    color: black;
+    background: linear-gradient(315deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 51%, rgba(222,127,22,1) 51%, rgba(222,127,22,1) 100%);
+}
 .filter-data-range .CalendarDay__selected:hover {
     background: var(--ltn__secondary-color) !important;
     color: white;
@@ -39,12 +56,28 @@
     margin-top: 0px !important;
 }
 
-.filter-data-range .CalendarDay__highlighted_calendar{
-    background: linear-gradient(0deg,#fff,#fff 50%,#f4af35 50%,#f4af35)!important;
-}
-
 .filter-data-range .CalendarDay__blocked_calendar {
     background: #f4af35;
     border: 1px solid #cacccd;
     color: #7f7f7f;
 }
+
+.startClose{
+    height: 100%;
+    line-height: 35px;
+    background: linear-gradient(315deg, rgba(244,175,53,1) 0%, rgba(244,175,53,1) 50%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
+}
+
+.endClose{
+    height: 100%;
+    line-height: 35px;
+    background: linear-gradient(135deg, rgba(244,175,53,1) 0%, rgba(244,175,53,1) 50%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
+}
+
+.startEndClose{
+    height: 100%;
+    line-height: 35px;
+    background: rgb(244,175,53);
+    background: linear-gradient(135deg, rgba(244,175,53,1) 0%, rgba(244,175,53,1) 49%, rgba(244,175,53,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 51%, rgba(244,180,65,1) 51%, rgba(244,180,65,1) 100%);
+}
+

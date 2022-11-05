@@ -399,7 +399,7 @@ body {
 
 h1,
 .h1 {
-  font-size: 36px;
+  font-size: 28px;
   line-height: 1.2;
 }
 
@@ -9923,7 +9923,7 @@ ul.wp-block-latest-posts.is-grid.alignwide {
 .property-detail-info-list ul li label {
   margin-right: 5px;
   font-weight: 600;
-  min-width: 110px;
+  min-width: 200px;
   display: inline-block;
 }
 .property-detail-info-list ul li span {
@@ -15890,12 +15890,11 @@ input.cart-plus-minus-box {
 
 .ltn__car-dealer-form-box .nice-select {
   margin: 0;
-  height: 60px;
+  height: 65px;
   line-height: 58px;
   padding-right: 40px;
   padding-left: 20px;
   border-radius: 0;
-  min-width: 200px;
   font-size: 16px;
   font-weight: 500;
   font-family: var(--ltn__heading-font);

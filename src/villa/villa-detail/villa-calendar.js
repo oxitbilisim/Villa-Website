@@ -28,20 +28,36 @@ const VillaCalendar = (props) => {
         return result == null ? false : true;
     }
 
-    const dayHighlighted = (day) => {
-        const result = props.reservations.find(r => {
+    const renderDayContents = (day, date) => {
+        const isStart = props.reservations.find(r => {
             const start = moment(r.start, serverDateFormat);
-            const end = moment(r.end, serverDateFormat);
-
-            if (day.format(serverDateFormat) == start.format(serverDateFormat) || day.format(serverDateFormat) == end.format(serverDateFormat)) {
+            if (day.format(serverDateFormat) == start.format(serverDateFormat)) {
                 return true;
             } else {
                 return false;
             }
-        })
+        });
+        const isEnd = props.reservations.find(r => {
+            const end = moment(r.end, serverDateFormat);
 
-        return result == null ? false : true;
-    }
+            if (day.format(serverDateFormat) == end.format(serverDateFormat)) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+        let bgType = "";
+        if(isStart && isEnd){
+            bgType = "startEndClose";
+        }else if(isStart){
+            bgType = "startClose";
+        }else if(isEnd){
+            bgType = "endClose";
+        }
+        return <div className={bgType}>
+            <span>{day.format('D')}</span>
+        </div>;
+    };
     
     return <div className={'filter-data-range'}>
         <DayPickerRangeController
@@ -56,7 +72,7 @@ const VillaCalendar = (props) => {
             focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
             onFocusChange={setFocusedInput} // PropTypes.func.isRequired,
             isDayBlocked={dayBlocker}
-            isDayHighlighted={dayHighlighted}
+            renderDayContents={renderDayContents}
         />
     </div>
 }

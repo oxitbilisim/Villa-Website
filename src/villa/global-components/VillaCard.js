@@ -105,7 +105,7 @@ const VillaCard = (props) => {
                         <span>&nbsp;</span>}
                 </div>
                 <div className="product-price">
-                    {props.data?.toplamFiyat != null && props.data?.toplamFiyat != props.data?.fiyat ?
+                    {props.data?.toplamFiyat != null && props.data?.toplamFiyat != 0 && props.data?.toplamFiyat != props.data?.fiyat ?
                         <span><CurrencyFormat value={props.data?.toplamFiyat} displayType={'text'} thousandSeparator={'.'} decimalScale={0} decimalSeparator={','} prefix={currencySymbol(props.data?.paraBirimi)} /><label>/Toplam</label></span> :
                         <span>&nbsp;</span>}
                 </div>

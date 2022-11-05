@@ -97,8 +97,7 @@ const BannerV5 = () => {
                                             <div className="tab-pane fade active show" id="ltn__form_tab_1_1">
                                                 <div className="car-dealer-form-inner">
                                                     <form onSubmit={onSubmit} className="ltn__car-dealer-form-box row">
-                                                        <div
-                                                            className="col-lg-4 col-md-6">
+                                                        <div className="col-lg-2 col-md-2">
                                                             <select ref={selectRef} className="nice-select">
                                                                 <option value={''}>Bölge</option>
                                                                 {regions.map(item =>
@@ -106,8 +105,7 @@ const BannerV5 = () => {
                                                                 )}
                                                             </select>
                                                         </div>
-                                                        <div
-                                                            className="col-lg-4 col-md-6">
+                                                        <div className="col-lg-2 pl-1 col-md-2">
                                                             <div className="input-item input-item-name">
                                                                 <input onChange={onChangeGuestCount} value={filterGuestCount} onKeyPress={(event) => {
                                                                     if (!/[0-9]/.test(event.key)) {
@@ -116,7 +114,7 @@ const BannerV5 = () => {
                                                                 }} type="text" className="mb-0" name="ltn__name" placeholder="Misafir Sayısı" />
                                                             </div>
                                                         </div>
-                                                        <div className="col-lg-4 col-md-6 home-date-range">
+                                                        <div className="col-lg-4 col-md-2 home-date-range">
                                                             <DateRangePicker
                                                                 startDatePlaceholderText="Giriş Tarihi"
                                                                 endDatePlaceholderText="Çıkış Tarihi"
@@ -134,13 +132,12 @@ const BannerV5 = () => {
                                                                 onFocusChange={setFocusedInput} // PropTypes.func.isRequired,
                                                             />       
                                                         </div>
-                                                        <div className="col-lg-8 col-md-6 mt-2">
+                                                        <div className="col-lg-2 col-md-2">
                                                             <div className="input-item input-item-name">
                                                                 <input onChange={onChangeName} value={filterName} type="text" className="mb-0" name="ltn__name" placeholder="Villa" />
                                                             </div>
                                                         </div>
-
-                                                        <div className="col-lg-4 mt-2 text-center">
+                                                        <div className="col-lg-2 text-center">
                                                             {/* <button type="submit" class="btn theme-btn-1 btn-effect-1 text-uppercase">Search Inventory</button> */}
                                                             <button type="submit" onClick={filter} className="btn theme-btn-1 btn-effect-1 text-uppercase">VİLLA ARA</button>
 

@@ -16,7 +16,7 @@ const Navbar = () => {
             <li key={'home'}><Link to="/">Anasayfa</Link></li>
             <li key={'regions'}><Link to="#">Bölgeler</Link>
                 <ul className={type == 'MOBILE' ? 'sub-menu' : ''}>
-                    {regions.map(item => (
+                    {regions.sort((a,b) => (a.toplam > b.toplam) ? -1 : ((b.toplam > a.toplam) ? 1 : 0)).map(item => (
                         <li key={'region-' + item.id}><Link to={'/bolge/' + item.url}>{item.ad}</Link></li>
                     ))}
 
@@ -78,7 +78,7 @@ const Navbar = () => {
                             <div className="col">
                                 <div className="site-logo-wrap">
                                     <div className="site-logo go-top">
-                                        <Link to="/"><img style={{height: 50}}
+                                        <Link to="/"><img style={{height: 65}}
                                                           src={publicUrl + "assets/img/logo.png"}
                                                           alt="Logo"/></Link>
                                     </div>

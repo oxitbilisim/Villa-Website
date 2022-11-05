@@ -51,11 +51,15 @@ const VillaFilters = (props) => {
         
         if(props.regionPageId!=null) {
             let filterObject_ = filterObject;
-            filterObject_.region.push(''+props.regionPageId);
+            if(!filterObject_.region.includes(props.regionPageId)) {
+                filterObject_.region.push(props.regionPageId);
+            }
         }
         if(props.categoryPageId!=null) {
             let filterObject_ = filterObject;
-            filterObject_.category.push(''+props.categoryPageId);
+            if(!filterObject_.category.includes(props.categoryPageId)) {
+                filterObject_.category.push(props.categoryPageId);
+            }
         }
     }, [props.match.params.subUri]);
 

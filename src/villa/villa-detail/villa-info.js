@@ -9,10 +9,11 @@ import {DateRangePicker} from "react-dates/esm";
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import './css/react_dates_overrides.css';
-import moment from "moment";
 import axios from "axios";
 import $ from "jquery";
 import {objectToQueryParam, queryParamToObject} from "../common-lib";
+import {Helmet} from "react-helmet";
+import moment from "moment/moment";
 
 const VillaInfo = (props) => {
     const [reservations, setReservations] = useState([]);
@@ -91,10 +92,12 @@ const VillaInfo = (props) => {
     }
 
     const toggleLike = (villaId) => {
-        if (state.likedVillaIds.includes(villaId)) {
+        if (state.likedVillaIds.filter(i => i.villaId == props.data?.villa.id && i.startDate == getDates()[0] && i.endDate == getDates()[1]).length > 0) {
             dispatch({
                 type: 'UNLIKE',
                 payload: villaId,
+                startDate: getDates()[0],
+                endDate: getDates()[1]
             });
         } else {
             dispatch({
@@ -116,22 +119,25 @@ const VillaInfo = (props) => {
             }
         })
 
-        return result == null ? false : true;
-    }
-
-    const dayHighlighted = (day) => {
-        const result = reservations.find(r => {
+        const isStart = reservations.find(r => {
             const start = moment(r.start, serverDateFormat);
-            const end = moment(r.end, serverDateFormat);
-
-            if (day.format(serverDateFormat) == start.format(serverDateFormat) || day.format(serverDateFormat) == end.format(serverDateFormat)) {
+            if (day.format(serverDateFormat) == start.format(serverDateFormat)) {
                 return true;
             } else {
                 return false;
             }
-        })
+        });
+        const isEnd = reservations.find(r => {
+            const end = moment(r.end, serverDateFormat);
 
-        return result == null ? false : true;
+            if (day.format(serverDateFormat) == end.format(serverDateFormat)) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
+        return result || (isStart && isEnd) ? true : false;
     }
 
     const onChangeForm = (e) => {
@@ -139,23 +145,72 @@ const VillaInfo = (props) => {
             setGuestCount(e.target.value);
         }
     }
-    
+
     const goToReservation = () => {
         const qs = localStorage.getItem("searchParams");
         const obj = qs != null ? queryParamToObject(qs) : {};
-        
+
         const guestCount_ = $(guestCountRef.current).val();
-        if(guestCount_==null){
+        if (guestCount_ == null) {
             $(guestCountRef.current).focus();
             return;
         }
         setGuestCount(guestCount_);
         obj.guestCount = guestCount_;
         const subUri = props.match.params.subUri;
-        props.history.push("/rezervasyon/"+subUri+"?" + objectToQueryParam(obj));
+        props.history.push("/rezervasyon/" + subUri + "?" + objectToQueryParam(obj));
     }
 
+    const getDates = () => {
+        const qs = localStorage.getItem('searchParams');
+        const searchObject = queryParamToObject(qs);
+        if (searchObject.startDate == null) {
+            searchObject.startDate = moment().format(serverDateFormat)
+        }
+        if (searchObject.endDate == null) {
+            searchObject.endDate = moment().add(1, 'days').format(serverDateFormat)
+        }
+
+        return [searchObject.startDate, searchObject.endDate];
+    }
+    
+    const renderDayContents = (day, date) => {
+        const isStart = reservations.find(r => {
+            const start = moment(r.start, serverDateFormat);
+            if (day.format(serverDateFormat) == start.format(serverDateFormat)) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+        const isEnd = reservations.find(r => {
+            const end = moment(r.end, serverDateFormat);
+
+            if (day.format(serverDateFormat) == end.format(serverDateFormat)) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+        let bgType = "";
+        if(isStart && isEnd){
+            bgType = "startEndClose";
+        }else if(isStart){
+            bgType = "startClose";
+        }else if(isEnd){
+            bgType = "endClose";
+        }
+        return <div className={bgType}>
+            <span>{day.format('D')}</span>
+        </div>;
+    };
+
     return <div className="ltn__shop-details-area pb-10">
+        <Helmet>
+            <title>villalarim.com | {props.data?.seo.baslik}</title>
+            <meta name="description" content={props.data?.seo.aciklama}/>
+            <meta name="keywords" content={props.data?.seo.anahtarKelime}/>
+        </Helmet>
         <div className="container">
             <div className="row">
                 <div className="col-lg-8 col-md-12">
@@ -168,7 +223,7 @@ const VillaInfo = (props) => {
                                     <h1>{props.data?.villa.ad} </h1>
                                     <a style={{cursor: 'pointer'}}
                                        onClick={() => toggleLike(props.data?.villa.id)} title="Beğen">
-                                        {state?.likedVillaIds?.includes(props.data?.villa.id) ?
+                                        {state?.likedVillaIds?.filter(i => i.villaId == props.data?.villa.id && i.startDate == getDates()[0] && i.endDate == getDates()[1]).length > 0 ?
                                             <i style={{color: 'red'}} className="fa-solid fa-heart"/>
                                             : <i className="flaticon-heart-1"/>
                                         }
@@ -208,12 +263,13 @@ const VillaInfo = (props) => {
 
                         <div className="widget ltn__author-widget" style={{padding: '35px 15px 30px 15px'}}>
                             <div className="ltn__author-widget-inner text-center">
-                                <h3 style={{color: '#de7f16'}}><CurrencyFormat value={props.data?.villa.fiyat}
-                                                                               displayType={'text'}
-                                                                               thousandSeparator={'.'}
-                                                                               decimalSeparator={','}
-                                                                               prefix={currencySymbol(props.data?.villa.paraBirimi)}/><label
-                                    style={{fontWeight: 'normal'}}>/{pricePeriod(props.data?.villa.fiyatTuru)}</label>
+                                <h3 style={{color: '#de7f16'}}>{props.data?.villa?.fiyat != null ?
+                                    <><CurrencyFormat value={props.data?.villa?.fiyat}
+                                                    displayType={'text'}
+                                                    thousandSeparator={'.'}
+                                                    decimalSeparator={','}
+                                                    prefix={currencySymbol(props.data?.villa?.paraBirimi)}/> <label
+                                    style={{fontWeight: 'normal'}}>/{pricePeriod(props.data?.villa.fiyatTuru)}</label></>: null}
                                 </h3>
                             </div>
 
@@ -235,21 +291,21 @@ const VillaInfo = (props) => {
                                     focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                                     onFocusChange={setFocusedInput} // PropTypes.func.isRequired,
                                     isDayBlocked={dayBlocker}
-                                    isDayHighlighted={dayHighlighted}
+                                    renderDayContents={renderDayContents}
                                 />
                             </div>
 
                             <div className="col-lg-12 text-center mt-2">
                                 <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Misafir
                                     Sayısı</h4>
-                                <div className="cart-plus-minus cart-plus-minus-custom" style={{width:'initial'}}>
+                                <div className="cart-plus-minus cart-plus-minus-custom" style={{width: 'initial'}}>
                                     <input type="text" id={"guestInput"} min="1" ref={guestCountRef} value={guestCount}
                                            name="guestCount"
                                            onChange={onChangeForm} className="cart-plus-minus-box"/>
                                 </div>
                             </div>
 
-                            {priceCalc != null ?<>
+                            {priceCalc != null ? <>
                                 <div className="col-lg-12 col-md-12 mt-3">
                                     <div className="shoping-cart-total">
                                         <table className="table">
@@ -300,12 +356,13 @@ const VillaInfo = (props) => {
                                 </div>
                                 <div className="col-lg-12 text-center">
                                     <div className="btn-wrapper go-top">
-                                        <button onClick={goToReservation} style={{zIndex:0}}
-                                                className="theme-btn-1 btn black-btn filter-button-custom">Rezervasyon Yap
+                                        <button onClick={goToReservation} style={{zIndex: 0}}
+                                                className="theme-btn-1 btn black-btn filter-button-custom">Rezervasyon
+                                            Yap
                                         </button>
                                     </div>
                                 </div>
-                            </>: null
+                            </> : null
                             }
 
                         </div>

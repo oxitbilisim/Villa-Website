@@ -28,43 +28,53 @@ const CollectionList = (props) => {
                             <table className="table">
                                 <tbody>
                                 {
-                                    list.map(item =>
-                                            <tr style={{display: 'revert'}}>
-                                                <td className="cart-product-image" width='100px'>
-                                                    <Link target={'_blank'} to={"/villa/" + item?.villa.url}>
-                                                        <img
-                                                            src={process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetVillaImage?id=" + item?.villa.imageId}
-                                                            alt="#"/>
-                                                    </Link>
-                                                </td>
-                                                <td className="cart-product-info text-left">
-                                                    <h4><Link target={'_blank'}
-                                                              to={"/villa/" + item?.villa.url}>{item?.villa.ad}</Link></h4>
-                                                </td>
-                                                <td className="cart-product-price text-left"><span><CurrencyFormat
-                                                    value={item?.villa.toplamFiyat} displayType={'text'} thousandSeparator={'.'}
-                                                    decimalSeparator={','}
-                                                    prefix={currencySymbol(item.villa.paraBirimi)}/><label>/
-                                                    <span className="mini-cart-quantity" style={{fontSize: '12px', fontStyle: 'italic'}}>
+                                    list.map((item,index) =>
+                                        <tr key={index} style={{display: 'revert'}}>
+                                            <td className="cart-product-image">
+                                                <Link target={'_blank'} to={"/villa/" + item?.villa.url}>
+                                                    <img
+                                                        src={process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetVillaImage?id=" + item?.villa.imageId}
+                                                        alt="#"/>
+                                                </Link>
+                                            </td>
+                                            <td className="cart-product-info text-left">
+                                                <h4><Link target={'_blank'}
+                                                          to={"/villa/" + item?.villa.url}>{item?.villa.ad}</Link></h4>
+                                            </td>
+                                            <td className="cart-product-price text-center"><span>
+                                                { item?.villa.fiyat!=null ?<>Gecelik Fiyat: <CurrencyFormat
+                                                value={item?.villa.fiyat} displayType={'text'}
+                                                thousandSeparator={'.'}
+                                                decimalSeparator={','}
+                                                prefix={currencySymbol(item.villa.paraBirimi)}/>
+                                                    <br/>Toplam Fiyat: <CurrencyFormat
+                                                value={item?.villa.toplamFiyat} displayType={'text'}
+                                                thousandSeparator={'.'}
+                                                decimalSeparator={','}
+                                                prefix={currencySymbol(item.villa.paraBirimi)}/></>:null}
+                                                    <br/>
+                                                        <label>
+                                                    <span className="mini-cart-quantity"
+                                                          style={{fontSize: '14px', fontStyle: 'italic'}}>
                                                         {moment(item.startDate, serverDateFormat).format(dateFormat)}
                                                         -
                                                         {moment(item.endDate, serverDateFormat).format(dateFormat)}
                                                     </span></label></span>
-                                                </td>
-                                            </tr>
+                                            </td>
+                                        </tr>
                                     )
+                                    }
+
+
+                                    </tbody>
+                                    </table>
+                                    </div>
+
+                                    </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    </div>
                                 }
 
-
-                                </tbody>
-                            </table>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-}
-
-export default CollectionList
+                                export default CollectionList

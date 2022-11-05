@@ -16,7 +16,7 @@ const RegionItems = () => {
                 </div>
             </div>
             <div className="row justify-content-center">
-                {regions.map(item => (
+                {regions.sort((a,b) => (a.toplam > b.toplam) ? -1 : ((b.toplam > a.toplam) ? 1 : 0)).map(item => (
                     <div key={'region-'+item.id} className="col-lg-4 col-md-6">
                         <Link to={'/bolge/' + item.url}>
                         <div className="ltn__banner-item ltn__banner-style-4 text-color-white bg_image"
