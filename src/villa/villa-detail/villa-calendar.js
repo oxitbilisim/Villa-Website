@@ -61,7 +61,7 @@ const VillaCalendar = (props) => {
     
     return <div className={'filter-data-range'}>
         <DayPickerRangeController
-            numberOfMonths={2}
+            numberOfMonths={1}
             firstDayOfWeek={1}
             startDate={startDate} // momentPropTypes.momentObj or null,
             endDate={endDate} // momentPropTypes.momentObj or null,

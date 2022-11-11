@@ -346,7 +346,7 @@ class NavbarV5 extends Component {
 					<div className="site-logo">
 						<Link to="/"><img src={publicUrl+"assets/img/logo.png"} alt="Logo" /></Link>
 					</div>
-					<button className="ltn__utilize-close">×</button>
+					<button className="ltn__utilize-close close-menu-card">×</button>
 					</div>
 					<div className="ltn__utilize-menu-search-form">
 					<form method="get" action="/shop">

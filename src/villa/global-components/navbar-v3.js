@@ -4,11 +4,13 @@ import Social from '../section-components/social';
 import axios from "axios";
 import {GlobalContext} from "../../villa/global-context";
 import LikedVillas from "./LikedVillas";
+import {LikedVillaContext} from "../liked-villa-context";
 
 const NavbarV3 = () => {
     const {regions, categories} = useContext(GlobalContext)
     let publicUrl = process.env.PUBLIC_URL + '/'
-
+    const [state, dispatch] = useContext(LikedVillaContext);
+    
     const renderMenu = (type) => {
         return <ul>
             <li key={'home'}><Link to="/">Anasayfa</Link></li>
@@ -30,22 +32,36 @@ const NavbarV3 = () => {
             </li>
             <li key={'blog'}><Link to="/blog">Blog</Link></li>
             <li key={'contact'}><Link to="/iletisim">İletişim</Link></li>
+            <li key={'liked-villa'}>
+                <a href="#ltn__utilize-cart-menu" className="ltn__utilize-toggle">
+                    <span className="mini-cart-icon" style={{lineHeight:'37px'}}>
+                        <i className="flaticon-heart-1"/>
+                        <sup>{state?.likedVillaIds?.length}</sup>
+                    </span>
+                </a>
+            </li>
         </ul>
     }
 
     return (
         <div>
             <header
-                className="ltn__header-area ltn__header-5 ltn__header-logo-and-mobile-menu-in-mobile ltn__header-logo-and-mobile-menu ltn__header-transparent gradient-color-4---">
+                className="ltn__header-area ltn__header-5 ltn__header-logo-and-mobile-menu-in-mobile ltn__header-logo-and-mobile-menu ltn__header-transparent--- gradient-color-4--- ">
                 <div className="ltn__header-top-area top-area-color-white">
                     <div className="container">
                         <div className="row">
                             <div className="col-md-7">
                                 <div className="ltn__top-bar-menu">
                                     <ul>
-                                        <li><a href="#"><i className="icon-mail"/> info@villalarim.com</a></li>
-                                        <li><a href="#"><i className="icon-phone-call"/>0242 844 22 89</a></li>
-                                        <li><a href="#"><i className="icon-phone-call"/>+90 537 734 33 02</a></li>
+                                        <li><a href="#"><i ref={element => {
+                                            if (element) element.style.setProperty('color', 'white', 'important');
+                                        }} className="icon-mail"/> info@villalarim.com</a></li>
+                                        <li><a href="#"><i ref={element => {
+                                            if (element) element.style.setProperty('color', 'white', 'important');
+                                        }} className="icon-phone-call"/>0242 844 22 89</a></li>
+                                        <li><a href="#"><i ref={element => {
+                                            if (element) element.style.setProperty('color', 'white', 'important');
+                                        }} className="icon-phone-call"/>+90 537 734 33 02</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -63,20 +79,20 @@ const NavbarV3 = () => {
                         </div>
                     </div>
                 </div>
-                <div className="ltn__header-middle-area ltn__header-sticky ltn__sticky-bg-black">
+                <div className="ltn__header-middle-area ltn__header-sticky ltn__sticky-bg-white">
                     <div className="container">
                         <div className="row">
                             <div className="col">
                                 <div className="site-logo-wrap">
                                     <div className="site-logo go-top">
-                                        <Link to="/"><img style={{height: 65}}
+                                        <Link to="/"><img className={"logo"}
                                                           src={publicUrl + "assets/img/logo-2.png"}
                                                           alt="Logo"/></Link>
                                     </div>
 
                                 </div>
                             </div>
-                            <div className="col header-menu-column menu-color-white">
+                            <div className="col header-menu-column menu-color-black">
                                 <div className="header-menu d-none d-xl-block go-top">
                                     <nav>
                                         <div className="ltn__main-menu">
@@ -113,7 +129,7 @@ const NavbarV3 = () => {
                         <div className="site-logo">
                             <Link to="/"><img src={publicUrl + "assets/img/logo.png"} alt="Logo"/></Link>
                         </div>
-                        <button className="ltn__utilize-close">×</button>
+                        <button className="ltn__utilize-close close-menu-card">×</button>
                     </div>
 
                     <div className="ltn__utilize-menu">
@@ -122,10 +138,8 @@ const NavbarV3 = () => {
 
                     <div className="ltn__social-media-2">
                         <ul>
-                            <li><a href="#" title="Facebook"><i className="fab fa-facebook-f"/></a></li>
-                            <li><a href="#" title="Twitter"><i className="fab fa-twitter"/></a></li>
-                            <li><a href="#" title="Linkedin"><i className="fab fa-linkedin"/></a></li>
-                            <li><a href="#" title="Instagram"><i className="fab fa-instagram"/></a></li>
+                            <li><a href="https://www.facebook.com/villalarim" title="Facebook"><i className="fab fa-facebook-f" /></a></li>
+                            <li><a href="https://www.instagram.com/villalarim/" title="Instagram"><i className="fab fa-instagram" /></a></li>
                         </ul>
                     </div>
                 </div>

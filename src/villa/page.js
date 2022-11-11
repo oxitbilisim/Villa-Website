@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import Navbar from './global-components/navbar';
+import Navbar from './global-components/navbar-v3';
 import PageHeader from './global-components/page-header';
-import BlogGrid from './blog-components/blog-grid';
 import CallToActionV1 from './section-components/call-to-action-v1';
 import Footer from './global-components/footer';
 import axios from "axios";

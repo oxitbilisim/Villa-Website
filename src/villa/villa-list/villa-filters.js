@@ -211,7 +211,7 @@ const VillaFilters = (props) => {
                                             Toplam {props.totalCount} villa bulundu
                                         </div>
                                     </li> : null}
-                                <li>
+                                {/*<li>
                                     <div className="short-by text-center">
                                         <select className="nice-select">
                                             <option>Sırala: En çok ziyaret edilenler</option>
@@ -220,12 +220,12 @@ const VillaFilters = (props) => {
                                             <option>Sırala: Yüksek fiyatlılar</option>
                                         </select>
                                     </div>
-                                </li>
+                                </li>*/}
                             </ul>
                         </div>
                         {props.children}
                     </div>
-                    <div className="col-lg-4  mb-100">
+                    <div className="col-lg-4  mb-10">
                         <aside className="sidebar ltn__shop-sidebar">
                             <h3 className="mb-6">Villa Ara</h3>
 

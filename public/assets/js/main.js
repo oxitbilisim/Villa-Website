@@ -65,6 +65,8 @@
           (function () {
               var $ltn__utilizeToggle = $('.ltn__utilize-toggle'),
                   $ltn__utilize = $('.ltn__utilize'),
+                  $ltn__utilize_menu = $('.ltn__utilize-mobile-menu'),
+                  $ltn__utilize_liked_villa = $('.ltn__utilize-cart-menu'),
                   $ltn__utilizeOverlay = $('.ltn__utilize-overlay'),
                   $mobileMenuToggle = $('.mobile-menu-toggle');
               $ltn__utilizeToggle.on('click', function (e) {
@@ -78,10 +80,24 @@
                       $this.addClass('close');
                   }
               });
-              $('.ltn__utilize-close, .ltn__utilize-overlay').on('click', function (e) {
+              /*$('.ltn__utilize-close, .ltn__utilize-overlay').on('click', function (e) {
                   e.preventDefault();
                   $body.removeClass('ltn__utilize-open');
                   $ltn__utilize.removeClass('ltn__utilize-open');
+                  $ltn__utilizeOverlay.fadeOut();
+                  $mobileMenuToggle.find('a').removeClass('close');
+              });*/
+              $('.close-menu-card, .ltn__utilize-overlay').on('click', function (e) {
+                  e.preventDefault();
+                  $body.removeClass('ltn__utilize-open');
+                  $ltn__utilize_menu.removeClass('ltn__utilize-open');
+                  $ltn__utilizeOverlay.fadeOut();
+                  $mobileMenuToggle.find('a').removeClass('close');
+              });
+              $('.liked-villa-card-close, .ltn__utilize-overlay').on('click', function (e) {
+                  e.preventDefault();
+                  $body.removeClass('ltn__utilize-open');
+                  $ltn__utilize_liked_villa.removeClass('ltn__utilize-open');
                   $ltn__utilizeOverlay.fadeOut();
                   $mobileMenuToggle.find('a').removeClass('close');
               });

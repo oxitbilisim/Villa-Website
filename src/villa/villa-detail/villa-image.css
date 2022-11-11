@@ -12,5 +12,5 @@
 }
 
 .slick-slide img {
-    height: 250px;
+    max-height: 250px;
 }

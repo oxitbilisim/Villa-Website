@@ -53,7 +53,7 @@ const LikedVillas = (props) => {
             <div className="ltn__utilize-menu-inner ltn__scrollbar">
                 <div className="ltn__utilize-menu-head">
                     <span className="ltn__utilize-menu-title">Beğenilen Villalar</span>
-                    <button className="ltn__utilize-close">×</button>
+                    <button className="ltn__utilize-close liked-villa-card-close">×</button>
                 </div>
                 <div className="mini-cart-product-area ltn__scrollbar">
                     {list.length > 0 ?

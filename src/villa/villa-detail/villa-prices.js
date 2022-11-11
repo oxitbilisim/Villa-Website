@@ -36,7 +36,7 @@ const VillaPrices = (props) => {
                                     <div className="col-lg-12">
                                         <div className="ltn__select-availability-table-wrap">
                                             <div
-                                                className="ltn__select-availability-table d-none d-md-block">
+                                                className="ltn__select-availability-table d-md-block">
                                                 <ul className="ltn__select-availability-table-head">
                                                     <li><b>Tarih</b></li>
                                                     <li><b>En Az Kiralama</b></li>

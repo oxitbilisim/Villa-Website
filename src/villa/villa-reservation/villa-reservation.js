@@ -1,6 +1,6 @@
 import React, {Component, useEffect, useState} from 'react';
 import axios from "axios";
-import Navbar from "../global-components/navbar";
+import Navbar from "../global-components/navbar-v3";
 import CallToActionV1 from "../section-components/call-to-action-v1";
 import Footer from "../global-components/footer";
 import ReservationDetail from "./reservation-detail";

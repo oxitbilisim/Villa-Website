@@ -66,6 +66,9 @@
  
 /* small mobile :320px. */
 @media (max-width: 767px) {
+    .logo{
+        height: auto !important;
+    }
     /* Global */
     body {
         font-size: 14px;

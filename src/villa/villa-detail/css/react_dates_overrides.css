@@ -15,6 +15,21 @@
     width: 138px !important;
     padding-right: 20px !important;
 }
+@media (max-width: 768px) {
+    .filter-data-range .DateInput{
+        width: 100% !important;
+        margin: 5px 0;
+    }
+    .filter-data-range .DateInput_input{
+        margin-bottom: 0px !important;
+        width: 100% !important;
+        padding-right: 20px !important;
+        margin: 5px 0;
+    }
+    .DateRangePickerInput_arrow_1{
+        display: none;
+    }
+}
 .filter-data-range .CalendarDay__selected_span {
     background: var(--ltn__secondary-color) !important;
 

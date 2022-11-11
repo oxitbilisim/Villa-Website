@@ -221,7 +221,7 @@ const VillaInfo = (props) => {
                             <div className="col-lg-7 col-md-12">
                                 <div className={'villa-title mt-2'}>
                                     <h1>{props.data?.villa.ad} </h1>
-                                    <a style={{cursor: 'pointer'}}
+                                    <a style={{cursor: 'pointer', float:'right'}}
                                        onClick={() => toggleLike(props.data?.villa.id)} title="Beğen">
                                         {state?.likedVillaIds?.filter(i => i.villaId == props.data?.villa.id && i.startDate == getDates()[0] && i.endDate == getDates()[1]).length > 0 ?
                                             <i style={{color: 'red'}} className="fa-solid fa-heart"/>
@@ -238,7 +238,7 @@ const VillaInfo = (props) => {
                             <div className="col-lg-5 col-md-12 mt-3" style={{textAlignLast: 'right'}}>
 
 
-                                <ul className="ltn__list-item-2 ltn__list-item-2-before ltn__flat-info">
+                                <ul className="ltn__list-item-2 ltn__list-item-2-before ltn__flat-info" style={{ textAlignLast: 'center'}}>
                                     <li><span>{props.data?.villa.kapasite} <i className="flaticon-user"></i></span>Kapasite
                                     </li>
                                     <li><span>{props.data?.villa.yatakOdaSayisi} <i
@@ -276,6 +276,7 @@ const VillaInfo = (props) => {
                             <div className="col-lg-12 filter-data-range">
                                 <DateRangePicker
                                     minimumNights={1}
+                                    numberOfMonths={1}
                                     startDatePlaceholderText="Giriş Tarihi"
                                     endDatePlaceholderText="Çıkış Tarihi"
                                     displayFormat={"DD.MM.YYYY"}

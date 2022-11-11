@@ -16,6 +16,19 @@
     width: 165px !important;
     padding-right: 20px !important;
 }
+@media (max-width: 768px) {
+    .home-date-range .DateInput{
+        width: 100% !important;
+        padding-bottom: 5px !important;
+        background: transparent;
+    }
+    .home-date-range .DateInput_input{
+        margin-bottom: 0px !important;
+        width: 100% !important;
+        padding-right: 20px !important;
+    }
+}
+
 .home-date-range .CalendarDay__selected_span {
     background: var(--ltn__secondary-color);
 

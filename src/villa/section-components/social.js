@@ -10,8 +10,12 @@ class Social extends Component {
 
     return <div className="ltn__social-media">
 			<ul>
-				<li><a href="https://www.facebook.com/villalarim" title="Facebook"><i className="fab fa-facebook-f" /></a></li>
-				<li><a href="https://www.instagram.com/villalarim/" title="Instagram"><i className="fab fa-instagram" /></a></li>
+				<li><a href="https://www.facebook.com/villalarim" title="Facebook"><i ref={element => {
+					if (element) element.style.setProperty('color', 'white', 'important');
+				}} className="fab fa-facebook-f" /></a></li>
+				<li><a href="https://www.instagram.com/villalarim/" title="Instagram"><i ref={element => {
+					if (element) element.style.setProperty('color', 'white', 'important');
+				}} className="fab fa-instagram" /></a></li>
 
 			</ul>
 		</div>

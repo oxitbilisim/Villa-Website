@@ -16,7 +16,16 @@ const VillaImage = (props) => {
         slidesToShow: 4,
         slidesToScroll: 1,
         adaptiveHeight: false,
-        centerMode: true
+        centerMode: true,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 1,
+                    infinite: true
+                }
+            }
+        ]
     };
     useEffect(() => {
     
