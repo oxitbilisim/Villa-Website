@@ -14888,7 +14888,13 @@ input.cart-plus-minus-box {
 }
 
 .cart-product-image img {
-    max-width: 100px;
+    max-width: 200px;
+}
+
+@media (max-width: 767px) {
+    .cart-product-image img {
+        max-width: 100px;
+    }
 }
 
 .cart-product-remove {
@@ -15127,7 +15133,7 @@ input.cart-plus-minus-box {
 }
 
 .ltn__faq-inner-2 .card .card-body {
-    padding: 15px 40px 25px;
+    padding: 15px 30px 40px 35px;
 }
 
 .ltn__faq-inner-3 .card {

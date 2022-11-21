@@ -6,6 +6,7 @@ export const GlobalContext = createContext();
 export const GlobalContextProvider = (props) => {
     const [regions, setRegions] = useState(null);
     const [categories, setCategories] = useState(null);
+    const [parameters, setParameters] = useState(null);
     
     useEffect(()=>{
         axios.get(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetBolgeAll")
@@ -17,6 +18,11 @@ export const GlobalContextProvider = (props) => {
             .then((response) => {
                 setCategories(response.data);
             })
+
+        axios.get(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetParameters")
+            .then((response) => {
+                setParameters(response.data);
+            })
     },[]);
 
     return (
@@ -24,9 +30,10 @@ export const GlobalContextProvider = (props) => {
             value={{
                 regions,
                 categories,
+                parameters,
                 
             }}>
-            {regions!=null && categories!=null?props.children:null}
+            {regions!=null && categories!=null && parameters!=null?props.children:null}
         </GlobalContext.Provider>
     )
 }

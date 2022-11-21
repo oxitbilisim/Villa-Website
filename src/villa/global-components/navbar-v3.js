@@ -7,7 +7,7 @@ import LikedVillas from "./LikedVillas";
 import {LikedVillaContext} from "../liked-villa-context";
 
 const NavbarV3 = () => {
-    const {regions, categories} = useContext(GlobalContext)
+    const {regions, categories, parameters} = useContext(GlobalContext)
     let publicUrl = process.env.PUBLIC_URL + '/'
     const [state, dispatch] = useContext(LikedVillaContext);
     
@@ -42,6 +42,10 @@ const NavbarV3 = () => {
             </li>
         </ul>
     }
+    
+    const email =  parameters.find(p => p.code == 'CONTACT_EMAIL').value;
+    const phone =  parameters.find(p => p.code == 'CONTACT_PHONE').value;
+    const phoneMobile =  parameters.find(p => p.code == 'CONTACT_PHONE_MOBILE').value;
 
     return (
         <div>
@@ -53,15 +57,15 @@ const NavbarV3 = () => {
                             <div className="col-md-7">
                                 <div className="ltn__top-bar-menu">
                                     <ul>
-                                        <li><a href="#"><i ref={element => {
+                                        <li><a href={"mailto:"+email}><i ref={element => {
                                             if (element) element.style.setProperty('color', 'white', 'important');
-                                        }} className="icon-mail"/> info@villalarim.com</a></li>
-                                        <li><a href="#"><i ref={element => {
+                                        }} className="icon-mail"/> {email}</a></li>
+                                        <li><a href={"tel:"+phone.replaceAll(" ","")}><i ref={element => {
                                             if (element) element.style.setProperty('color', 'white', 'important');
-                                        }} className="icon-phone-call"/>0242 844 22 89</a></li>
-                                        <li><a href="#"><i ref={element => {
+                                        }} className="icon-phone-call"/> {phone}</a></li>
+                                        <li><a href={"tel:"+phoneMobile.replaceAll(" ","")}><i ref={element => {
                                             if (element) element.style.setProperty('color', 'white', 'important');
-                                        }} className="icon-phone-call"/>+90 537 734 33 02</a></li>
+                                        }} className="icon-phone-call"/>{phoneMobile}</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -138,8 +142,8 @@ const NavbarV3 = () => {
 
                     <div className="ltn__social-media-2">
                         <ul>
-                            <li><a href="https://www.facebook.com/villalarim" title="Facebook"><i className="fab fa-facebook-f" /></a></li>
-                            <li><a href="https://www.instagram.com/villalarim/" title="Instagram"><i className="fab fa-instagram" /></a></li>
+                            <li><a href="https://www.facebook.com/villalarim" target="_blank" title="Facebook"><i className="fab fa-facebook-f" /></a></li>
+                            <li><a href="https://www.instagram.com/villalarim/" target="_blank" title="Instagram"><i className="fab fa-instagram" /></a></li>
                         </ul>
                     </div>
                 </div>

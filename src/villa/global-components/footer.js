@@ -6,7 +6,12 @@ import axios from "axios";
 import {GlobalContext} from "../global-context";
 
 const Footer = (props) => {
-    const {regions, categories} = useContext(GlobalContext)
+    const {regions, categories, parameters} = useContext(GlobalContext);
+
+    const email = parameters.find(p => p.code == 'CONTACT_EMAIL').value;
+    const phone = parameters.find(p => p.code == 'CONTACT_PHONE').value;
+    const phoneMobile = parameters.find(p => p.code == 'CONTACT_PHONE_MOBILE').value;
+    const address = parameters.find(p => p.code == 'CONTACT_ADDRESS').value;
 
 
     useEffect(() => {
@@ -106,7 +111,7 @@ const Footer = (props) => {
                                                 <i className="icon-placeholder"/>
                                             </div>
                                             <div className="footer-address-info">
-                                                <p>Menteşe Mah. Şehitler Cad. No:16 <br/> Kalkan / Kaş / ANTALYA</p>
+                                                <p dangerouslySetInnerHTML={{__html: address}}></p>
                                             </div>
                                         </li>
                                         <li>
@@ -114,7 +119,15 @@ const Footer = (props) => {
                                                 <i className="icon-call"/>
                                             </div>
                                             <div className="footer-address-info">
-                                                <p><a href="tel:+0123-456789">0242 844 22 89</a></p>
+                                                <p><a href={"tel:"+phone.replaceAll(" ","")}>{phone}</a></p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className="footer-address-icon">
+                                                <i className="icon-call"/>
+                                            </div>
+                                            <div className="footer-address-info">
+                                                <p><a href={"tel:"+phoneMobile.replaceAll(" ","")}>{phoneMobile}</a></p>
                                             </div>
                                         </li>
                                         <li>
@@ -122,7 +135,7 @@ const Footer = (props) => {
                                                 <i className="icon-mail"/>
                                             </div>
                                             <div className="footer-address-info">
-                                                <p><a href="mailto:example@example.com">info@villalarim.com</a></p>
+                                                <p><a href={"mailto:"+email}>{email}</a></p>
                                             </div>
                                         </li>
                                     </ul>

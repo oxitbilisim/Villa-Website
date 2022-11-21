@@ -229,87 +229,95 @@ const VillaFilters = (props) => {
                         <aside className="sidebar ltn__shop-sidebar">
                             <h3 className="mb-6">Villa Ara</h3>
 
-                            {/* Advance Information widget */}
-                            <div className="widget ltn__menu-widget">
-                                <form onSubmit={onSubmit}>
-                                    <div className="ltn__search-widget mb-30">
-                                        <input type="text" value={filterName} onChange={onChangeForm} name="name"
-                                               placeholder="Villa Ara..."/>
-                                    </div>
-                                    <div className="row pb-4">
-                                        <div className="col-lg-12">
-                                            <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Fiyat
-                                                Aralığı</h4>
-                                        </div>
-                                        <div className="col-lg-6">
-                                            <label>En Düşük</label>
-                                            <div className="input-item input-item-custom">
-                                                <input type="text" name="startPrice" onKeyPress={(event) => {
-                                                    if (!/[0-9]/.test(event.key)) {
-                                                        event.preventDefault();
-                                                    }
-                                                }} value={filterStartPrice} onChange={onChangeForm}/>
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-6">
-                                            <label>En Yüksek</label>
-                                            <div className="input-item input-item-custom">
-                                                <input type="text" name="endPrice" onKeyPress={(event) => {
-                                                    if (!/[0-9]/.test(event.key)) {
-                                                        event.preventDefault();
-                                                    }
-                                                }} value={filterEndPrice} onChange={onChangeForm}/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row pb-4">
-                                        <div className="col-lg-12">
-                                            <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Tarih
-                                                Aralığı</h4>
-                                        </div>
-                                        <div className="col-lg-12 filter-data-range">
-                                            <DateRangePicker
-                                                startDatePlaceholderText="Giriş Tarihi"
-                                                endDatePlaceholderText="Çıkış Tarihi"
-                                                displayFormat={"DD.MM.YYYY"}
-                                                firstDayOfWeek={1}
-                                                startDate={filterStartDate} // momentPropTypes.momentObj or null,
-                                                startDateId="startDate" // PropTypes.string.isRequired,
-                                                endDate={filterEndDate} // momentPropTypes.momentObj or null,
-                                                endDateId="endDate" // PropTypes.string.isRequired,
-                                                onDatesChange={({startDate, endDate}) => {
-                                                    setFilterStartDate(startDate);
-                                                    setFilterEndDate(endDate);
-                                                }} // PropTypes.func.isRequired,
-                                                focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                                                onFocusChange={setFocusedInput} // PropTypes.func.isRequired,
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="row pb-1">
-                                        <div className="col-lg-6">
-                                            <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Misafir
-                                                Sayısı</h4>
-                                            <div className="cart-plus-minus cart-plus-minus-custom">
-                                                <input type="text" id={"guestInput"} min="1" ref={guestCountRef}
-                                                       value={filterGuestCount} name="guestCount"
-                                                       onChange={onChangeForm} className="cart-plus-minus-box"/>
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-6 text-center">
-                                            <div className="btn-wrapper go-top">
-                                                <button onClick={filter} style={{zIndex: 0}}
-                                                        className="theme-btn-1 btn black-btn filter-button-custom">Filtrele
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-
                             <div className="ltn__faq-inner ltn__faq-inner-2">
                                 <div id="accordion_2">
+                                    {/* card */}
+                                    <div className="card">
+                                        <h6 className="collapsed ltn__card-title" data-bs-toggle="collapse"
+                                            data-bs-target="#item-0" aria-expanded="false">
+                                            Filtreler
+                                        </h6>
+                                        <div id="item-0" className="collapse" data-bs-parent="#accordion_0">
+                                            <div className="card-body widget ltn__menu-widget"
+                                                 style={{border: 'initial'}}>
+                                                <form onSubmit={onSubmit}>
+                                                    <div className="ltn__search-widget mb-30">
+                                                        <input type="text" value={filterName} onChange={onChangeForm} name="name"
+                                                               placeholder="Villa Ara..."/>
+                                                    </div>
+                                                    <div className="row pb-4">
+                                                        <div className="col-lg-12">
+                                                            <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Fiyat
+                                                                Aralığı</h4>
+                                                        </div>
+                                                        <div className="col-lg-6">
+                                                            <label>En Düşük</label>
+                                                            <div className="input-item input-item-custom">
+                                                                <input type="text" name="startPrice" onKeyPress={(event) => {
+                                                                    if (!/[0-9]/.test(event.key)) {
+                                                                        event.preventDefault();
+                                                                    }
+                                                                }} value={filterStartPrice} onChange={onChangeForm}/>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-lg-6">
+                                                            <label>En Yüksek</label>
+                                                            <div className="input-item input-item-custom">
+                                                                <input type="text" name="endPrice" onKeyPress={(event) => {
+                                                                    if (!/[0-9]/.test(event.key)) {
+                                                                        event.preventDefault();
+                                                                    }
+                                                                }} value={filterEndPrice} onChange={onChangeForm}/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row pb-4">
+                                                        <div className="col-lg-12">
+                                                            <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Tarih
+                                                                Aralığı</h4>
+                                                        </div>
+                                                        <div className="col-lg-12 filter-data-range">
+                                                            <DateRangePicker
+                                                                startDatePlaceholderText="Giriş Tarihi"
+                                                                endDatePlaceholderText="Çıkış Tarihi"
+                                                                displayFormat={"DD.MM.YYYY"}
+                                                                firstDayOfWeek={1}
+                                                                startDate={filterStartDate} // momentPropTypes.momentObj or null,
+                                                                startDateId="startDate" // PropTypes.string.isRequired,
+                                                                endDate={filterEndDate} // momentPropTypes.momentObj or null,
+                                                                endDateId="endDate" // PropTypes.string.isRequired,
+                                                                onDatesChange={({startDate, endDate}) => {
+                                                                    setFilterStartDate(startDate);
+                                                                    setFilterEndDate(endDate);
+                                                                }} // PropTypes.func.isRequired,
+                                                                focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                                                                onFocusChange={setFocusedInput} // PropTypes.func.isRequired,
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="row pb-1">
+                                                        <div className="col-lg-6">
+                                                            <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Misafir
+                                                                Sayısı</h4>
+                                                            <div className="cart-plus-minus cart-plus-minus-custom">
+                                                                <input type="text" id={"guestInput"} min="1" ref={guestCountRef}
+                                                                       value={filterGuestCount} name="guestCount"
+                                                                       onChange={onChangeForm} className="cart-plus-minus-box"/>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-lg-6 text-center">
+                                                            <div className="btn-wrapper go-top">
+                                                                <button onClick={filter} style={{zIndex: 0}}
+                                                                        className="theme-btn-1 btn black-btn filter-button-custom">Filtrele
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                     {/* card */}
                                     <div className="card">
                                         <h6 className="collapsed ltn__card-title" data-bs-toggle="collapse"
@@ -341,7 +349,7 @@ const VillaFilters = (props) => {
                                         </div>
                                     </div>
                                     {/* card */}
-                                    <div className="card">
+                                    <div className="card">                                        
                                         <h6 className="collapsed ltn__card-title" data-bs-toggle="collapse"
                                             data-bs-target="#item-2" aria-expanded="false">
                                             Bölgeler {filterObject.region.length > 0 ?

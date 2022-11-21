@@ -31,40 +31,40 @@
     }
 }
 .filter-data-range .CalendarDay__selected_span {
-    background: var(--ltn__secondary-color) !important;
+    background: #D75353FF !important;
 
 }
 
 .filter-data-range .CalendarDay__selected {
-    background: var(--ltn__secondary-color) !important;
+    background: #D75353FF !important;
     color: white;
 }
 .filter-data-range .CalendarDay__selected_start > div {
     height: 100%;
     line-height: 35px;
     color: black;
-    background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 51%, rgba(222,127,22,1) 51%, rgba(222,127,22,1) 100%);
+    background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 51%, rgb(215, 83, 83,1) 51%, rgb(215, 83, 83,1) 100%);
 }
 .filter-data-range .CalendarDay__selected_start .endClose {
-    background: linear-gradient(135deg, rgba(244,175,53,1) 0%, rgba(244,175,53,1) 49%, rgba(244,175,53,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 51%, rgba(222,127,22,1) 51%, rgba(222,127,22,1) 100%) !important;
+    background: linear-gradient(135deg, rgb(202, 11, 11,1) 0%, rgb(202, 11, 11,1) 49%, rgb(202, 11, 11,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 51%, rgb(215, 83, 83,1) 51%, rgb(215, 83, 83,1) 100%) !important;
 }
 .filter-data-range .CalendarDay__selected_end .startClose {
-    background: linear-gradient(315deg, rgba(244,175,53,1) 0%, rgba(244,175,53,1) 49%, rgba(244,175,53,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 51%, rgba(222,127,22,1) 51%, rgba(222,127,22,1) 100%) !important;
+    background: linear-gradient(315deg, rgb(202, 11, 11,1) 0%, rgb(202, 11, 11,1) 49%, rgb(202, 11, 11,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 51%, rgb(215, 83, 83,1) 51%, rgb(215, 83, 83,1) 100%) !important;
 }
 .filter-data-range .CalendarDay__selected_end > div {
     height: 100%;
     line-height: 35px;
     color: black;
-    background: linear-gradient(315deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 51%, rgba(222,127,22,1) 51%, rgba(222,127,22,1) 100%);
+    background: linear-gradient(315deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 51%, rgb(215, 83, 83,1) 51%, rgb(215, 83, 83,1) 100%);
 }
 .filter-data-range .CalendarDay__selected:hover {
-    background: var(--ltn__secondary-color) !important;
+    background: #D75353FF !important;
     color: white;
 }
 
 .filter-data-range .CalendarDay__hovered_span:hover,
 .filter-data-range .CalendarDay__hovered_span {
-    background: var(--ltn__secondary-color) !important;
+    background: #D75353FF !important;
 }
 
 .filter-data-range .DayPicker_weekHeader_li{
@@ -72,27 +72,27 @@
 }
 
 .filter-data-range .CalendarDay__blocked_calendar {
-    background: #f4af35;
+    background: rgb(202, 11, 11,1);
     border: 1px solid #cacccd;
-    color: #7f7f7f;
+    color: #FFFFFF;
 }
 
 .startClose{
     height: 100%;
     line-height: 35px;
-    background: linear-gradient(315deg, rgba(244,175,53,1) 0%, rgba(244,175,53,1) 50%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
+    background: linear-gradient(315deg, rgb(202, 11, 11) 0%, rgb(202, 11, 11,1) 50%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
 }
 
 .endClose{
     height: 100%;
     line-height: 35px;
-    background: linear-gradient(135deg, rgba(244,175,53,1) 0%, rgba(244,175,53,1) 50%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
+    background: linear-gradient(135deg, rgb(202, 11, 11,1) 0%, rgb(202, 11, 11,1) 50%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
 }
 
 .startEndClose{
     height: 100%;
     line-height: 35px;
-    background: rgb(244,175,53);
-    background: linear-gradient(135deg, rgba(244,175,53,1) 0%, rgba(244,175,53,1) 49%, rgba(244,175,53,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 51%, rgba(244,180,65,1) 51%, rgba(244,180,65,1) 100%);
+    background: rgb(202, 11, 11,1);
+    background: linear-gradient(135deg, rgb(202, 11, 11,1) 0%, rgb(202, 11, 11,1) 49%, rgb(202, 11, 11,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 51%, rgba(244,180,65,1) 51%, rgba(244,180,65,1) 100%);
 }
 

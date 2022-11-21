@@ -30,23 +30,23 @@
 }
 
 .home-date-range .CalendarDay__selected_span {
-    background: var(--ltn__secondary-color);
+    background: #ca0b0b;
 
 }
 
 .CalendarDay__selected {
-    background: var(--ltn__secondary-color);
+    background: #ca0b0b;
     color: white;
 }
 
 .CalendarDay__selected:hover {
-    background: var(--ltn__secondary-color);
+    background: #ca0b0b;
     color: white;
 }
    
 .CalendarDay__hovered_span:hover,
 .CalendarDay__hovered_span {
-    background: var(--ltn__secondary-color);;
+    background: #ca0b0b;;
 }
 
 .DayPicker_weekHeader_li{
