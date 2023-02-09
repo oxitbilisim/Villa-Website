@@ -6,7 +6,7 @@ node {
     }
     
     stage ('Git Checkout') {
-      git branch: 'main', credentialsId: 'ba3bdf3e-3541-4f49-a5aa-0644baf85d8c', url: 'https://github.com/oxitbilisim/Villa-Website.git'
+      git branch: 'master', credentialsId: 'ba3bdf3e-3541-4f49-a5aa-0644baf85d8c', url: 'https://github.com/oxitbilisim/Villa-Website.git'
     }
     
     stage('Remove Existing Image') {
