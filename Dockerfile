@@ -1,19 +1,22 @@
-#FROM node:16.15-alpine AS builder
-#ENV NODE_ENV production
+FROM node:18 AS builder
+ENV NODE_ENV production
 
-#WORKDIR /app
+WORKDIR /app
 
-#COPY . .
-#RUN npm install 
+COPY . .
 
-#RUN npm run build -- --profile
+RUN npm install --legacy-peer-deps --loglevel=error
+RUN npx update-browserslist-db@latest
+ENV NODE_OPTIONS=--openssl-legacy-provider
+
+RUN npm run build
 
 
 FROM nginx:1.21.0-alpine as nginx
 ENV NODE_ENV production
 
-#COPY --from=builder /app/build /usr/share/nginx/html
-COPY build /usr/share/nginx/html
+COPY --from=builder /app/build /usr/share/nginx/html
+#COPY build /usr/share/nginx/html
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
