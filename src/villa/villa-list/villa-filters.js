@@ -242,7 +242,7 @@ const VillaFilters = (props) => {
                                                  style={{border: 'initial'}}>
                                                 <form onSubmit={onSubmit}>
                                                     <div className="ltn__search-widget mb-30">
-                                                        <input type="text" value={filterName} onChange={onChangeForm} name="name"
+                                                        <input type="text" value={filterName} autoComplete={"off"} onChange={onChangeForm} name="name"
                                                                placeholder="Villa Ara..."/>
                                                     </div>
                                                     <div className="row pb-4">
@@ -253,7 +253,7 @@ const VillaFilters = (props) => {
                                                         <div className="col-lg-6">
                                                             <label>En Düşük</label>
                                                             <div className="input-item input-item-custom">
-                                                                <input type="text" name="startPrice" onKeyPress={(event) => {
+                                                                <input type="text" name="startPrice" autoComplete={"off"} onKeyPress={(event) => {
                                                                     if (!/[0-9]/.test(event.key)) {
                                                                         event.preventDefault();
                                                                     }
@@ -263,7 +263,7 @@ const VillaFilters = (props) => {
                                                         <div className="col-lg-6">
                                                             <label>En Yüksek</label>
                                                             <div className="input-item input-item-custom">
-                                                                <input type="text" name="endPrice" onKeyPress={(event) => {
+                                                                <input type="text" autoComplete={"off"} name="endPrice" onKeyPress={(event) => {
                                                                     if (!/[0-9]/.test(event.key)) {
                                                                         event.preventDefault();
                                                                     }
@@ -301,7 +301,7 @@ const VillaFilters = (props) => {
                                                             <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Misafir
                                                                 Sayısı</h4>
                                                             <div className="cart-plus-minus cart-plus-minus-custom">
-                                                                <input type="text" id={"guestInput"} min="1" ref={guestCountRef}
+                                                                <input type="text" autoComplete={"off"} id={"guestInput"} min="1" ref={guestCountRef}
                                                                        value={filterGuestCount} name="guestCount"
                                                                        onChange={onChangeForm} className="cart-plus-minus-box"/>
                                                             </div>

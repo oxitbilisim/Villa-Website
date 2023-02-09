@@ -114,7 +114,7 @@ const BannerV5 = () => {
                                                         <div className="col-lg-2 pl-1 col-md-2"
                                                              style={{paddingBottom: '5px'}}>
                                                             <div className="input-item input-item-name">
-                                                                <input onChange={onChangeGuestCount}
+                                                                <input autoComplete={"off"} onChange={onChangeGuestCount}
                                                                        value={filterGuestCount} onKeyPress={(event) => {
                                                                     if (!/[0-9]/.test(event.key)) {
                                                                         event.preventDefault();
@@ -144,9 +144,9 @@ const BannerV5 = () => {
                                                         <div className="col-lg-2 col-md-2"
                                                              style={{paddingBottom: '5px'}}>
                                                             <div className="input-item input-item-name">
-                                                                <input onChange={onChangeName} value={filterName}
+                                                                <input autoComplete={"off"} onChange={onChangeName} value={filterName}
                                                                        type="text" className="mb-0" name="ltn__name"
-                                                                       placeholder="Villa"/>
+                                                                       placeholder="Villa Adı İle Ara"/>
                                                             </div>
                                                         </div>
                                                         <div className="col-lg-2 text-center"

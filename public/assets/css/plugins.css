@@ -14950,7 +14950,7 @@ a[class*=lightcase-icon-].lightcase-icon-pause, a[class*=lightcase-icon-].lightc
 @media screen and (max-width: 640px) {
     a[class*=lightcase-icon-] {
         bottom: 15px;
-        font-size: 24px
+        font-size: 40px
     }
 }
 

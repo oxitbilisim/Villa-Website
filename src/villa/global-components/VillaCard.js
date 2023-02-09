@@ -101,12 +101,19 @@ const VillaCard = (props) => {
             <div className="product-info-bottom">
                 <div className="product-price">
                     {props.data?.fiyat != null ?
-                        <span><CurrencyFormat value={props.data?.fiyat} displayType={'text'} thousandSeparator={'.'} decimalScale={0} decimalSeparator={','} prefix={currencySymbol(props.data?.paraBirimi)} /><label>/{pricePeriod(props.data?.fiyatTuru)}</label></span> :
+                        <span style={{textDecoration:props.data?.discountRate != null ?'line-through':'initial'}}><CurrencyFormat value={props.data?.fiyat} displayType={'text'} thousandSeparator={'.'} decimalScale={0} decimalSeparator={','} prefix={currencySymbol(props.data?.paraBirimi)} /><label>/{pricePeriod(props.data?.fiyatTuru)}</label></span> :
+                        <span>&nbsp;</span>}
+                    {props.data?.indirimliFiyat != null ?
+                        <><br /><span><CurrencyFormat value={props.data?.indirimliFiyat} displayType={'text'} thousandSeparator={'.'} decimalScale={0} decimalSeparator={','} prefix={currencySymbol(props.data?.paraBirimi)} /><label>/{pricePeriod(props.data?.fiyatTuru)}</label></span></> :
                         <span>&nbsp;</span>}
                 </div>
                 <div className="product-price">
                     {props.data?.toplamFiyat != null && props.data?.toplamFiyat != 0 && props.data?.toplamFiyat != props.data?.fiyat ?
-                        <span><CurrencyFormat value={props.data?.toplamFiyat} displayType={'text'} thousandSeparator={'.'} decimalScale={0} decimalSeparator={','} prefix={currencySymbol(props.data?.paraBirimi)} /><label>/Toplam</label></span> :
+                        <span style={{textDecoration:props.data?.discountRate != null ?'line-through':'initial'}}><CurrencyFormat value={props.data?.toplamFiyat} displayType={'text'} thousandSeparator={'.'} decimalScale={0} decimalSeparator={','} prefix={currencySymbol(props.data?.paraBirimi)} /><label>/Toplam</label></span> :
+                        <span>&nbsp;</span>}
+                    
+                    {props.data?.indirimliToplamFiyat != null && props.data?.indirimliToplamFiyat != 0 && props.data?.indirimliToplamFiyat != props.data?.indirimliFiyat ?
+                        <><br /><span><CurrencyFormat value={props.data?.indirimliToplamFiyat} displayType={'text'} thousandSeparator={'.'} decimalScale={0} decimalSeparator={','} prefix={currencySymbol(props.data?.paraBirimi)} /><label>/Toplam</label></span> </>:
                         <span>&nbsp;</span>}
                 </div>
             </div>

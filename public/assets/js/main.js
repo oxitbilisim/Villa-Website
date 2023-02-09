@@ -361,6 +361,7 @@
               swipe: true,
               maxWidth: 1170,
               maxHeight: 600,
+              closeOnOverlayClick: false
           });
   
           /* --------------------------------------------------------

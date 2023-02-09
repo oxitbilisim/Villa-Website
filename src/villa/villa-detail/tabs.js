@@ -15,7 +15,7 @@ const Tabs = (props) => {
                         <div className="nav">
                             <a data-bs-toggle="tab" href="#liton_tab_3_1">Açıklama</a>
                             <a data-bs-toggle="tab" href="#liton_tab_3_2">Özellikler</a>
-                            <a className={'d-none'} data-bs-toggle="tab" href="#liton_tab_3_3">Konum</a>
+                            <a data-bs-toggle="tab" href="#liton_tab_3_3">Konum</a>
                             <a className="active show" data-bs-toggle="tab" href="#liton_tab_3_4">Fiyatlar</a>
                             <a data-bs-toggle="tab" href="#liton_tab_3_5">Takvim</a>
                         </div>

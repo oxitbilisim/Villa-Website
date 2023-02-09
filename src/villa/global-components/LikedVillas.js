@@ -77,9 +77,18 @@ const LikedVillas = (props) => {
                                     <h6><Link to={"/villa/" + item?.villa.url} target={"_blank"}>{item.villa.ad}</Link>
                                     </h6>
                                     <span className="mini-cart-quantity">
-                                        {item?.villa.fiyat != null ?
-                                            <>
+                                        {item?.villa.toplamFiyat != null ?
+                                            <span style={{textDecoration:item?.villa.toplamFiyat != item?.villa.indirimliToplamFiyat ?'line-through':'initial'}}>
                                                 <CurrencyFormat value={item?.villa.toplamFiyat} displayType={'text'}
+                                                                thousandSeparator={'.'} decimalSeparator={','}
+                                                                decimalScale={0}
+                                                                prefix={currencySymbol(item?.villa.paraBirimi)}/>
+
+                                            </span>
+                                            : null}
+                                        {item?.villa.indirimliToplamFiyat != null ?
+                                            <>
+                                                &nbsp; <CurrencyFormat value={item?.villa.indirimliToplamFiyat} displayType={'text'}
                                                                 thousandSeparator={'.'} decimalSeparator={','}
                                                                 decimalScale={0}
                                                                 prefix={currencySymbol(item?.villa.paraBirimi)}/>

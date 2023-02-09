@@ -205,19 +205,19 @@ const ReservationDetail = (props) => {
                                     <div className="row">
                                         <div className="col-md-12">
                                             <div className="input-item input-item-name ltn__custom-icon">
-                                                <input type="text" name="name" value={formName} onChange={onChangeForm}
+                                                <input autoComplete={"off"} type="text" name="name" value={formName} onChange={onChangeForm}
                                                        placeholder="Adınız Soyadınız"/>
                                             </div>
                                         </div>
                                         <div className="col-md-12">
                                             <div className="input-item input-item-email ltn__custom-icon">
-                                                <input type="email" name="email" value={formEmail}
+                                                <input autoComplete={"off"} type="email" name="email" value={formEmail}
                                                        onChange={onChangeForm} placeholder="E-posta Adresiniz"/>
                                             </div>
                                         </div>
                                         <div className="col-md-12">
                                             <div className="input-item input-item-phone ltn__custom-icon">
-                                                <input type="text" name="phone" value={formPhone}
+                                                <input autoComplete={"off"} type="text" name="phone" value={formPhone}
                                                        onChange={onChangeForm}
                                                        placeholder="Telefon Numaranız"/>
                                             </div>

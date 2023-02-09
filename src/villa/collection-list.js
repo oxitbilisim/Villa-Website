@@ -28,7 +28,7 @@ const CollectionList = (props) => {
                             <table className="table">
                                 <tbody>
                                 {
-                                    list.map((item,index) =>
+                                    list.map((item, index) =>
                                         <tr key={index} style={{display: 'revert'}}>
                                             <td className="cart-product-image">
                                                 <Link target={'_blank'} to={"/villa/" + item?.villa.url}>
@@ -42,17 +42,41 @@ const CollectionList = (props) => {
                                                           to={"/villa/" + item?.villa.url}>{item?.villa.ad}</Link></h4>
                                             </td>
                                             <td className="cart-product-price text-center"><span>
-                                                { item?.villa.fiyat!=null ?<>Gecelik Fiyat: <CurrencyFormat
-                                                value={item?.villa.fiyat} displayType={'text'}
-                                                thousandSeparator={'.'}
-                                                decimalSeparator={','}
-                                                prefix={currencySymbol(item.villa.paraBirimi)}/>
-                                                    <br/>Toplam Fiyat: <CurrencyFormat
-                                                value={item?.villa.toplamFiyat} displayType={'text'}
-                                                thousandSeparator={'.'}
-                                                decimalSeparator={','}
-                                                prefix={currencySymbol(item.villa.paraBirimi)}/></>:null}
-                                                    <br/>
+                                                {item?.villa.fiyat != null ? <>Gecelik Fiyat:
+                                                    <span
+                                                        style={{textDecoration: item?.villa.discountRate != null ? 'line-through' : 'initial'}}>
+                                                        <CurrencyFormat
+                                                            value={item?.villa.fiyat} displayType={'text'}
+                                                            thousandSeparator={'.'}
+                                                            decimalSeparator={','}
+                                                            prefix={currencySymbol(item.villa.paraBirimi)}/>
+                                                    </span>
+                                                    <span>&nbsp;
+                                                        <CurrencyFormat
+                                                            value={item?.villa.indirimliFiyat} displayType={'text'}
+                                                            thousandSeparator={'.'}
+                                                            decimalSeparator={','}
+                                                            prefix={currencySymbol(item.villa.paraBirimi)}/>
+                                                    </span>
+                                                    <br/>Toplam Fiyat:
+
+                                                    <span
+                                                        style={{textDecoration: item?.villa.discountRate != null ? 'line-through' : 'initial'}}>
+                                                        <CurrencyFormat
+                                                        value={item?.villa.toplamFiyat} displayType={'text'}
+                                                        thousandSeparator={'.'}
+                                                        decimalSeparator={','}
+                                                        prefix={currencySymbol(item.villa.paraBirimi)}/>
+                                                    </span>
+                                                    <span>&nbsp;
+                                                        <CurrencyFormat
+                                                            value={item?.villa.indirimliToplamFiyat} displayType={'text'}
+                                                            thousandSeparator={'.'}
+                                                            decimalSeparator={','}
+                                                            prefix={currencySymbol(item.villa.paraBirimi)}/>
+                                                    </span>
+                                                    </>:null}
+                                                <br/>
                                                         <label>
                                                     <span className="mini-cart-quantity"
                                                           style={{fontSize: '14px', fontStyle: 'italic'}}>
@@ -63,18 +87,18 @@ const CollectionList = (props) => {
                                             </td>
                                         </tr>
                                     )
-                                    }
-
-
-                                    </tbody>
-                                    </table>
-                                    </div>
-
-                                    </div>
-                                    </div>
-                                    </div>
-                                    </div>
-                                    </div>
                                 }
 
-                                export default CollectionList
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+export default CollectionList
