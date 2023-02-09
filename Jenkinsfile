@@ -10,7 +10,7 @@ node {
     }
     
     stage('Remove Existing Image') {
-        sh('docker image rm villa-fe')
+        sh('docker image rmi villa-fe')
     }
       
     stage('Build Image') {
