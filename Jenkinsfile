@@ -15,6 +15,32 @@ node {
       
     stage('Build Image') {
         sh('docker build -t villa-fe . --no-cache')
+    }
+      
+    stage('Deploy') {
+        sh('docker save villa-fe > /tmp/villa-fe.tar')
+        sshPublisher(publishers: [sshPublisherDesc(
+        configName: 'Villa Prod Server', 
+        transfers: 
+            [
+                sshTransfer(
+                    cleanRemote: false, 
+                    excludes: '', 
+                    execCommand: '''./root/deploy-commands/deploy-villa-fe.sh /tmp''', 
+                    execTimeout: 120000, 
+                    flatten: false, 
+                    makeEmptyDirs: false, 
+                    noDefaultExcludes: false, 
+                    patternSeparator: '[, ]+', 
+                    remoteDirectory: '/tmp', 
+                    remoteDirectorySDF: false, 
+                    removePrefix: '', 
+                    sourceFiles: '/tmp/villa-fe.tar'
+                )
+            ], 
+        usePromotionTimestamp: false, 
+        useWorkspaceInPromotion: false, 
+        verbose: false)])
     }  
    
 }
