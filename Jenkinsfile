@@ -18,7 +18,7 @@ node {
     }
       
     stage('Deploy') {
-        sh('docker save villa-fe > /tmp/villa-fe.tar')
+        sh('docker save villa-fe > villa-fe.tar')
         sshPublisher(publishers: [sshPublisherDesc(
         configName: 'Villa Prod Server', 
         transfers: 
@@ -26,16 +26,16 @@ node {
                 sshTransfer(
                     cleanRemote: false, 
                     excludes: '', 
-                    execCommand: '''./root/deploy-commands/deploy-villa-fe.sh /tmp''', 
+                    execCommand: '''/root/deploy-commands/deploy-villa-fe.sh /tmp''', 
                     execTimeout: 120000, 
                     flatten: false, 
                     makeEmptyDirs: false, 
                     noDefaultExcludes: false, 
                     patternSeparator: '[, ]+', 
-                    remoteDirectory: '/tmp', 
+                    remoteDirectory: '//tmp//', 
                     remoteDirectorySDF: false, 
                     removePrefix: '', 
-                    sourceFiles: '/tmp/villa-fe.tar'
+                    sourceFiles: 'villa-fe.tar'
                 )
             ], 
         usePromotionTimestamp: false, 
