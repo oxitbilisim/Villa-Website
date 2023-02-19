@@ -22,7 +22,7 @@ const VillaCard = (props) => {
 
         return [searchObject.startDate, searchObject.endDate];
     }
-    
+
     const toggleLike = (villaId) => {
         if (state.likedVillaIds.filter(i => i.villaId == props.data?.id && i.startDate == getDates()[0] && i.endDate == getDates()[1]).length > 0) {
             dispatch({
@@ -39,17 +39,44 @@ const VillaCard = (props) => {
         }
     }
 
+    const discountRateCheck = (val) => {
+        return val != null && val != "" && val != 0;
+    }
+
     return <div>
         <div
             className="ltn__product-item ltn__product-item-4 ltn__product-item-5 text-center---">
-            <div className="product-img go-top" style={{height:'250px',display: 'flex',
+            <div className="product-img go-top" style={{
+                height: '250px', display: 'flex',
                 justifyContent: 'center',
-                alignItems: 'center'}}>
+                alignItems: 'center'
+            }}>
                 <Link
                     to={"/villa/" + props.data?.url} style={{textAlign: 'center'}}>
-                    <img src={process.env.REACT_APP_API_ENDPOINT+"/VillaFE/GetVillaImage?id="+props.data?.imageId}
+                    <img src={process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetVillaImage?id=" + props.data?.imageId}
                          style={{maxHeight: '281px'}}/>
                 </Link>
+                { discountRateCheck(props.data?.discountRate)?
+                <div className="real-estate-agent">
+                    <div className="agent-img">
+                        <div style={{ 
+                            borderRadius:'100%', 
+                            width: '60px', 
+                            height: '60px', 
+                            border: '3px solid', 
+                            color: '#FFF',
+                            borderColor: 'var(--border-color-1)',
+                            textAlign: 'center',
+                            lineHeight: '53px',
+                            fontWeight: '900',
+                            fontSize: '20px',
+                            background: 'var(--ltn__secondary-color)' 
+                        }}>
+                            {props.data?.discountRate}%
+                        </div>
+                    </div>
+                </div>
+                :null }
             </div>
             <div className="product-info">
                 <h2 className="product-title go-top">
@@ -87,34 +114,63 @@ const VillaCard = (props) => {
                 </div>
                 <div className="product-hover-action mb-2 text-center">
                     <ul>
-                        <li style={{backgroundColor: 'initial', color:'initial'}}>
+                        <li style={{backgroundColor: 'initial', color: 'initial'}}>
                             <a style={{cursor: 'pointer'}} onClick={() => toggleLike(props.data?.id)} title="Beğen">
-                                {state?.likedVillaIds?.filter(i => i.villaId == props.data?.id && i.startDate == getDates()[0] && i.endDate == getDates()[1]).length > 0?
+                                {state?.likedVillaIds?.filter(i => i.villaId == props.data?.id && i.startDate == getDates()[0] && i.endDate == getDates()[1]).length > 0 ?
                                     <i style={{color: 'red'}} className="fa-solid fa-heart"/>
-                                    :<i className="flaticon-heart-1"/>
+                                    : <i className="flaticon-heart-1"/>
                                 }
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div className="product-info-bottom">
-                <div className="product-price">
+            <div className="product-info-bottom" style={{display: 'block'}}>
+                <div className="product-price" style={{width: '100%', textAlign: 'center'}}>
                     {props.data?.fiyat != null ?
-                        <span style={{textDecoration:props.data?.discountRate != null ?'line-through':'initial'}}><CurrencyFormat value={props.data?.fiyat} displayType={'text'} thousandSeparator={'.'} decimalScale={0} decimalSeparator={','} prefix={currencySymbol(props.data?.paraBirimi)} /><label>/{pricePeriod(props.data?.fiyatTuru)}</label></span> :
-                        <span>&nbsp;</span>}
-                    {props.data?.indirimliFiyat != null ?
-                        <><br /><span><CurrencyFormat value={props.data?.indirimliFiyat} displayType={'text'} thousandSeparator={'.'} decimalScale={0} decimalSeparator={','} prefix={currencySymbol(props.data?.paraBirimi)} /><label>/{pricePeriod(props.data?.fiyatTuru)}</label></span></> :
-                        <span>&nbsp;</span>}
+                        <>
+                        <span
+                            style={{textDecoration: discountRateCheck(props.data?.discountRate) ? 'line-through' : 'initial'}}>
+                            <CurrencyFormat value={props.data?.fiyat} displayType={'text'} thousandSeparator={'.'}
+                                            decimalScale={0} decimalSeparator={','}
+                                            prefix={currencySymbol(props.data?.paraBirimi)}/>
+                            </span>
+                            {discountRateCheck(props.data?.discountRate) && props.data?.indirimliFiyat != props.data?.fiyat ?
+                                <><span>&nbsp;&nbsp;<CurrencyFormat value={props.data?.indirimliFiyat}
+                                                                    displayType={'text'}
+                                                                    thousandSeparator={'.'} decimalScale={0}
+                                                                    decimalSeparator={','}
+                                                                    prefix={currencySymbol(props.data?.paraBirimi)}/></span></> :
+                                <span>&nbsp;</span>}
+                            <label>/{pricePeriod(props.data?.fiyatTuru)}</label>
+                        </> : <span>&nbsp;</span>}
+
                 </div>
-                <div className="product-price">
+                <div className="product-price" style={{width: '100%', textAlign: 'center'}}>
                     {props.data?.toplamFiyat != null && props.data?.toplamFiyat != 0 && props.data?.toplamFiyat != props.data?.fiyat ?
-                        <span style={{textDecoration:props.data?.discountRate != null ?'line-through':'initial'}}><CurrencyFormat value={props.data?.toplamFiyat} displayType={'text'} thousandSeparator={'.'} decimalScale={0} decimalSeparator={','} prefix={currencySymbol(props.data?.paraBirimi)} /><label>/Toplam</label></span> :
+                        <>
+                        <span
+                            style={{textDecoration: discountRateCheck(props.data?.discountRate) ? 'line-through' : 'initial'}}><CurrencyFormat
+                            value={props.data?.toplamFiyat} displayType={'text'} thousandSeparator={'.'}
+                            decimalScale={0} decimalSeparator={','}
+                            prefix={currencySymbol(props.data?.paraBirimi)}/></span>
+
+                            {props.data?.indirimliToplamFiyat != null &&
+                            props.data?.indirimliToplamFiyat != 0 &&
+                            props.data?.indirimliToplamFiyat != props.data?.indirimliFiyat &&
+                            props.data?.indirimliToplamFiyat != props.data?.toplamFiyat
+                                ?
+                                <span>&nbsp;&nbsp;<CurrencyFormat value={props.data?.indirimliToplamFiyat}
+                                                                  displayType={'text'}
+                                                                  thousandSeparator={'.'} decimalScale={0}
+                                                                  decimalSeparator={','}
+                                                                  prefix={currencySymbol(props.data?.paraBirimi)}/></span> :
+                                <span>&nbsp;</span>}
+                            <label>/Toplam</label>
+                        </>
+                        :
                         <span>&nbsp;</span>}
-                    
-                    {props.data?.indirimliToplamFiyat != null && props.data?.indirimliToplamFiyat != 0 && props.data?.indirimliToplamFiyat != props.data?.indirimliFiyat ?
-                        <><br /><span><CurrencyFormat value={props.data?.indirimliToplamFiyat} displayType={'text'} thousandSeparator={'.'} decimalScale={0} decimalSeparator={','} prefix={currencySymbol(props.data?.paraBirimi)} /><label>/Toplam</label></span> </>:
-                        <span>&nbsp;</span>}
+
                 </div>
             </div>
         </div>

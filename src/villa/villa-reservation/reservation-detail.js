@@ -54,16 +54,16 @@ const ReservationDetail = (props) => {
 
     const sendReservation = () => {
         setErrorMessage(null);
-        
-        if(
-            formName==null || formName.trim()=="" ||
-            formPhone==null || formPhone.trim()=="" ||
-            formEmail==null || formEmail.trim()==""
-        ){
+
+        if (
+            formName == null || formName.trim() == "" ||
+            formPhone == null || formPhone.trim() == "" ||
+            formEmail == null || formEmail.trim() == ""
+        ) {
             setErrorMessage("Kişisel bilgiler alanını boş bırakamazsınız!");
             return;
         }
-        
+
         const data = {
             villaId: props.data?.villa?.id,
             startDate: obj.startDate,
@@ -102,6 +102,11 @@ const ReservationDetail = (props) => {
             }).catch(() => {
         });
     }, [])
+
+
+    const discountRateCheck = (val) => {
+        return val != null && val != "" && val != 0;
+    }
 
     return (<div className="ltn__checkout-area mb-105">
         <div className="container">
@@ -150,11 +155,26 @@ const ReservationDetail = (props) => {
                                             <tbody>
                                             <tr>
                                                 <td>Toplam Tutar</td>
-                                                <td><CurrencyFormat value={priceCalc.totalPrice}
+                                                <td>
+                                                    <span
+                                                        style={{textDecoration: priceCalc.totalPrice != priceCalc.discountTotalPrice ? 'line-through' : 'initial'}}>
+                                                    <CurrencyFormat value={priceCalc.totalPrice}
                                                                     displayType={'text'}
                                                                     thousandSeparator={'.'}
                                                                     decimalSeparator={','} decimalScale={0}
-                                                                    prefix={currencySymbol(priceCalc?.currency)}/></td>
+                                                                    prefix={currencySymbol(priceCalc?.currency)}/>
+                                                    </span>
+
+                                                    {priceCalc.totalPrice != priceCalc.discountTotalPrice ?
+                                                        <span>&nbsp;&nbsp;
+                                                    <CurrencyFormat value={priceCalc.discountTotalPrice}
+                                                                    displayType={'text'}
+                                                                    thousandSeparator={'.'}
+                                                                    decimalSeparator={','} decimalScale={0}
+                                                                    prefix={currencySymbol(priceCalc?.currency)}/>
+                                                    </span>
+                                                        : null}
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Ön Ödeme</td>
@@ -205,7 +225,8 @@ const ReservationDetail = (props) => {
                                     <div className="row">
                                         <div className="col-md-12">
                                             <div className="input-item input-item-name ltn__custom-icon">
-                                                <input autoComplete={"off"} type="text" name="name" value={formName} onChange={onChangeForm}
+                                                <input autoComplete={"off"} type="text" name="name" value={formName}
+                                                       onChange={onChangeForm}
                                                        placeholder="Adınız Soyadınız"/>
                                             </div>
                                         </div>

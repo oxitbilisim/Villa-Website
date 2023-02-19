@@ -14,6 +14,10 @@ const VillaPrices = (props) => {
         },
         []);
 
+    const discountRateCheck = (val) => {
+        return val != null && val != "" && val != 0;
+    }
+
     return <div>
         <div className="ltn__apartments-plan-area product-details-apartments-plan">
             <div
@@ -49,7 +53,12 @@ const VillaPrices = (props) => {
                                                         className="ltn__select-availability-table-row">
                                                         <li>{moment(item.baslangic, serverDateFormat).format(dateFormat) + " - " + moment(item.bitis, serverDateFormat).format(dateFormat)}</li>
                                                         <li>{item.enAzKiralama} Gece</li>
-                                                        <li><b><CurrencyFormat value={item.fiyat} displayType={'text'} decimalScale={0} thousandSeparator={'.'} decimalSeparator={','} prefix={currencySymbol(item.paraBirimiAd)} /></b></li>
+                                                        <li>
+                                                            <b>
+                                                                <span style={{textDecoration: discountRateCheck(item.indirim) ? 'line-through' : 'initial'}}><CurrencyFormat value={item.fiyat} displayType={'text'} decimalScale={0} thousandSeparator={'.'} decimalSeparator={','} prefix={currencySymbol(item.paraBirimiAd)} /></span>
+                                                                { discountRateCheck(item.indirim) ? <span>&nbsp;&nbsp;<CurrencyFormat value={item.fiyat*item.indirim/100} displayType={'text'} decimalScale={0} thousandSeparator={'.'} decimalSeparator={','} prefix={currencySymbol(item.paraBirimiAd)} /></span> : null}
+                                                            </b>
+                                                        </li>
 
                                                     </ul>
                                                 ))}

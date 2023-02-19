@@ -73,7 +73,7 @@ const LikedVillas = (props) => {
                                           className="mini-cart-item-delete"><i
                                         className="icon-cancel"/></span>
                                 </div>
-                                <div className="mini-cart-info go-top">
+                                <div className="mini-cart-info go-top" style={{lineHeight:'20px'}}>
                                     <h6><Link to={"/villa/" + item?.villa.url} target={"_blank"}>{item.villa.ad}</Link>
                                     </h6>
                                     <span className="mini-cart-quantity">
@@ -95,7 +95,7 @@ const LikedVillas = (props) => {
 
                                             </>
                                             : null}</span>
-                                     / 
+                                     <br /> 
                                     <span className="mini-cart-quantity" style={{fontSize:'12px', fontStyle:'italic'}}>
                                         {moment(item.startDate, serverDateFormat).format(dateFormat)} 
                                         -

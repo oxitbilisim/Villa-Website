@@ -173,7 +173,7 @@ const VillaInfo = (props) => {
 
         return [searchObject.startDate, searchObject.endDate];
     }
-    
+
     const renderDayContents = (day, date) => {
         const isStart = reservations.find(r => {
             const start = moment(r.start, serverDateFormat);
@@ -193,11 +193,11 @@ const VillaInfo = (props) => {
             }
         });
         let bgType = "";
-        if(isStart && isEnd){
+        if (isStart && isEnd) {
             bgType = "startEndClose";
-        }else if(isStart){
+        } else if (isStart) {
             bgType = "startClose";
-        }else if(isEnd){
+        } else if (isEnd) {
             bgType = "endClose";
         }
         return <div className={bgType}>
@@ -221,7 +221,7 @@ const VillaInfo = (props) => {
                             <div className="col-lg-7 col-md-12">
                                 <div className={'villa-title mt-2'}>
                                     <h1>{props.data?.villa.ad} </h1>
-                                    <a style={{cursor: 'pointer', float:'right'}}
+                                    <a style={{cursor: 'pointer', float: 'right'}}
                                        onClick={() => toggleLike(props.data?.villa.id)} title="Beğen">
                                         {state?.likedVillaIds?.filter(i => i.villaId == props.data?.villa.id && i.startDate == getDates()[0] && i.endDate == getDates()[1]).length > 0 ?
                                             <i style={{color: 'red'}} className="fa-solid fa-heart"/>
@@ -238,7 +238,8 @@ const VillaInfo = (props) => {
                             <div className="col-lg-5 col-md-12 mt-3" style={{textAlignLast: 'right'}}>
 
 
-                                <ul className="ltn__list-item-2 ltn__list-item-2-before ltn__flat-info" style={{ textAlignLast: 'center'}}>
+                                <ul className="ltn__list-item-2 ltn__list-item-2-before ltn__flat-info"
+                                    style={{textAlignLast: 'center'}}>
                                     <li><span>{props.data?.villa.kapasite} <i className="flaticon-user"></i></span>Kapasite
                                     </li>
                                     <li><span>{props.data?.villa.yatakOdaSayisi} <i
@@ -263,24 +264,29 @@ const VillaInfo = (props) => {
 
                         <div className="widget ltn__author-widget" style={{padding: '35px 15px 30px 15px'}}>
                             <div className="ltn__author-widget-inner text-center">
-                                <h3 style={{color: '#de7f16', textDecoration:props.data?.villa?.discountRate != null ?'line-through':'initial'}}>{props.data?.villa?.fiyat != null ?
-                                    <><CurrencyFormat value={props.data?.villa?.fiyat}
-                                                    displayType={'text'}
-                                                    thousandSeparator={'.'}
-                                                    decimalSeparator={','}
-                                                    decimalScale={0}
-                                                    prefix={currencySymbol(props.data?.villa?.paraBirimi)}/> <label
-                                    style={{fontWeight: 'normal'}}>/{pricePeriod(props.data?.villa.fiyatTuru)}</label></>: null}
+                                <h3 style={{color: '#de7f16'}}>{props.data?.villa?.fiyat != null ?
+                                    <span
+                                        style={{textDecoration: props.data?.villa?.discountRate != null ? 'line-through' : 'initial'}}><CurrencyFormat
+                                        value={props.data?.villa?.fiyat}
+                                        displayType={'text'}
+                                        thousandSeparator={'.'}
+                                        decimalSeparator={','}
+                                        decimalScale={0}
+                                        prefix={currencySymbol(props.data?.villa?.paraBirimi)}/></span> : null}
+
+                                    {props.data?.villa.indirimliFiyat != null ?
+                                        <span>&nbsp;&nbsp;{props.data?.villa?.fiyat != null ?
+                                            <><CurrencyFormat value={props.data?.villa?.indirimliFiyat}
+                                                              displayType={'text'}
+                                                              thousandSeparator={'.'}
+                                                              decimalSeparator={','}
+                                                              decimalScale={0}
+                                                              prefix={currencySymbol(props.data?.villa?.paraBirimi)}/>
+                                            </> : null}
+                                            <label
+                                                style={{fontWeight: 'normal'}}>/{pricePeriod(props.data?.villa.fiyatTuru)}</label>
+                                </span> : null}
                                 </h3>
-                                {props.data?.villa.indirimliFiyat != null ? <h3 style={{color: '#de7f16'}}>{props.data?.villa?.fiyat != null ?
-                                    <><CurrencyFormat value={props.data?.villa?.indirimliFiyat}
-                                                    displayType={'text'}
-                                                    thousandSeparator={'.'}
-                                                    decimalSeparator={','}
-                                                    decimalScale={0}
-                                                    prefix={currencySymbol(props.data?.villa?.paraBirimi)}/> <label
-                                    style={{fontWeight: 'normal'}}>/{pricePeriod(props.data?.villa.fiyatTuru)}</label></>: null}
-                                </h3>:null}
                             </div>
 
                             <div className="col-lg-12 filter-data-range">
@@ -310,7 +316,8 @@ const VillaInfo = (props) => {
                                 <h4 className="ltn__widget-title ltn__widget-title-border--- title-filter">Misafir
                                     Sayısı</h4>
                                 <div className="cart-plus-minus cart-plus-minus-custom" style={{width: 'initial'}}>
-                                    <input autoComplete={"off"} type="text" id={"guestInput"} min="1" ref={guestCountRef} value={guestCount}
+                                    <input autoComplete={"off"} type="text" id={"guestInput"} min="1"
+                                           ref={guestCountRef} value={guestCount}
                                            name="guestCount"
                                            onChange={onChangeForm} className="cart-plus-minus-box"/>
                                 </div>
@@ -327,42 +334,52 @@ const VillaInfo = (props) => {
                                             <tr>
                                                 <td>Toplam Tutar</td>
                                                 <td align={"right"}>
-                                                    <span style={{textDecoration:priceCalc.discountTotalPrice!= priceCalc.totalPrice ?'line-through':'initial'}}>
+                                                    <span
+                                                        style={{textDecoration: priceCalc.discountTotalPrice != priceCalc.totalPrice ? 'line-through' : 'initial'}}>
                                                         <CurrencyFormat value={priceCalc.totalPrice}
-                                                                    displayType={'text'}
-                                                                    thousandSeparator={'.'}
-                                                                    decimalSeparator={','} decimalScale={0}
-                                                                    prefix={currencySymbol(priceCalc?.currency)}/>
+                                                                        displayType={'text'}
+                                                                        thousandSeparator={'.'}
+                                                                        decimalSeparator={','} decimalScale={0}
+                                                                        prefix={currencySymbol(priceCalc?.currency)}/>
                                                     </span>
-                                                    {priceCalc.discountTotalPrice!= priceCalc.totalPrice ? <> &nbsp; <CurrencyFormat value={priceCalc.discountTotalPrice}
-                                                                    displayType={'text'}
-                                                                    thousandSeparator={'.'}
-                                                                    decimalSeparator={','} decimalScale={0}
-                                                                    prefix={currencySymbol(priceCalc?.currency)}/></>
-                                                    :null}
+                                                    {priceCalc.discountTotalPrice != priceCalc.totalPrice ? <> &nbsp;
+                                                            <CurrencyFormat value={priceCalc.discountTotalPrice}
+                                                                            displayType={'text'}
+                                                                            thousandSeparator={'.'}
+                                                                            decimalSeparator={','} decimalScale={0}
+                                                                            prefix={currencySymbol(priceCalc?.currency)}/></>
+                                                        : null}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Ön Ödeme</td>
                                                 <td align={"right"}><CurrencyFormat value={priceCalc.downPayment}
-                                                                    displayType={'text'} thousandSeparator={'.'}
-                                                                    decimalSeparator={','} decimalScale={0}
-                                                                    prefix={currencySymbol(priceCalc?.currency)}/></td>
+                                                                                    displayType={'text'}
+                                                                                    thousandSeparator={'.'}
+                                                                                    decimalSeparator={','}
+                                                                                    decimalScale={0}
+                                                                                    prefix={currencySymbol(priceCalc?.currency)}/>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Depozito</td>
-                                                <td align={"right"}><CurrencyFormat value={priceCalc.deposit} displayType={'text'}
-                                                                    thousandSeparator={'.'} decimalSeparator={','}
-                                                                    decimalScale={0}
-                                                                    prefix={currencySymbol(priceCalc?.currency)}/></td>
+                                                <td align={"right"}><CurrencyFormat value={priceCalc.deposit}
+                                                                                    displayType={'text'}
+                                                                                    thousandSeparator={'.'}
+                                                                                    decimalSeparator={','}
+                                                                                    decimalScale={0}
+                                                                                    prefix={currencySymbol(priceCalc?.currency)}/>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Ekstra Temizlik Ücreti</td>
                                                 <td align={"right"}><CurrencyFormat value={priceCalc.cleaningFee}
-                                                                    displayType={'text'}
-                                                                    thousandSeparator={'.'}
-                                                                    decimalSeparator={','} decimalScale={0}
-                                                                    prefix={currencySymbol(priceCalc?.currency)}/></td>
+                                                                                    displayType={'text'}
+                                                                                    thousandSeparator={'.'}
+                                                                                    decimalSeparator={','}
+                                                                                    decimalScale={0}
+                                                                                    prefix={currencySymbol(priceCalc?.currency)}/>
+                                                </td>
                                             </tr>
                                             <tr style={{fontSize: '14px'}}>
                                                 <td colSpan={2}><strong>Fiyata Dahil Olanlar</strong></td>
