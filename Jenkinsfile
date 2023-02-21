@@ -42,5 +42,9 @@ node {
         useWorkspaceInPromotion: false, 
         verbose: false)])
     }  
+    
+    stage('Clear Untagged Images') {
+        sh('docker rmi $(docker images -f “dangling=true” -q)')
+    }
    
 }

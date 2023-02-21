@@ -56,7 +56,7 @@ const VillaPrices = (props) => {
                                                         <li>
                                                             <b>
                                                                 <span style={{textDecoration: discountRateCheck(item.indirim) ? 'line-through' : 'initial'}}><CurrencyFormat value={item.fiyat} displayType={'text'} decimalScale={0} thousandSeparator={'.'} decimalSeparator={','} prefix={currencySymbol(item.paraBirimiAd)} /></span>
-                                                                { discountRateCheck(item.indirim) ? <span>&nbsp;&nbsp;<CurrencyFormat value={item.fiyat*item.indirim/100} displayType={'text'} decimalScale={0} thousandSeparator={'.'} decimalSeparator={','} prefix={currencySymbol(item.paraBirimiAd)} /></span> : null}
+                                                                { discountRateCheck(item.indirim) ? <span>&nbsp;&nbsp;<CurrencyFormat value={item.fiyat*(100-item.indirim)/100} displayType={'text'} decimalScale={0} thousandSeparator={'.'} decimalSeparator={','} prefix={currencySymbol(item.paraBirimiAd)} /></span> : null}
                                                             </b>
                                                         </li>
 
