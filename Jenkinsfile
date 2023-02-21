@@ -44,7 +44,7 @@ node {
     }  
     
     stage('Clear Untagged Images') {
-        sh('docker rmi $(docker images -f “dangling=true” -q)')
+        sh('docker rmi -f $(docker images --filter "dangling=true" -q --no-trunc) || (exit 0)')
     }
    
 }
