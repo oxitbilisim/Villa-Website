@@ -8,7 +8,8 @@ const PageDetails = (props) => {
         if(props?.data?.sayfaIcerik[0]?.icerik!=null){
             try {
                 const jo = JSON.parse(props?.data?.sayfaIcerik[0]?.icerik);
-                setDetail(draftToHtml(jo));    
+                setDetail(draftToHtml(jo));
+                window.scrollTo(0, 0);
             }catch (e) {
                 
             }

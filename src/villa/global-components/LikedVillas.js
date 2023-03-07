@@ -86,7 +86,7 @@ const LikedVillas = (props) => {
 
                                             </span>
                                             : null}
-                                        {item?.villa.indirimliToplamFiyat != null ?
+                                        {item?.villa.indirimliToplamFiyat != null &&  item?.villa.toplamFiyat != item?.villa.indirimliToplamFiyat ?
                                             <>
                                                 &nbsp; <CurrencyFormat value={item?.villa.indirimliToplamFiyat} displayType={'text'}
                                                                 thousandSeparator={'.'} decimalSeparator={','}

@@ -14,7 +14,7 @@ const Home_V5 = () => {
         <BannerV5/>
         <RegionItems/>
         <CategoryItems/>
-        {/*<PopularVillas limit={3}/>*/}
+        <PopularVillas limit={3}/>
         <CallToActionV1/>
         <Footer/>
     </div>

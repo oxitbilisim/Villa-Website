@@ -205,6 +205,10 @@ const VillaInfo = (props) => {
         </div>;
     };
 
+    const discountRateCheck = (val) => {
+        return val != null && val != "" && val != 0;
+    }
+
     return <div className="ltn__shop-details-area pb-10">
         <Helmet>
             <title>villalarim.com | {props.data?.seo.baslik}</title>
@@ -266,7 +270,7 @@ const VillaInfo = (props) => {
                             <div className="ltn__author-widget-inner text-center">
                                 <h3 style={{color: '#de7f16'}}>{props.data?.villa?.fiyat != null ?
                                     <span
-                                        style={{textDecoration: props.data?.villa?.discountRate != null ? 'line-through' : 'initial'}}><CurrencyFormat
+                                        style={{textDecoration: discountRateCheck(props.data?.villa?.discountRate) ? 'line-through' : 'initial'}}><CurrencyFormat
                                         value={props.data?.villa?.fiyat}
                                         displayType={'text'}
                                         thousandSeparator={'.'}
@@ -274,7 +278,7 @@ const VillaInfo = (props) => {
                                         decimalScale={0}
                                         prefix={currencySymbol(props.data?.villa?.paraBirimi)}/></span> : null}
 
-                                    {props.data?.villa.indirimliFiyat != null ?
+                                    {discountRateCheck(props.data?.villa?.discountRate) ?
                                         <span>&nbsp;&nbsp;{props.data?.villa?.fiyat != null ?
                                             <><CurrencyFormat value={props.data?.villa?.indirimliFiyat}
                                                               displayType={'text'}
@@ -283,9 +287,10 @@ const VillaInfo = (props) => {
                                                               decimalScale={0}
                                                               prefix={currencySymbol(props.data?.villa?.paraBirimi)}/>
                                             </> : null}
-                                            <label
-                                                style={{fontWeight: 'normal'}}>/{pricePeriod(props.data?.villa.fiyatTuru)}</label>
+                                            
                                 </span> : null}
+                                    <label
+                                        style={{fontWeight: 'normal'}}>/{pricePeriod(props.data?.villa.fiyatTuru)}</label>
                                 </h3>
                             </div>
 
