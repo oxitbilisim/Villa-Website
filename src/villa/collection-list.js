@@ -19,6 +19,11 @@ const CollectionList = (props) => {
                 setList(response.data);
             });
     }
+
+    const discountRateCheck = (val) => {
+        return val != null && val != "" && val != 0;
+    }
+
     return <div className="liton__shoping-cart-area mb-120">
         <div className="container">
             <div className="row">
@@ -30,7 +35,7 @@ const CollectionList = (props) => {
                                 {
                                     list.map((item, index) =>
                                         <tr key={index} style={{display: 'revert'}}>
-                                            <td className="cart-product-image">
+                                            <td className="cart-product-image" width="200">
                                                 <Link target={'_blank'} to={"/villa/" + item?.villa.url}>
                                                     <img
                                                         src={process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetVillaImage?id=" + item?.villa.imageId}
@@ -44,38 +49,43 @@ const CollectionList = (props) => {
                                             <td className="cart-product-price text-center"><span>
                                                 {item?.villa.fiyat != null ? <>Gecelik Fiyat:
                                                     <span
-                                                        style={{textDecoration: item?.villa.discountRate != null ? 'line-through' : 'initial'}}>
+                                                        style={{textDecoration: discountRateCheck(item?.villa.discountRate) ? 'line-through' : 'initial'}}>
                                                         <CurrencyFormat
                                                             value={item?.villa.fiyat} displayType={'text'}
                                                             thousandSeparator={'.'}
                                                             decimalSeparator={','}
                                                             prefix={currencySymbol(item.villa.paraBirimi)}/>
                                                     </span>
-                                                    <span>&nbsp;
-                                                        <CurrencyFormat
-                                                            value={item?.villa.indirimliFiyat} displayType={'text'}
-                                                            thousandSeparator={'.'}
-                                                            decimalSeparator={','}
-                                                            prefix={currencySymbol(item.villa.paraBirimi)}/>
+                                                    {item?.villa.indirimliFiyat != item?.villa.fiyat ?
+                                                        <span>&nbsp;
+                                                            <CurrencyFormat
+                                                                value={item?.villa.indirimliFiyat} displayType={'text'}
+                                                                thousandSeparator={'.'}
+                                                                decimalSeparator={','}
+                                                                prefix={currencySymbol(item.villa.paraBirimi)}/>
                                                     </span>
+                                                        : null}
                                                     <br/>Toplam Fiyat:
 
                                                     <span
-                                                        style={{textDecoration: item?.villa.discountRate != null ? 'line-through' : 'initial'}}>
+                                                        style={{textDecoration: discountRateCheck(item?.villa.discountRate) ? 'line-through' : 'initial'}}>
                                                         <CurrencyFormat
-                                                        value={item?.villa.toplamFiyat} displayType={'text'}
-                                                        thousandSeparator={'.'}
-                                                        decimalSeparator={','}
-                                                        prefix={currencySymbol(item.villa.paraBirimi)}/>
-                                                    </span>
-                                                    <span>&nbsp;
-                                                        <CurrencyFormat
-                                                            value={item?.villa.indirimliToplamFiyat} displayType={'text'}
+                                                            value={item?.villa.toplamFiyat} displayType={'text'}
                                                             thousandSeparator={'.'}
                                                             decimalSeparator={','}
                                                             prefix={currencySymbol(item.villa.paraBirimi)}/>
                                                     </span>
-                                                    </>:null}
+                                                    {item?.villa.indirimliToplamFiyat != item?.villa.toplamFiyat ?
+                                                        <span>&nbsp;
+                                                            <CurrencyFormat
+                                                                value={item?.villa.indirimliToplamFiyat}
+                                                                displayType={'text'}
+                                                                thousandSeparator={'.'}
+                                                                decimalSeparator={','}
+                                                                prefix={currencySymbol(item.villa.paraBirimi)}/>
+                                                    </span>
+                                                        : null}
+                                                </> : null}
                                                 <br/>
                                                         <label>
                                                     <span className="mini-cart-quantity"
