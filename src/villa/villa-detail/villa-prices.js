@@ -51,7 +51,7 @@ const VillaPrices = (props) => {
                                                 {props.data?.filter(i => i.paraBirimiAd==currency).map(item => (
                                                     <ul key={'price-' + item.id}
                                                         className="ltn__select-availability-table-row">
-                                                        <li>{moment(item.baslangic, serverDateFormat).format(dateFormat) + " - " + moment(item.bitis, serverDateFormat).format(dateFormat)}</li>
+                                                        <li>{moment(item.startDate, serverDateFormat).format(dateFormat) + " - " + moment(item.endDate, serverDateFormat).format(dateFormat)}</li>
                                                         <li>{item.enAzKiralama} Gece</li>
                                                         <li>
                                                             <b>
