@@ -3,11 +3,23 @@ import {Link} from 'react-router-dom';
 import axios from "axios";
 import VillaCard from "../global-components/VillaCard";
 import PropTypes from "prop-types";
-import VillaListV1 from "../villa-list/villa-list-v1";
-
+import './popular-villas.css';
+import OwlCarousel from 'react-owl-carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
 const PopularVillas = (props) => {
     const [list, setList] = useState([]);
 
+    
+    useEffect(() => {
+
+        const minscript = document.createElement("script");
+        minscript.async = true;
+        minscript.src = "/assets/js/main.js";
+        document.body.appendChild(minscript);
+        //$('.ltn__img-slider-area').lightcase();
+    }, [list]);
+    
     useEffect(() => {
         loadData();
     }, []);
@@ -32,13 +44,13 @@ const PopularVillas = (props) => {
                         </div>
                     </div>
                     <div className="row ltn__product-slider-item-three-active--- slick-arrow-1">
-
+                        <OwlCarousel className='owl-theme' loop margin={10} nav>
                         {list.map(item => (
-                            <div key={'popular-villa-' + item.id} className="col-xl-4 col-sm-6 col-12">
+                            <div key={'popular-villa-' + item.id}>
                                 <VillaCard data={item}/>
                             </div>
                         ))}
-
+                        </OwlCarousel>
                     </div>
                 </div>
             </div> : null}

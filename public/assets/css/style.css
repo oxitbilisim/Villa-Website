@@ -1591,10 +1591,10 @@ ul {
     margin-right: 0px;
 }
 
-.owl-dots .owl-dot:hover,
+/*.owl-dots .owl-dot:hover,
 .owl-dots .owl-dot.active {
     background-color: var(--ltn__primary-color);
-}
+}*/
 
 /* owl-arrow-1 */
 .owl-arrow-1 .owl-nav > div {

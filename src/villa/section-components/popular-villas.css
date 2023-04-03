@@ -1,0 +1,14 @@
+.slick-track
+{
+    display: flex !important;
+}
+
+.slick-slide
+{
+    width:auto !important;
+    height: inherit !important;
+}
+
+.slick-slide img {
+    max-height: 250px;
+}

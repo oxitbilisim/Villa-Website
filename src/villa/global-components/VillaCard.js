@@ -43,7 +43,7 @@ const VillaCard = (props) => {
         return val != null && val != "" && val != 0;
     }
 
-    return <div>
+    return <>
         <div
             className="ltn__product-item ltn__product-item-4 ltn__product-item-5 text-center---">
             <div className="product-img go-top" style={{
@@ -174,7 +174,7 @@ const VillaCard = (props) => {
                 </div>
             </div>
         </div>
-    </div>
+    </>
 }
 
 VillaCard.propTypes = {

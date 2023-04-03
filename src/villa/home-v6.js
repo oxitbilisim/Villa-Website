@@ -12,9 +12,9 @@ const Home_V5 = () => {
     return <div>
         <Navbar CustomClass="ltn__header-transparent gradient-color-2"/>
         <BannerV5/>
+        <PopularVillas limit={20}/>
         <RegionItems/>
         <CategoryItems/>
-        <PopularVillas limit={3}/>
         <CallToActionV1/>
         <Footer/>
     </div>
