@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {Component, useEffect, useRef, useState} from 'react';
 import {Link} from 'react-router-dom';
 import axios from "axios";
 import VillaCard from "../global-components/VillaCard";
@@ -9,8 +9,10 @@ import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 const PopularVillas = (props) => {
     const [list, setList] = useState([]);
-
-    
+    const windowWidth = useRef(window.innerWidth);
+    const [itemCount, setItemCount] = useState(windowWidth.current<768?1:3);
+    console.log(windowWidth.current);
+    console.log("width: "+windowWidth.current);
     useEffect(() => {
 
         const minscript = document.createElement("script");
@@ -44,7 +46,7 @@ const PopularVillas = (props) => {
                         </div>
                     </div>
                     <div className="row ltn__product-slider-item-three-active--- slick-arrow-1">
-                        <OwlCarousel className='owl-theme' loop margin={10} nav>
+                        <OwlCarousel className='owl-theme' items={itemCount} loop margin={10} nav>
                         {list.map(item => (
                             <div key={'popular-villa-' + item.id}>
                                 <VillaCard data={item}/>

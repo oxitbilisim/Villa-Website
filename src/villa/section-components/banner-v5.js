@@ -152,7 +152,7 @@ const BannerV5 = () => {
                                                         <div className="col-lg-2 text-center"
                                                              style={{paddingBottom: '5px'}}>
                                                             {/* <button type="submit" class="btn theme-btn-1 btn-effect-1 text-uppercase">Search Inventory</button> */}
-                                                            <button type="submit" onClick={filter}
+                                                            <button type="submit" onClick={filter} style={{zIndex:'initial'}}
                                                                     className="btn theme-btn-1 btn-effect-1 text-uppercase">VİLLA
                                                                 ARA
                                                             </button>
