@@ -16,7 +16,8 @@ const VillaFilters = (props) => {
 
     const [focusedInput, setFocusedInput] = useState();
     const guestCountRef = useRef();
-
+    const windowWidth = useRef(window.innerWidth);
+    const [numberOfMonths, setNumberOfMonths] = useState(windowWidth.current<768?1:2);
     const initializeFilterObject = () => {
         const obj = queryParamToObject(props.location.search);
         const initObject = {
@@ -278,6 +279,7 @@ const VillaFilters = (props) => {
                                                         </div>
                                                         <div className="col-lg-12 filter-data-range">
                                                             <DateRangePicker
+                                                                numberOfMonths={numberOfMonths}
                                                                 startDatePlaceholderText="Giriş Tarihi"
                                                                 endDatePlaceholderText="Çıkış Tarihi"
                                                                 displayFormat={"DD.MM.YYYY"}
