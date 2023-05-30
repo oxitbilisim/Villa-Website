@@ -80,6 +80,10 @@ const BannerV5 = () => {
         filter();
     }
 
+    
+    const windowWidth = useRef(window.innerWidth);
+    const [numberOfMonths, setNumberOfMonths] = useState(windowWidth.current<768?1:2);
+
     return <div className="banner-v5-custom-style">
         <div
             className="ltn__slide-one-active----- slick-slide-arrow-1----- slick-slide-dots-1----- arrow-white----- ltn__slide-animation-active">
@@ -125,6 +129,7 @@ const BannerV5 = () => {
                                                         </div>
                                                         <div className="col-lg-4 col-md-2 home-date-range">
                                                             <DateRangePicker
+                                                                numberOfMonths={numberOfMonths}
                                                                 startDatePlaceholderText="Giriş Tarihi"
                                                                 endDatePlaceholderText="Çıkış Tarihi"
                                                                 displayFormat={"DD.MM.YYYY"}
