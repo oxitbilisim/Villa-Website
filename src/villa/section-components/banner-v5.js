@@ -38,6 +38,12 @@ const BannerV5 = () => {
                 $(selectRef.current).val(filterObject.region[0]);
             }
         }
+        const startDateElement = document.getElementById('startDate');
+        const endDateElement = document.getElementById('endDate');
+        console.log(startDateElement);
+        //startDateElement.focus();
+        //startDateElement.select();
+        
     }, [])
 
     const onChangeGuestCount = (e) => {
@@ -141,9 +147,17 @@ const BannerV5 = () => {
                                                                 onDatesChange={({startDate, endDate}) => {
                                                                     setFilterStartDate(startDate);
                                                                     setFilterEndDate(endDate);
+                                                                    
                                                                 }} // PropTypes.func.isRequired,
                                                                 focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                                                                onFocusChange={setFocusedInput} // PropTypes.func.isRequired,
+                                                                onFocusChange={focusedInput => {
+                                                                    if(focusedInput!=null) {
+                                                                        const startDateElement = document.getElementById(focusedInput);
+                                                                        startDateElement.focus();
+                                                                        startDateElement.select();
+                                                                    }
+                                                                    setFocusedInput(focusedInput)
+                                                                }} // PropTypes.func.isRequired,
                                                             />
                                                         </div>
                                                         <div className="col-lg-2 col-md-2"

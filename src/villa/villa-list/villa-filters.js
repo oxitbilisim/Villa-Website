@@ -293,7 +293,14 @@ const VillaFilters = (props) => {
                                                                     setFilterEndDate(endDate);
                                                                 }} // PropTypes.func.isRequired,
                                                                 focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                                                                onFocusChange={setFocusedInput} // PropTypes.func.isRequired,
+                                                                onFocusChange={focusedInput => {
+                                                                    if(focusedInput!=null) {
+                                                                        const startDateElement = document.getElementById(focusedInput);
+                                                                        startDateElement.focus();
+                                                                        startDateElement.select();
+                                                                    }
+                                                                    setFocusedInput(focusedInput)
+                                                                }}
                                                             />
                                                         </div>
                                                     </div>
