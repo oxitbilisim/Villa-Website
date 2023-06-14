@@ -38,13 +38,27 @@ const BannerV5 = () => {
                 $(selectRef.current).val(filterObject.region[0]);
             }
         }
-        const startDateElement = document.getElementById('startDate');
-        const endDateElement = document.getElementById('endDate');
-        console.log(startDateElement);
-        //startDateElement.focus();
-        //startDateElement.select();
+
+        const startDateElement = document.getElementById("startDate");
+        startDateElement.addEventListener('keydown', function(e) {
+            const key = e.key; // const {key} = event; ES6+
+            if (key === "Backspace") {
+                setFilterStartDate(null);
+                return false;
+            }
+        })
+        const endDateElement = document.getElementById("endDate");
+        endDateElement.addEventListener('keydown', function(e) {
+            const key = e.key; // const {key} = event; ES6+
+            if (key === "Backspace") {
+                setFilterEndDate(null);
+                return false;
+            }
+        })
+        
         
     }, [])
+    
 
     const onChangeGuestCount = (e) => {
         setFilterGuestCount(e.target.value);
@@ -151,11 +165,6 @@ const BannerV5 = () => {
                                                                 }} // PropTypes.func.isRequired,
                                                                 focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                                                                 onFocusChange={focusedInput => {
-                                                                    if(focusedInput!=null) {
-                                                                        const startDateElement = document.getElementById(focusedInput);
-                                                                        startDateElement.focus();
-                                                                        startDateElement.select();
-                                                                    }
                                                                     setFocusedInput(focusedInput)
                                                                 }} // PropTypes.func.isRequired,
                                                             />

@@ -198,6 +198,25 @@ const VillaFilters = (props) => {
         event.preventDefault();
         filter();
     }
+    
+    useEffect(()=>{
+        const startDateElement = document.getElementById("startDate");
+        startDateElement.addEventListener('keydown', function(e) {
+            const key = e.key; // const {key} = event; ES6+
+            if (key === "Backspace") {
+                setFilterStartDate(null);
+                return false;
+            }
+        })
+        const endDateElement = document.getElementById("endDate");
+        endDateElement.addEventListener('keydown', function(e) {
+            const key = e.key; // const {key} = event; ES6+
+            if (key === "Backspace") {
+                setFilterEndDate(null);
+                return false;
+            }
+        })
+    },[])
 
     return <div>
         <div className="ltn__product-area ltn__product-gutter">
@@ -294,11 +313,6 @@ const VillaFilters = (props) => {
                                                                 }} // PropTypes.func.isRequired,
                                                                 focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                                                                 onFocusChange={focusedInput => {
-                                                                    if(focusedInput!=null) {
-                                                                        const startDateElement = document.getElementById(focusedInput);
-                                                                        startDateElement.focus();
-                                                                        startDateElement.select();
-                                                                    }
                                                                     setFocusedInput(focusedInput)
                                                                 }}
                                                             />
