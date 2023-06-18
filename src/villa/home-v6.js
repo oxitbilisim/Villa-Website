@@ -8,10 +8,10 @@ import CategoryItems from "./section-components/category-items";
 import PopularVillas from "./section-components/popular-villas";
 import Footer from "./global-components/footer";
 
-const Home_V5 = () => {
+const Home_V5 = (props) => {
     return <div>
         <Navbar CustomClass="ltn__header-transparent gradient-color-2"/>
-        <BannerV5/>
+        <BannerV5 {...props}/>
         <PopularVillas limit={20}/>
         <RegionItems/>
         <CategoryItems/>

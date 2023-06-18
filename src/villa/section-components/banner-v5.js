@@ -11,7 +11,7 @@ import './banner-v5.css';
 import $ from "jquery";
 import {queryParamToObject} from "../common-lib";
 
-const BannerV5 = () => {
+const BannerV5 = (props) => {
     const {regions, categories} = useContext(GlobalContext);
     const [filterStartDate, setFilterStartDate] = useState();
     const [filterEndDate, setFilterEndDate] = useState();
@@ -22,7 +22,7 @@ const BannerV5 = () => {
     const selectRef = useRef();
 
     useEffect(() => {
-        const cachedFilters = localStorage.getItem('searchParams')
+        const cachedFilters = props.location.search;//localStorage.getItem('searchParams')
         if (cachedFilters != null) {
             const filterObject = queryParamToObject(cachedFilters);
             if (filterObject.startDate != null) {

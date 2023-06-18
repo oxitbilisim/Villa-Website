@@ -43,7 +43,7 @@ export const LikedVillaContextProvider = (props) => {
     }
 
     const getDates = () => {
-        const qs = localStorage.getItem('searchParams');
+        const qs = props.location.search;//localStorage.getItem('searchParams');
         const searchObject = queryParamToObject(qs);
         if (searchObject.startDate == null) {
             searchObject.startDate = moment().format(serverDateFormat)

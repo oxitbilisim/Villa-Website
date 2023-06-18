@@ -72,7 +72,7 @@ const VillaListV1 = (props) => {
                         {totalCount == 0 ? <div className="text-center">Kayıt bulunamadı!</div> : null}
                         {list?.map(item => (
                             <div key={'villa-' + item.id} className="col-xl-6 col-sm-6 col-12">
-                                <VillaCard data={item}/>
+                                <VillaCard {...props} data={item}/>
                             </div>
                         ))}
 

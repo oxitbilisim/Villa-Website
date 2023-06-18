@@ -33,7 +33,7 @@ const VillaInfo = (props) => {
     }, [props.data])
 
     useEffect(() => {
-        const cachedFilters = localStorage.getItem('searchParams')
+        const cachedFilters = props.location.search;//localStorage.getItem('searchParams')
         if (cachedFilters != null) {
             const filterObject = queryParamToObject(cachedFilters);
             if (filterObject.startDate != null) {
@@ -49,7 +49,7 @@ const VillaInfo = (props) => {
     }, [])
 
     useEffect(() => {
-        const qs = localStorage.getItem("searchParams");
+        const qs = props.location.search;//localStorage.getItem("searchParams");
 
         const obj = qs != null ? queryParamToObject(qs) : {};
         let changed = false
@@ -147,7 +147,7 @@ const VillaInfo = (props) => {
     }
 
     const goToReservation = () => {
-        const qs = localStorage.getItem("searchParams");
+        const qs = props.location.search;//localStorage.getItem("searchParams");
         const obj = qs != null ? queryParamToObject(qs) : {};
 
         const guestCount_ = $(guestCountRef.current).val();
@@ -162,7 +162,7 @@ const VillaInfo = (props) => {
     }
 
     const getDates = () => {
-        const qs = localStorage.getItem('searchParams');
+        const qs = props.location.search;//localStorage.getItem('searchParams');
         const searchObject = queryParamToObject(qs);
         if (searchObject.startDate == null) {
             searchObject.startDate = moment().format(serverDateFormat)

@@ -75,7 +75,7 @@ const VillaFilters = (props) => {
             filterObject_[key] = value;
         }
         const qs = objectToQueryParam(filterObject_);
-        localStorage.setItem('searchParams', qs);
+        //localStorage.setItem('searchParams', qs);
         redirectToSearch(qs);
         setFilterObject(filterObject_);
     }
@@ -92,7 +92,7 @@ const VillaFilters = (props) => {
         }
 
         const qs = objectToQueryParam(filterObject_);
-        localStorage.setItem('searchParams', qs)
+        //localStorage.setItem('searchParams', qs)
         redirectToSearch(qs);
         setFilterObject(filterObject_);
     }

@@ -11,7 +11,7 @@ const VillaCard = (props) => {
     const [state, dispatch] = useContext(LikedVillaContext);
 
     const getDates = () => {
-        const qs = localStorage.getItem('searchParams');
+        const qs = props.location.search; //localStorage.getItem('searchParams');
         const searchObject = queryParamToObject(qs);
         if (searchObject.startDate == null) {
             searchObject.startDate = moment().format(serverDateFormat)
@@ -38,6 +38,13 @@ const VillaCard = (props) => {
             });
         }
     }
+    
+    const qs = () => {
+        if(props?.location?.search!=null){
+            return props?.location?.search;
+        }
+        return "";
+    }
 
     const discountRateCheck = (val) => {
         return val != null && val != "" && val != 0;
@@ -52,7 +59,7 @@ const VillaCard = (props) => {
                 alignItems: 'center'
             }}>
                 <Link
-                    to={"/villa/" + props.data?.url} style={{textAlign: 'center'}}>
+                    to={"/villa/" + props.data?.url+qs()} style={{textAlign: 'center'}}>
                     <img src={process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetVillaImage?id=" + props.data?.imageId}
                          style={{maxHeight: '281px'}}/>
                 </Link>
@@ -80,12 +87,12 @@ const VillaCard = (props) => {
             </div>
             <div className="product-info">
                 <h2 className="product-title go-top">
-                    <Link to={"/villa/" + props.data?.url}>{props.data?.ad}</Link></h2>
+                    <Link to={"/villa/" + props.data?.url+qs()}>{props.data?.ad}</Link></h2>
                 <div className="product-img-location go-top mb-2">
                     <ul>
                         <li>
                             <Link
-                                to={"/villa/" + props.data?.url}
+                                to={"/villa/" + props.data?.url+qs()}
                                 title={props.data?.il + ', ' + props.data?.bolge + ', ' + props.data?.mevki}
                                 style={{
                                     textOverflow: 'ellipsis',
