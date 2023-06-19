@@ -17,8 +17,8 @@ export const LikedVillaContextProvider = (props) => {
         };
     }
 
-    const likeVilla = (state, villaId) => {
-        const dates = getDates();
+    const likeVilla = (state, villaId, qs) => {
+        const dates = getDates(qs);
         const startDate = dates[0];
         const endDate = dates[1];
         const likeObject = {
@@ -42,8 +42,11 @@ export const LikedVillaContextProvider = (props) => {
         return tmpData;
     }
 
-    const getDates = () => {
-        const qs = props.location.search;//localStorage.getItem('searchParams');
+    const getDates = (qs) => {
+        //const qs = props.location?.search;//localStorage.getItem('searchParams');
+        console.log("==========");
+        console.log(props);
+        console.log(qs);
         const searchObject = queryParamToObject(qs);
         if (searchObject.startDate == null) {
             searchObject.startDate = moment().format(serverDateFormat)
@@ -51,7 +54,8 @@ export const LikedVillaContextProvider = (props) => {
         if (searchObject.endDate == null) {
             searchObject.endDate = moment().add(1, 'days').format(serverDateFormat)
         }
-
+        console.log([searchObject.startDate, searchObject.endDate]);
+        console.log("==========");
         return [searchObject.startDate, searchObject.endDate];
     }
 
@@ -65,7 +69,7 @@ export const LikedVillaContextProvider = (props) => {
         switch (action.type) {
             case 'LIKE':
                 return {
-                    likedVillaIds: likeVilla(state, action.payload),
+                    likedVillaIds: likeVilla(state, action.payload, action.qs),
                 };
             case 'UNLIKE':
                 return {

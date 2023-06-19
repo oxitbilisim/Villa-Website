@@ -11,7 +11,7 @@ const VillaCard = (props) => {
     const [state, dispatch] = useContext(LikedVillaContext);
 
     const getDates = () => {
-        const qs = props.location.search; //localStorage.getItem('searchParams');
+        const qs = props.location?.search; //localStorage.getItem('searchParams');
         const searchObject = queryParamToObject(qs);
         if (searchObject.startDate == null) {
             searchObject.startDate = moment().format(serverDateFormat)
@@ -19,7 +19,7 @@ const VillaCard = (props) => {
         if (searchObject.endDate == null) {
             searchObject.endDate = moment().add(1, 'days').format(serverDateFormat)
         }
-
+        console.log([searchObject.startDate, searchObject.endDate]);
         return [searchObject.startDate, searchObject.endDate];
     }
 
@@ -35,6 +35,7 @@ const VillaCard = (props) => {
             dispatch({
                 type: 'LIKE',
                 payload: villaId,
+                qs: props.location?.search
             });
         }
     }

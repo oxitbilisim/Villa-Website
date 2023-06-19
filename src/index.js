@@ -20,12 +20,12 @@ import moment from "moment";
 import 'moment/locale/tr';
 import ReservationInformation from "./villa/reservation_information";
 
-const Root = () => {
+const Root = (props) => {
     moment.locale('tr');
     return (
         <BrowserRouter basename="/">
             <GlobalContextProvider>
-                <LikedVillaContextProvider>
+                <LikedVillaContextProvider {...props}>
                     <Switch>
                         <Route exact path="/" component={HomeV6}/>
                         <Route exact path="/bolge/:subUri" component={RegionVillas}/>
