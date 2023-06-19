@@ -157,6 +157,8 @@ const VillaInfo = (props) => {
         }
         setGuestCount(guestCount_);
         obj.guestCount = guestCount_;
+        obj.startDate = startDate.format(serverDateFormat);
+        obj.endDate = endDate.format(serverDateFormat);
         const subUri = props.match.params.subUri;
         props.history.push("/rezervasyon/" + subUri + "?" + objectToQueryParam(obj));
     }
