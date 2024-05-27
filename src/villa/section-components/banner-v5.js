@@ -72,23 +72,23 @@ const BannerV5 = (props) => {
         let firstFilterAdded = false;
         const region = $(selectRef.current).val();
         if (region != null && region?.trim() != '') {
-            qs = qs + "region=" + encodeURIComponent(region);
+            qs = qs + "r=" + encodeURIComponent(region);
             firstFilterAdded = true;
         }
         if (filterGuestCount != null && filterGuestCount?.trim() != '') {
-            qs = qs + (firstFilterAdded ? "&" : "") + "guestCount=" + encodeURIComponent(filterGuestCount);
+            qs = qs + (firstFilterAdded ? "&" : "") + "gc=" + encodeURIComponent(filterGuestCount);
             firstFilterAdded = true;
         }
         if (filterName != null && filterName?.trim() != '') {
-            qs = qs + (firstFilterAdded ? "&" : "") + "name=" + encodeURIComponent(filterName);
+            qs = qs + (firstFilterAdded ? "&" : "") + "n=" + encodeURIComponent(filterName);
             firstFilterAdded = true;
         }
         if (filterStartDate != null) {
-            qs = qs + (firstFilterAdded ? "&" : "") + "startDate=" + encodeURIComponent(filterStartDate.format("yyyy-MM-DD"));
+            qs = qs + (firstFilterAdded ? "&" : "") + "sd=" + encodeURIComponent(filterStartDate.format("yyyy-MM-DD"));
             firstFilterAdded = true;
         }
         if (filterEndDate != null) {
-            qs = qs + (firstFilterAdded ? "&" : "") + "endDate=" + encodeURIComponent(filterEndDate.format("yyyy-MM-DD"));
+            qs = qs + (firstFilterAdded ? "&" : "") + "ed=" + encodeURIComponent(filterEndDate.format("yyyy-MM-DD"));
 
         }
         localStorage.setItem('searchParams', qs)

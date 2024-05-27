@@ -21,16 +21,16 @@ const VillaFilters = (props) => {
     const initializeFilterObject = () => {
         const obj = queryParamToObject(props.location.search);
         const initObject = {
-            type: obj.type == null ? [] : obj.type,
-            region: obj.region == null ? [] : obj.region,
-            category: obj.category == null ? [] : obj.category,
-            property: obj.property == null ? [] : obj.property,
-            startPrice: obj.startPrice == null ? '' : obj.startPrice,
-            endPrice: obj.endPrice == null ? '' : obj.endPrice,
-            name: obj.name == null ? '' : obj.name,
-            guestCount: obj.guestCount == null ? '2' : obj.guestCount,
-            startDate: obj.startDate == null ? '' : obj.startDate,
-            endDate: obj.endDate == null ? '' : obj.endDate
+            t: obj.t == null ? [] : obj.t, //type
+            r: obj.r == null ? [] : obj.r, //region
+            c: obj.c == null ? [] : obj.c, //category
+            p: obj.p == null ? [] : obj.p, //property
+            sp: obj.sp == null ? '' : obj.sp, // startPrice
+            ep: obj.ep == null ? '' : obj.ep, // endPrice
+            n: obj.n == null ? '' : obj.n, // name
+            gc: obj.gc == null ? '2' : obj.gc, //guestCount
+            sd: obj.sd == null ? '' : obj.sd, //startDate
+            ed: obj.ed == null ? '' : obj.ed //endDate
         };
         return initObject;
     }
@@ -39,12 +39,12 @@ const VillaFilters = (props) => {
     const [villaProperties, setVillaProperties] = useState([]);
     const [estates, setEstates] = useState([]);
     const [filterObject, setFilterObject] = useState(initializeFilterObject());
-    const [filterName, setFilterName] = useState(filterObject?.name);
-    const [filterStartPrice, setFilterStartPrice] = useState(filterObject?.startPrice);
-    const [filterEndPrice, setFilterEndPrice] = useState(filterObject?.endPrice);
-    const [filterStartDate, setFilterStartDate] = useState(filterObject?.startDate != null && filterObject?.startDate != '' ? moment(filterObject?.startDate) : null);
-    const [filterEndDate, setFilterEndDate] = useState(filterObject?.endDate != null && filterObject?.endDate != '' ? moment(filterObject?.endDate) : null);
-    const [filterGuestCount, setFilterGuestCount] = useState(filterObject?.guestCount);
+    const [filterName, setFilterName] = useState(filterObject?.n);
+    const [filterStartPrice, setFilterStartPrice] = useState(filterObject?.sp);
+    const [filterEndPrice, setFilterEndPrice] = useState(filterObject?.ep);
+    const [filterStartDate, setFilterStartDate] = useState(filterObject?.sd != null && filterObject?.sd != '' ? moment(filterObject?.sd) : null);
+    const [filterEndDate, setFilterEndDate] = useState(filterObject?.ed != null && filterObject?.ed != '' ? moment(filterObject?.ed) : null);
+    const [filterGuestCount, setFilterGuestCount] = useState(filterObject?.gc);
 
     useEffect(() => {
         loadVillasProperties();
@@ -52,14 +52,14 @@ const VillaFilters = (props) => {
         
         if(props.regionPageId!=null) {
             let filterObject_ = filterObject;
-            if(!filterObject_.region.includes(props.regionPageId)) {
-                filterObject_.region.push(props.regionPageId);
+            if(!filterObject_.r.includes(props.regionPageId)) {
+                filterObject_.r.push(props.regionPageId);
             }
         }
         if(props.categoryPageId!=null) {
             let filterObject_ = filterObject;
-            if(!filterObject_.category.includes(props.categoryPageId)) {
-                filterObject_.category.push(props.categoryPageId);
+            if(!filterObject_.c.includes(props.categoryPageId)) {
+                filterObject_.c.push(props.categoryPageId);
             }
         }
     }, [props.match.params.subUri]);
@@ -138,9 +138,9 @@ const VillaFilters = (props) => {
 
     const filter = () => {
         if (filterName != null && filterName?.trim() != '') {
-            addFilter('name', filterName);
+            addFilter('n', filterName);
         } else {
-            removeFilter('name', null);
+            removeFilter('n', null);
         }
         let filterStartPrice_ = filterStartPrice;
         let filterEndPrice_ = filterEndPrice;
@@ -158,38 +158,38 @@ const VillaFilters = (props) => {
         }
 
         if (filterStartPrice_ != null && filterStartPrice_?.trim() != '') {
-            addFilter('startPrice', filterStartPrice_);
+            addFilter('sp', filterStartPrice_);
         } else {
-            removeFilter('startPrice', null);
+            removeFilter('sp', null);
         }
         if (filterEndPrice_ != null && filterEndPrice_?.trim() != '') {
-            addFilter('endPrice', filterEndPrice_);
+            addFilter('ep', filterEndPrice_);
         } else {
-            removeFilter('endPrice', null);
+            removeFilter('ep', null);
         }
         //if (filterGuestCount != null && filterGuestCount?.trim() != '' && filterGuestCount!='0') {
         const guestCount = $(guestCountRef.current).val();
         setFilterGuestCount(guestCount);
         if (guestCount != null && guestCount?.trim() != '' && guestCount != '0') {
-            addFilter('guestCount', guestCount);
+            addFilter('gc', guestCount);
         } else {
-            removeFilter('guestCount', null);
+            removeFilter('gc', null);
         }
         if (filterStartDate != null) {
-            addFilter('startDate', filterStartDate.format("yyyy-MM-DD"));
+            addFilter('sd', filterStartDate.format("yyyy-MM-DD"));
         } else {
-            removeFilter('startDate', null);
+            removeFilter('sd', null);
         }
         if (filterEndDate != null) {
-            addFilter('endDate', filterEndDate.format("yyyy-MM-DD"));
+            addFilter('ed', filterEndDate.format("yyyy-MM-DD"));
         } else {
-            removeFilter('endDate', null);
+            removeFilter('ed', null);
         }
         if (props.regionPageId != null) {
-            addFilter('region', props.regionPageId);
+            addFilter('r', props.regionPageId);
         }
         if (props.categoryPageId != null) {
-            addFilter('category', props.categoryPageId);
+            addFilter('c', props.categoryPageId);
         }
         return false;
     }
@@ -345,8 +345,8 @@ const VillaFilters = (props) => {
                                     <div className="card">
                                         <h6 className="collapsed ltn__card-title" data-bs-toggle="collapse"
                                             data-bs-target="#item-1" aria-expanded="false">
-                                            Mülk Tipi {filterObject.type.length > 0 ?
-                                            <sup>{filterObject.type.length}</sup> : null}
+                                            Mülk Tipi {filterObject.t.length > 0 ?
+                                            <sup>{filterObject.t.length}</sup> : null}
                                         </h6>
                                         <div id="item-1" className="collapse" data-bs-parent="#accordion_1">
                                             <div className="card-body widget ltn__menu-widget"
@@ -357,8 +357,8 @@ const VillaFilters = (props) => {
                                                             <li key={'filter-region-' + item.id}>
                                                                 <label className="checkbox-item">{item.ad}
                                                                     <input type="checkbox"
-                                                                           name={'type'}
-                                                                           checked={filterObject?.type.includes('' + item.id)}
+                                                                           name={'t'}
+                                                                           checked={filterObject?.t.includes('' + item.id)}
                                                                            onChange={checkboxChange}
                                                                            value={item.id}/>
                                                                     <span className="checkmark"/>
@@ -375,8 +375,8 @@ const VillaFilters = (props) => {
                                     <div className="card">                                        
                                         <h6 className="collapsed ltn__card-title" data-bs-toggle="collapse"
                                             data-bs-target="#item-2" aria-expanded="false">
-                                            Bölgeler {filterObject.region.length > 0 ?
-                                            <sup>{filterObject.region.length}</sup> : null}
+                                            Bölgeler {filterObject.r.length > 0 ?
+                                            <sup>{filterObject.r.length}</sup> : null}
                                         </h6>
                                         <div id="item-2" className="collapse" data-bs-parent="#accordion_2">
                                             <div className="card-body widget ltn__menu-widget"
@@ -387,8 +387,8 @@ const VillaFilters = (props) => {
                                                             <li key={'filter-region-' + item.id}>
                                                                 <label className="checkbox-item">{item.ad}
                                                                     <input type="checkbox"
-                                                                           name={'region'}
-                                                                           checked={filterObject?.region.includes('' + item.id)}
+                                                                           name={'r'}
+                                                                           checked={filterObject?.r.includes('' + item.id)}
                                                                            onChange={checkboxChange}
                                                                            value={item.id}/>
                                                                     <span className="checkmark"/>
@@ -405,8 +405,8 @@ const VillaFilters = (props) => {
                                     <div className="card">
                                         <h6 className="collapsed ltn__card-title" data-bs-toggle="collapse"
                                             data-bs-target="#item-3" aria-expanded="false">
-                                            Kategoriler {filterObject.category.length > 0 ?
-                                            <sup>{filterObject.category.length}</sup> : null}
+                                            Kategoriler {filterObject.c.length > 0 ?
+                                            <sup>{filterObject.c.length}</sup> : null}
                                         </h6>
                                         <div id="item-3" className="collapse" data-bs-parent="#accordion_2">
                                             <div className="card-body widget ltn__menu-widget"
@@ -417,8 +417,8 @@ const VillaFilters = (props) => {
                                                             <li key={'filter-region-' + item.id}>
                                                                 <label className="checkbox-item">{item.ad}
                                                                     <input type="checkbox"
-                                                                           name={'category'}
-                                                                           checked={filterObject?.category.includes('' + item.id)}
+                                                                           name={'c'}
+                                                                           checked={filterObject?.c.includes('' + item.id)}
                                                                            onChange={checkboxChange}
                                                                            value={item.id}/>
                                                                     <span className="checkmark"/>
@@ -435,8 +435,8 @@ const VillaFilters = (props) => {
                                     <div className="card">
                                         <h6 className="collapsed ltn__card-title" data-bs-toggle="collapse"
                                             data-bs-target="#item-4" aria-expanded="false">
-                                            Villa Özellikleri {filterObject.property.length > 0 ?
-                                            <sup>{filterObject.property.length}</sup> : null}
+                                            Villa Özellikleri {filterObject.p.length > 0 ?
+                                            <sup>{filterObject.p.length}</sup> : null}
                                         </h6>
                                         <div id="item-4" className="collapse" data-bs-parent="#accordion_2">
                                             <div className="card-body widget ltn__menu-widget"
@@ -446,8 +446,8 @@ const VillaFilters = (props) => {
                                                         <li key={'filter-properety-' + item.id}>
                                                             <label className="checkbox-item">{item.ad}
                                                                 <input type="checkbox"
-                                                                       name={'property'}
-                                                                       checked={filterObject?.property.includes('' + item.id)}
+                                                                       name={'p'}
+                                                                       checked={filterObject?.p.includes('' + item.id)}
                                                                        onChange={checkboxChange}
                                                                        value={item.id}/>
                                                                 <span className="checkmark"/>
