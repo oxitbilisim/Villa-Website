@@ -267,7 +267,21 @@ const VillaInfo = (props) => {
 
                 <div className="col-lg-4 go-top">
                     <aside className="sidebar ltn__shop-sidebar ltn__right-sidebar---">
-
+                        <div className="d-flex justify-content-center align-items-center mb-3">
+                            <div
+                                className="bg-white shadow-sm px-2 rounded d-flex flex-row border border-danger w-100 fs-8 text-nowrap border-2 text-danger">
+                                <img src={process.env.PUBLIC_URL+"/assets/img/Kultur-ve-Turizm-Bakanligi.svg"} width="50" height="50" />
+                                <div className="d-flex flex-column align-items-start justify-content-center" style={{color:'#fd2c50', fontSize:'0.75rem'}}>
+                                    <span>Kültür ve Turizm Bakanlığı</span>
+                                    { props.data?.villa?.ktbBelgeNo!= null ? 
+                                        <span className="">Belge Başvuru No : {props.data?.villa?.ktbBelgeNo}</span>
+                                        :
+                                        <span className="">Belge Başvuru Sürecinde</span>
+                                    }
+                                    
+                                </div>
+                            </div>
+                        </div>
                         <div className="widget ltn__author-widget" style={{padding: '35px 15px 30px 15px'}}>
                             <div className="ltn__author-widget-inner text-center">
                                 <h3 style={{color: '#de7f16'}}>{props.data?.villa?.fiyat != null ?
