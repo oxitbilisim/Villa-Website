@@ -48,15 +48,15 @@ export const LikedVillaContextProvider = (props) => {
         console.log(props);
         console.log(qs);
         const searchObject = queryParamToObject(qs);
-        if (searchObject.startDate == null) {
-            searchObject.startDate = moment().format(serverDateFormat)
+        if (searchObject.sd == null) {
+            searchObject.sd = moment().format(serverDateFormat)
         }
-        if (searchObject.endDate == null) {
-            searchObject.endDate = moment().add(1, 'days').format(serverDateFormat)
+        if (searchObject.ed == null) {
+            searchObject.ed = moment().add(1, 'days').format(serverDateFormat)
         }
-        console.log([searchObject.startDate, searchObject.endDate]);
+        console.log([searchObject.sd, searchObject.ed]);
         console.log("==========");
-        return [searchObject.startDate, searchObject.endDate];
+        return [searchObject.sd, searchObject.ed];
     }
 
     const unlikeAllVilla = (state) => {

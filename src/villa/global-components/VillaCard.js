@@ -13,14 +13,14 @@ const VillaCard = (props) => {
     const getDates = () => {
         const qs = props.location?.search; //localStorage.getItem('searchParams');
         const searchObject = queryParamToObject(qs);
-        if (searchObject.startDate == null) {
-            searchObject.startDate = moment().format(serverDateFormat)
+        if (searchObject.sd == null) {
+            searchObject.sd = moment().format(serverDateFormat)
         }
-        if (searchObject.endDate == null) {
-            searchObject.endDate = moment().add(1, 'days').format(serverDateFormat)
+        if (searchObject.ed == null) {
+            searchObject.ed = moment().add(1, 'days').format(serverDateFormat)
         }
-        console.log([searchObject.startDate, searchObject.endDate]);
-        return [searchObject.startDate, searchObject.endDate];
+        console.log([searchObject.sd, searchObject.ed]);
+        return [searchObject.sd, searchObject.ed];
     }
 
     const toggleLike = (villaId) => {
@@ -125,7 +125,7 @@ const VillaCard = (props) => {
                         <li style={{backgroundColor: 'initial', color: 'initial'}}>
                             <a style={{cursor: 'pointer'}} onClick={() => toggleLike(props.data?.id)} title="Beğen">
                                 {state?.likedVillaIds?.filter(i => i.villaId == props.data?.id && i.startDate == getDates()[0] && i.endDate == getDates()[1]).length > 0 ?
-                                    <i style={{color: 'red'}} className="fa-solid fa-heart"/>
+                                    <i style={{color: '#ff0000 !important'}} className="fa-solid fa-heart"/>
                                     : <i className="flaticon-heart-1"/>
                                 }
                             </a>

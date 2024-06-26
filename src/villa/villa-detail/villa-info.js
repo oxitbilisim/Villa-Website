@@ -166,14 +166,14 @@ const VillaInfo = (props) => {
     const getDates = () => {
         const qs = props.location.search;//localStorage.getItem('searchParams');
         const searchObject = queryParamToObject(qs);
-        if (searchObject.startDate == null) {
-            searchObject.startDate = moment().format(serverDateFormat)
+        if (searchObject.sd == null) {
+            searchObject.sd = moment().format(serverDateFormat)
         }
-        if (searchObject.endDate == null) {
-            searchObject.endDate = moment().add(1, 'days').format(serverDateFormat)
+        if (searchObject.ed == null) {
+            searchObject.ed = moment().add(1, 'days').format(serverDateFormat)
         }
 
-        return [searchObject.startDate, searchObject.endDate];
+        return [searchObject.sd, searchObject.ed];
     }
 
     const renderDayContents = (day, date) => {

@@ -46,8 +46,8 @@ const CollectionList = (props) => {
                                                 <h4><Link target={'_blank'}
                                                           to={"/villa/" + item?.villa.url}>{item?.villa.ad}</Link></h4>
                                             </td>
-                                            <td className="cart-product-price text-center"><span>
-                                                {item?.villa.fiyat != null ? <>Gecelik Fiyat:
+                                            <td className="cart-product-price text-center" style={{fontSize:'18px',fontWeight:'600'}}><span>
+                                                {item?.villa.fiyat != null ? <>Gecelik Fiyat:&nbsp;
                                                     <span
                                                         style={{textDecoration: discountRateCheck(item?.villa.discountRate) ? 'line-through' : 'initial'}}>
                                                         <CurrencyFormat
@@ -65,7 +65,7 @@ const CollectionList = (props) => {
                                                                 prefix={currencySymbol(item.villa.paraBirimi)}/>
                                                     </span>
                                                         : null}
-                                                    <br/>Toplam Fiyat:
+                                                    <br/>Toplam Fiyat:&nbsp;
 
                                                     <span
                                                         style={{textDecoration: discountRateCheck(item?.villa.discountRate) ? 'line-through' : 'initial'}}>
