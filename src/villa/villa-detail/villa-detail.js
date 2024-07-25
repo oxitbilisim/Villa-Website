@@ -18,7 +18,11 @@ const VillaDetail = (props) => {
         axios.get(process.env.REACT_APP_API_ENDPOINT + "/VillaFE/GetVillaByURL?url=" + subUri)
             .then((response) => {
                 setData(response.data);
-            }).finally(() => {
+            }).catch(reason =>{
+                if (reason.response.status == 404){
+                    props.history.push("/");
+                }
+        }).finally(() => {
             setLoaded(true);
         })
     }
