@@ -274,7 +274,7 @@ const VillaInfo = (props) => {
                                 <div className="d-flex flex-column align-items-start justify-content-center" style={{color:'#fd2c50', fontSize:'0.75rem'}}>
                                     <span>Kültür ve Turizm Bakanlığı</span>
                                     { props.data?.villa?.ktbBelgeNo!= null ? 
-                                        <span className="">Belge Başvuru No : {props.data?.villa?.ktbBelgeNo}</span>
+                                        <span className="">Belge No : {props.data?.villa?.ktbBelgeNo}</span>
                                         :
                                         <span className="">Belge Başvuru Sürecinde</span>
                                     }
